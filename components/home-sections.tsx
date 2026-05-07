@@ -1,0 +1,166 @@
+'use client';
+
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Container, SectionHeader, GridSection } from '@/components/layout';
+import { DivisionCard, TournamentCard, NewsCard, StreamerCard } from '@/components/cards';
+import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
+import { ArrowRight } from 'lucide-react';
+
+export function HeroSection() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-card to-background pt-16">
+      <Container className="text-center py-20">
+        <div className="inline-block mb-4 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full">
+          <span className="text-primary text-sm font-semibold">Welcome to Provela Esports</span>
+        </div>
+        <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+          Competitive Gaming at Its Finest
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          Join the premier esports organization with elite players, world-class tournaments, and non-stop entertainment.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/divisions">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Explore Divisions <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+          <Link href="/tournaments">
+            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              View Tournaments
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] }) {
+  const featured = divisions.filter((d) => d.featured).slice(0, 3);
+
+  return (
+    <div className="py-20 bg-background">
+      <Container>
+        <SectionHeader
+          subtitle="Featured"
+          title="Our Divisions"
+          description="Explore our competitive divisions across multiple games with the world&apos;s best players."
+        />
+        <GridSection cols={3}>
+          {featured.map((division) => (
+            <DivisionCard key={division.id} division={division} />
+          ))}
+        </GridSection>
+        <div className="text-center mt-12">
+          <Link href="/divisions">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              View All Divisions <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tournament[] }) {
+  const upcomingAndOngoing = tournaments.filter((t) => t.status === 'upcoming' || t.status === 'ongoing').slice(0, 3);
+
+  return (
+    <div className="py-20 bg-card">
+      <Container>
+        <SectionHeader
+          subtitle="Competitions"
+          title="Tournaments"
+          description="Check out the latest tournaments with massive prize pools and intense competition."
+        />
+        <GridSection cols={3}>
+          {upcomingAndOngoing.map((tournament) => (
+            <TournamentCard key={tournament.id} tournament={tournament} />
+          ))}
+        </GridSection>
+        <div className="text-center mt-12">
+          <Link href="/tournaments">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              View All Tournaments <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
+  const latest = articles.slice(0, 3);
+
+  return (
+    <div className="py-20 bg-background">
+      <Container>
+        <SectionHeader
+          subtitle="Updates"
+          title="Latest News"
+          description="Stay updated with the latest news, announcements, and stories from the Provela community."
+        />
+        <GridSection cols={3}>
+          {latest.map((article) => (
+            <NewsCard key={article.id} article={article} />
+          ))}
+        </GridSection>
+        <div className="text-center mt-12">
+          <Link href="/news">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              Read More News <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
+  return (
+    <div className="py-20 bg-card">
+      <Container>
+        <SectionHeader
+          subtitle="Live Streams"
+          title="Featured Streamers"
+          description="Follow our professional streamers and watch the best esports content live."
+        />
+        <GridSection cols={4}>
+          {streamers.map((streamer) => (
+            <StreamerCard key={streamer.id} streamer={streamer} />
+          ))}
+        </GridSection>
+        <div className="text-center mt-12">
+          <Link href="/streamers">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              View All Streamers <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export function CTASection() {
+  return (
+    <div className="py-20 bg-gradient-to-r from-primary/10 to-primary/5 border-y border-primary/20">
+      <Container className="text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Ready to Join the Action?</h2>
+        <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+          Whether you&apos;re a player, fan, or aspiring esports professional, there&apos;s a place for you at Provela.
+        </p>
+        <Link href="/contact">
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            Get Started <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
+      </Container>
+    </div>
+  );
+}
