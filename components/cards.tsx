@@ -1,25 +1,39 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
 import { Dot } from 'lucide-react';
 
 export function DivisionCard({ division }: { division: Division }) {
+  const coverImage =
+    division.media.find((item) => item.type === 'image')?.url ??
+    'https://images.unsplash.com/photo-1542751110-97427bbecf20?w=1200&h=700&fit=crop';
+
   return (
     <Link href={`/divisions/${division.id}`}>
-      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 p-6 cursor-pointer">
-        <div className="text-4xl mb-4">{division.icon}</div>
-        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-          {division.name}
-        </h3>
-        <p className="text-muted-foreground text-sm mb-4">{division.description}</p>
-        <div className="flex justify-between text-sm text-muted-foreground border-t border-border pt-4">
-          <div>
-            <p className="font-semibold text-foreground">{division.teams}</p>
-            <p className="text-xs">Teams</p>
+      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer">
+        <div className="relative h-44 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${coverImage})` }}>
+          <div className="absolute inset-0 bg-black/45 group-hover:bg-black/30 transition-colors" />
+          <div className="absolute inset-x-0 bottom-0 p-4">
+            <p className="text-xs uppercase tracking-wide text-primary-foreground/80 mb-1">{division.game}</p>
+            <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors line-clamp-1">
+              {division.name}
+            </h3>
           </div>
-          <div>
-            <p className="font-semibold text-foreground">{division.players}</p>
-            <p className="text-xs">Players</p>
+          <div className="absolute top-3 right-3 px-2 py-1 rounded-md text-xs font-semibold bg-primary text-primary-foreground">
+            {division.icon}
+          </div>
+        </div>
+
+        <div className="p-4">
+          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{division.tagline}</p>
+          <div className="flex justify-between text-sm text-muted-foreground border-t border-border pt-4">
+            <div>
+              <p className="font-semibold text-foreground">{division.teams}</p>
+              <p className="text-xs">Teams</p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground">{division.players}</p>
+              <p className="text-xs">Players</p>
+            </div>
           </div>
         </div>
       </div>
@@ -28,13 +42,13 @@ export function DivisionCard({ division }: { division: Division }) {
 }
 
 export function TournamentCard({ tournament }: { tournament: Tournament }) {
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: Tournament['status']) => {
     switch (status) {
-      case 'ongoing':
+      case 'active':
         return 'bg-primary/20 text-primary';
       case 'upcoming':
         return 'bg-blue-500/20 text-blue-400';
-      case 'completed':
+      case 'past':
         return 'bg-gray-500/20 text-gray-400';
       default:
         return 'bg-gray-500/20 text-gray-400';
@@ -62,7 +76,7 @@ export function TournamentCard({ tournament }: { tournament: Tournament }) {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Participants</span>
-              <span className="font-semibold text-foreground">{tournament.participants}</span>
+              <span className="font-semibold text-foreground">{tournament.participants.length}</span>
             </div>
           </div>
         </div>
@@ -98,7 +112,7 @@ export function NewsCard({ article }: { article: NewsArticle }) {
 
 export function StreamerCard({ streamer }: { streamer: Streamer }) {
   return (
-    <a href={streamer.twitchUrl} target="_blank" rel="noopener noreferrer">
+    <a href={streamer.liveUrl} target="_blank" rel="noopener noreferrer">
       <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 p-4 cursor-pointer flex flex-col items-center text-center">
         <div className="relative mb-4">
           <img

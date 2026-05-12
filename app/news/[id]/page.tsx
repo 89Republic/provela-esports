@@ -1,5 +1,3 @@
-'use client';
-
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container } from '@/components/layout';
@@ -77,7 +75,7 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
                 </div>
 
                 <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-                  {article.content.split('\n').map((paragraph, idx) => (
+                  {article.content.map((paragraph, idx) => (
                     <p key={idx} className="text-foreground">
                       {paragraph}
                     </p>

@@ -1,5 +1,3 @@
-'use client';
-
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container } from '@/components/layout';
@@ -47,6 +45,13 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
     });
   };
 
+  const statusBadge =
+    tournament?.status === 'active'
+      ? 'bg-primary/20 text-primary'
+      : tournament?.status === 'upcoming'
+        ? 'bg-blue-500/20 text-blue-400'
+        : 'bg-gray-500/20 text-gray-400';
+
   return (
     <>
       <Navbar />
@@ -54,7 +59,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 flex items-end">
           <Container className="pb-8 w-full">
-            <div className="inline-block px-3 py-1 bg-primary text-primary-foreground rounded-full text-xs font-semibold mb-4 capitalize">
+            <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 capitalize ${statusBadge}`}>
               {tournament.status}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground">{tournament.name}</h1>
@@ -68,10 +73,8 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
             <div className="md:col-span-2">
               <div className="bg-card border border-border rounded-lg p-8 mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-4">Tournament Details</h2>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {tournament.name} is one of our premier tournaments in {tournament.game} with an exciting format and
-                  competitive play.
-                </p>
+                <p className="text-lg text-muted-foreground mb-3">{tournament.overview}</p>
+                <p className="text-muted-foreground mb-6">{tournament.format}</p>
 
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   <div className="border border-border rounded-lg p-4">
@@ -95,26 +98,63 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                       <Users className="w-5 h-5" />
                       <span className="text-sm font-semibold">Participants</span>
                     </div>
-                    <p className="text-foreground font-semibold">{tournament.participants} Teams</p>
+                    <p className="text-foreground font-semibold">{tournament.participants.length} Teams</p>
                   </div>
                   <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center space-x-2 text-primary mb-2">
-                      <span className="text-sm font-semibold">Game</span>
+                      <span className="text-sm font-semibold">Division</span>
                     </div>
-                    <p className="text-foreground font-semibold">{tournament.game}</p>
+                    <p className="text-foreground font-semibold">{tournament.division}</p>
                   </div>
                 </div>
 
+                <h3 className="text-xl font-bold text-foreground mb-4">Participants</h3>
+                <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                  {tournament.participants.map((participant) => (
+                    <div key={participant.id} className="border border-border rounded-lg p-3">
+                      <p className="font-semibold text-foreground">{participant.name}</p>
+                      <p className="text-sm text-muted-foreground capitalize">{participant.type}</p>
+                      {participant.record && <p className="text-sm text-primary">Record: {participant.record}</p>}
+                    </div>
+                  ))}
+                </div>
+
                 <h3 className="text-xl font-bold text-foreground mb-4">Standings</h3>
-                <div className="bg-background rounded-lg p-6">
-                  <p className="text-muted-foreground">
-                    Tournament standings will be displayed here once integrated with the backend API.
-                  </p>
+                <div className="bg-background rounded-lg p-6 space-y-3">
+                  {tournament.standings.length === 0 && (
+                    <p className="text-muted-foreground">Standings will be published once bracket play starts.</p>
+                  )}
+                  {tournament.standings.map((row) => (
+                    <div key={row.rank} className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-4 text-sm">
+                      <span className="text-primary font-semibold">#{row.rank}</span>
+                      <span className="text-foreground font-medium">{row.name}</span>
+                      <span className="text-muted-foreground">P:{row.played}</span>
+                      <span className="text-foreground font-semibold">{row.points} pts</span>
+                    </div>
+                  ))}
                 </div>
 
                 <h3 className="text-xl font-bold text-foreground mb-4 mt-8">Schedule</h3>
-                <div className="bg-background rounded-lg p-6">
-                  <p className="text-muted-foreground">Match schedule will be displayed here once integrated with the backend API.</p>
+                <div className="bg-background rounded-lg p-6 space-y-3">
+                  {tournament.schedule.map((match) => (
+                    <div key={match.id} className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className="font-semibold text-foreground">{match.label}</p>
+                        <p className="text-sm text-muted-foreground">{match.stage}</p>
+                      </div>
+                      <span className="text-sm text-primary font-semibold">{formatDate(match.date)}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <h3 className="text-xl font-bold text-foreground mb-4 mt-8">Recent Results</h3>
+                <div className="bg-background rounded-lg p-6 space-y-2">
+                  {tournament.results.length === 0 && (
+                    <p className="text-muted-foreground">Results will appear here after the first match day.</p>
+                  )}
+                  {tournament.results.map((result, idx) => (
+                    <p key={idx} className="text-foreground">{result}</p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -125,7 +165,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                 <div className="space-y-6">
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Status</p>
-                    <p className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-semibold capitalize">
+                    <p className={`inline-block px-3 py-1 rounded-full text-sm font-semibold capitalize ${statusBadge}`}>
                       {tournament.status}
                     </p>
                   </div>
@@ -135,10 +175,10 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Participating Teams</p>
-                    <p className="text-2xl font-bold text-foreground">{tournament.participants}</p>
+                    <p className="text-2xl font-bold text-foreground">{tournament.participants.length}</p>
                   </div>
                   <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-lg transition-colors">
-                    Register Team
+                    {tournament.registrationOpen ? 'Register Team' : 'Registration Closed'}
                   </button>
                 </div>
               </div>

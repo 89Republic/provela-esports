@@ -6,13 +6,13 @@ import { TOURNAMENTS } from '@/lib/constants';
 
 export const metadata = {
   title: 'Tournaments | Provela Esports',
-  description: 'Discover upcoming, ongoing, and completed tournaments with massive prize pools.',
+  description: 'Discover upcoming, active, and past tournaments with massive prize pools.',
 };
 
 export default function TournamentsPage() {
   const upcoming = TOURNAMENTS.filter((t) => t.status === 'upcoming');
-  const ongoing = TOURNAMENTS.filter((t) => t.status === 'ongoing');
-  const completed = TOURNAMENTS.filter((t) => t.status === 'completed');
+  const active = TOURNAMENTS.filter((t) => t.status === 'active');
+  const past = TOURNAMENTS.filter((t) => t.status === 'past');
 
   return (
     <>
@@ -23,11 +23,11 @@ export default function TournamentsPage() {
       />
       <main className="py-20">
         <Container>
-          {ongoing.length > 0 && (
+          {active.length > 0 && (
             <div className="mb-16">
-              <h2 className="text-2xl font-bold text-foreground mb-8">Ongoing</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-8">Active</h2>
               <GridSection cols={3}>
-                {ongoing.map((tournament) => (
+                {active.map((tournament) => (
                   <TournamentCard key={tournament.id} tournament={tournament} />
                 ))}
               </GridSection>
@@ -45,11 +45,11 @@ export default function TournamentsPage() {
             </div>
           )}
 
-          {completed.length > 0 && (
+          {past.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-foreground mb-8">Completed</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-8">Past</h2>
               <GridSection cols={3}>
-                {completed.map((tournament) => (
+                {past.map((tournament) => (
                   <TournamentCard key={tournament.id} tournament={tournament} />
                 ))}
               </GridSection>

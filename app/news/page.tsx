@@ -10,8 +10,6 @@ export const metadata = {
 };
 
 export default function NewsPage() {
-  const categories = Array.from(new Set(NEWS_ARTICLES.map((a) => a.category)));
-
   return (
     <>
       <Navbar />
