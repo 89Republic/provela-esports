@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { BrandLogo } from '@/components/brand-logo';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,12 +24,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">P</span>
-            </div>
-            <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-              Provela
-            </span>
+            <BrandLogo className="group-hover:opacity-90 transition-opacity" />
           </Link>
 
           {/* Desktop Navigation */}

@@ -2,15 +2,23 @@ import Link from 'next/link';
 import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
 import { Dot } from 'lucide-react';
 
+const NEWS_DATE_FORMATTER = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'UTC',
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+});
+
 export function DivisionCard({ division }: { division: Division }) {
   const coverImage =
     division.media.find((item) => item.type === 'image')?.url ??
     'https://images.unsplash.com/photo-1542751110-97427bbecf20?w=1200&h=700&fit=crop';
+  const encodedCoverImage = encodeURI(coverImage);
 
   return (
     <Link href={`/divisions/${division.id}`}>
       <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer">
-        <div className="relative h-44 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${coverImage})` }}>
+        <div className="relative h-44 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedCoverImage}")` }}>
           <div className="absolute inset-0 bg-black/45 group-hover:bg-black/30 transition-colors" />
           <div className="absolute inset-x-0 bottom-0 p-4">
             <p className="text-xs uppercase tracking-wide text-primary-foreground/80 mb-1">{division.game}</p>
@@ -55,10 +63,12 @@ export function TournamentCard({ tournament }: { tournament: Tournament }) {
     }
   };
 
+  const encodedTournamentImage = encodeURI(tournament.image);
+
   return (
     <Link href={`/tournaments/${tournament.id}`}>
       <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer">
-        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${tournament.image})` }}>
+        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedTournamentImage}")` }}>
           <div className="absolute inset-0 bg-black/40" />
           <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(tournament.status)} capitalize`}>
             {tournament.status}
@@ -86,10 +96,13 @@ export function TournamentCard({ tournament }: { tournament: Tournament }) {
 }
 
 export function NewsCard({ article }: { article: NewsArticle }) {
+  const publishedDate = NEWS_DATE_FORMATTER.format(new Date(article.date));
+  const encodedArticleImage = encodeURI(article.image);
+
   return (
     <Link href={`/news/${article.id}`}>
       <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer flex flex-col">
-        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${article.image})` }}>
+        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedArticleImage}")` }}>
           <div className="absolute inset-0 bg-black/40" />
           <div className="absolute top-4 left-4 px-2 py-1 bg-primary text-primary-foreground rounded text-xs font-semibold">
             {article.category}
@@ -102,7 +115,7 @@ export function NewsCard({ article }: { article: NewsArticle }) {
           <p className="text-sm text-muted-foreground mb-4 flex-1 line-clamp-2">{article.excerpt}</p>
           <div className="flex justify-between text-xs text-muted-foreground border-t border-border pt-4">
             <span>{article.author}</span>
-            <span>{new Date(article.date).toLocaleDateString()}</span>
+            <span>{publishedDate}</span>
           </div>
         </div>
       </div>

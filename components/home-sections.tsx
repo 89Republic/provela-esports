@@ -8,8 +8,7 @@ import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
 import { ArrowRight } from 'lucide-react';
 
 export function HeroSection() {
-  const heroImage =
-    'https://images.unsplash.com/photo-1542751371-29b0f74f9713?w=2000&h=1200&fit=crop';
+  const heroImage = '/images/hero.png';
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-b from-background via-card to-background pt-16">
@@ -23,7 +22,7 @@ export function HeroSection() {
       </div>
 
       <Container className="relative text-center py-20">
-        <div className="mx-auto max-w-4xl rounded-3xl border border-white/20 bg-black/35 px-6 py-10 md:px-10 md:py-14 shadow-[0_30px_80px_rgba(0,0,0,0.5)] backdrop-blur-md transform-[perspective(1200px)_rotateX(6deg)]">
+        <div className="mx-auto max-w-4xl px-6 py-10 md:px-10 md:py-14">
           <div className="inline-block mb-4 px-4 py-2 bg-primary/20 border border-primary/40 rounded-full">
             <span className="text-primary text-sm font-semibold">Welcome to Provela Esports</span>
           </div>

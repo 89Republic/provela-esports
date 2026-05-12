@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Twitch, Youtube, Twitter } from 'lucide-react';
+import { BrandLogo } from '@/components/brand-logo';
 
 export function Footer() {
   return (
@@ -8,12 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                <span className="text-primary-foreground font-bold">P</span>
-              </div>
-              <span className="text-xl font-bold text-foreground">Provela</span>
-            </div>
+            <BrandLogo className="mb-4" />
             <p className="text-muted-foreground text-sm">
               Premier esports organization bringing competitive gaming to the world.
             </p>

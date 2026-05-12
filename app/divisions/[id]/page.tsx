@@ -4,7 +4,7 @@ import { PageHeader, Container } from '@/components/layout';
 import { DIVISIONS } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink, MapPin } from 'lucide-react';
 
 interface DivisionDetailPageProps {
   params: Promise<{
@@ -45,6 +45,8 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
     );
   }
 
+  const sidePanelImage = division.media.find((item) => item.type === 'image')?.url ?? '/images/hero.png';
+
   return (
     <>
       <Navbar />
@@ -56,28 +58,45 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
               <h2 className="text-2xl font-bold text-foreground mb-4">About {division.name}</h2>
               <p className="text-lg text-muted-foreground mb-8">{division.description}</p>
 
-              <h3 className="text-xl font-bold text-foreground mb-4 mt-8">Roster</h3>
+              <h3 className="text-xl font-bold text-foreground mb-4 mt-8">Player Profiles</h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 {division.roster.map((member) => (
-                  <div key={member.id} className="bg-card border border-border rounded-lg p-4">
-                    <p className="text-xs uppercase tracking-wide text-primary mb-1">{member.tag}</p>
-                    <h4 className="text-lg font-semibold text-foreground">{member.name}</h4>
-                    <p className="text-sm text-muted-foreground">{member.role}</p>
-                    <p className="text-sm text-muted-foreground mb-3">{member.location}</p>
-                    <div className="flex flex-wrap gap-2">
+                  <article key={member.id} className="bg-card border border-border rounded-lg p-4 hover:border-primary/60 transition-colors">
+                    <div className="flex items-start gap-4">
+                      <img
+                        src={member.avatar || '/placeholder-user.jpg'}
+                        alt={member.name}
+                        className="w-16 h-16 rounded-full border-2 border-primary/30 object-cover"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs uppercase tracking-wide text-primary mb-1">{member.tag}</p>
+                        <h4 className="text-lg font-semibold text-foreground leading-tight line-clamp-1">{member.name}</h4>
+                        <p className="text-sm text-muted-foreground">{member.role}</p>
+                        <div className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
+                          <MapPin className="w-3 h-3" />
+                          <span className="line-clamp-1">{member.location}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Social Links</p>
+                      <div className="flex flex-wrap gap-2">
                       {member.socialLinks.map((social) => (
                         <a
                           key={`${member.id}-${social.platform}`}
                           href={social.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs px-2 py-1 rounded bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                          className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                         >
-                          {social.platform}
+                          <span>{social.platform}</span>
+                          <ExternalLink className="w-3 h-3" />
                         </a>
                       ))}
                     </div>
-                  </div>
+                    </div>
+                  </article>
                 ))}
               </div>
 
@@ -126,6 +145,13 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
 
             <div className="md:col-span-1">
               <div className="bg-card border border-border rounded-lg p-6 sticky top-24">
+                <div className="mb-5 overflow-hidden rounded-md border border-border">
+                  <img
+                    src={sidePanelImage}
+                    alt={`${division.name} cover`}
+                    className="w-full h-36 object-cover"
+                  />
+                </div>
                 <div className="text-6xl mb-4 text-center">{division.icon}</div>
                 <div className="space-y-6">
                   <div>

@@ -8,7 +8,10 @@ export const BRAND_SOCIALS: SocialLink[] = [
 ];
 
 const CODM_IMAGE = '/images/codm-cover.png';
-const EAFC_IMAGE = '/images/eafc-cover.jpeg';
+const EAFC_IMAGE = '/images/eafc .jpg';
+const EAFC_CLUBS_IMAGE = '/images/eafc-cover.jpeg';
+const STREAMERS_IMAGE = '/images/streaming.jpg';
+const TOURNAMENT_IMAGE = '/images/tournament.jpg';
 
 export const DIVISIONS: Division[] = [
   {
@@ -137,7 +140,7 @@ export const DIVISIONS: Division[] = [
         id: 'sp3-media-1',
         type: 'image',
         title: 'Tactical Session',
-        url: EAFC_IMAGE,
+        url: EAFC_CLUBS_IMAGE,
       },
       {
         id: 'sp3-media-2',
@@ -286,7 +289,7 @@ export const DIVISIONS: Division[] = [
         id: 'e-media-1',
         type: 'image',
         title: 'Team Strategy Brief',
-        url: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=900&h=500&fit=crop',
+        url: '/images/e-football.jpeg',
       },
       {
         id: 'e-media-2',
@@ -361,7 +364,7 @@ export const DIVISIONS: Division[] = [
         id: 'fcx-media-1',
         type: 'image',
         title: 'FCX Main Stage',
-        url: 'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=900&h=500&fit=crop',
+        url: TOURNAMENT_IMAGE,
       },
       {
         id: 'fcx-media-2',
@@ -435,7 +438,7 @@ export const DIVISIONS: Division[] = [
         id: 'streamers-media-1',
         type: 'image',
         title: 'Live Watch Party',
-        url: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=900&h=500&fit=crop',
+        url: STREAMERS_IMAGE,
       },
       {
         id: 'streamers-media-2',
@@ -477,7 +480,7 @@ export const TOURNAMENTS: Tournament[] = [
     endDate: '2026-06-15T22:00:00.000Z',
     prizePool: '$50,000',
     registrationOpen: false,
-    image: EAFC_IMAGE,
+    image: TOURNAMENT_IMAGE,
     participants: [
       { id: 'p1', name: 'Provela EA FC', type: 'team', record: '6-1' },
       { id: 'p2', name: 'North Core', type: 'team', record: '5-2' },
@@ -510,7 +513,7 @@ export const TOURNAMENTS: Tournament[] = [
     endDate: '2026-07-19T22:00:00.000Z',
     prizePool: '$10,000',
     registrationOpen: true,
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&h=600&fit=crop',
+    image: TOURNAMENT_IMAGE,
     participants: [
       { id: 'u1', name: 'Slots Available', type: 'team' },
       { id: 'u2', name: 'Slots Available', type: 'team' },
@@ -538,7 +541,7 @@ export const TOURNAMENTS: Tournament[] = [
     endDate: '2026-03-18T22:00:00.000Z',
     prizePool: '$25,000',
     registrationOpen: false,
-    image: EAFC_IMAGE,
+    image: TOURNAMENT_IMAGE,
     participants: [
       { id: 'i1', name: 'Provela EA FC', type: 'team', record: '7-1' },
       { id: 'i2', name: 'Apex Eleven', type: 'team', record: '6-2' },
