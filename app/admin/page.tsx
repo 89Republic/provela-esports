@@ -31,12 +31,12 @@ export default function AdminDashboard() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 mb-8">
-        <StatCard label="Divisions" value={content?.divisions.length ?? '—'} />
-        <StatCard label="Tournaments" value={content?.tournaments.length ?? '—'} />
-        <StatCard label="Streamers" value={content?.streamers.length ?? '—'} />
-        <StatCard label="News Articles" value={content?.newsArticles.length ?? '—'} />
-        <StatCard label="Social Links" value={content?.brandSocials.length ?? '—'} />
-        <StatCard label="Contact Topics" value={content?.contactTopics.length ?? '—'} />
+        <StatCard label="Divisions"      value={content?.divisions.length ?? '—'}      color="violet"  />
+        <StatCard label="Tournaments"    value={content?.tournaments.length ?? '—'}    color="sky"     />
+        <StatCard label="Streamers"      value={content?.streamers.length ?? '—'}      color="emerald" />
+        <StatCard label="News Articles"  value={content?.newsArticles.length ?? '—'}   color="amber"   />
+        <StatCard label="Social Links"   value={content?.brandSocials.length ?? '—'}   color="rose"    />
+        <StatCard label="Contact Topics" value={content?.contactTopics.length ?? '—'}  color="cyan"    />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 mb-8">

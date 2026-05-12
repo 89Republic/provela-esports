@@ -32,7 +32,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
   return (
     <aside className="flex h-full flex-col bg-card border-r border-border">
       <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-        <BrandLogo />
+        <Link href="/" className="hover:opacity-80 transition-opacity"><BrandLogo /></Link>
         {onClose && (
           <button onClick={onClose} className="p-1 text-muted-foreground hover:text-foreground transition-colors md:hidden">
             <X className="size-5" />
@@ -115,7 +115,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           >
             <Menu className="size-5" />
           </button>
-          <BrandLogo />
+          <Link href="/" className="hover:opacity-80 transition-opacity"><BrandLogo /></Link>
           <span className="ml-auto text-xs text-muted-foreground font-semibold uppercase tracking-wide">Admin</span>
         </header>
 

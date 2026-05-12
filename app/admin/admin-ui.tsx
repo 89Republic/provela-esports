@@ -15,12 +15,24 @@ export function PageTitle({ title, subtitle, action }: { title: string; subtitle
   );
 }
 
-export function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
+const STAT_CARD_THEMES = {
+  violet:  { card: 'bg-violet-500/10  border-violet-500/30',  text: 'text-violet-400',  value: 'text-violet-300'  },
+  sky:     { card: 'bg-sky-500/10     border-sky-500/30',     text: 'text-sky-400',     value: 'text-sky-300'     },
+  emerald: { card: 'bg-emerald-500/10 border-emerald-500/30', text: 'text-emerald-400', value: 'text-emerald-300' },
+  amber:   { card: 'bg-amber-500/10   border-amber-500/30',   text: 'text-amber-400',   value: 'text-amber-300'   },
+  rose:    { card: 'bg-rose-500/10    border-rose-500/30',    text: 'text-rose-400',    value: 'text-rose-300'    },
+  cyan:    { card: 'bg-cyan-500/10    border-cyan-500/30',    text: 'text-cyan-400',    value: 'text-cyan-300'    },
+} as const;
+
+export type StatCardColor = keyof typeof STAT_CARD_THEMES;
+
+export function StatCard({ label, value, sub, color }: { label: string; value: string | number; sub?: string; color?: StatCardColor }) {
+  const theme = color ? STAT_CARD_THEMES[color] : null;
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-3xl font-bold text-foreground">{value}</p>
-      {sub && <p className="mt-1 text-xs text-muted-foreground">{sub}</p>}
+    <div className={cn('rounded-xl border p-5', theme ? `${theme.card}` : 'bg-card border-border')}>
+      <p className={cn('text-sm font-medium', theme ? theme.text : 'text-muted-foreground')}>{label}</p>
+      <p className={cn('mt-1 text-3xl font-bold', theme ? theme.value : 'text-foreground')}>{value}</p>
+      {sub && <p className={cn('mt-1 text-xs', theme ? theme.text : 'text-muted-foreground')}>{sub}</p>}
     </div>
   );
 }
