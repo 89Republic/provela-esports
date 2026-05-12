@@ -2,16 +2,17 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container, GridSection } from '@/components/layout';
 import { StreamerCard } from '@/components/cards';
-import { STREAMERS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 
 export const metadata = {
   title: 'Streamers | Provela Esports',
   description: 'Follow our professional streamers and watch the best esports content live on Twitch and YouTube.',
 };
 
-export default function StreamersPage() {
-  const liveStreamers = STREAMERS.filter((s) => s.status === 'live');
-  const offlineStreamers = STREAMERS.filter((s) => s.status === 'offline');
+export default async function StreamersPage() {
+  const content = await getSiteContent();
+  const liveStreamers = content.streamers.filter((s) => s.status === 'live');
+  const offlineStreamers = content.streamers.filter((s) => s.status === 'offline');
 
   return (
     <>

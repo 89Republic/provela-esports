@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container } from '@/components/layout';
-import { NEWS_ARTICLES } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
@@ -14,7 +14,8 @@ interface NewsDetailPageProps {
 
 export default async function NewsDetailPage(props: NewsDetailPageProps) {
   const params = await props.params;
-  const article = NEWS_ARTICLES.find((a) => a.id === params.id);
+  const content = await getSiteContent();
+  const article = content.newsArticles.find((a) => a.id === params.id);
 
   if (!article) {
     return (
@@ -37,7 +38,7 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
     );
   }
 
-  const relatedArticles = NEWS_ARTICLES.filter(
+  const relatedArticles = content.newsArticles.filter(
     (a) => a.category === article.category && a.id !== article.id
   ).slice(0, 3);
 

@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container } from '@/components/layout';
-import { TOURNAMENTS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Trophy, Users } from 'lucide-react';
@@ -14,7 +14,8 @@ interface TournamentDetailPageProps {
 
 export default async function TournamentDetailPage(props: TournamentDetailPageProps) {
   const params = await props.params;
-  const tournament = TOURNAMENTS.find((t) => t.id === params.id);
+  const content = await getSiteContent();
+  const tournament = content.tournaments.find((t) => t.id === params.id);
 
   if (!tournament) {
     return (

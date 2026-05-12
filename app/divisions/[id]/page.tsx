@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container } from '@/components/layout';
-import { DIVISIONS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, MapPin } from 'lucide-react';
@@ -14,7 +14,8 @@ interface DivisionDetailPageProps {
 
 export default async function DivisionDetailPage(props: DivisionDetailPageProps) {
   const params = await props.params;
-  const division = DIVISIONS.find((d) => d.id === params.id);
+  const content = await getSiteContent();
+  const division = content.divisions.find((d) => d.id === params.id);
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString('en-US', {

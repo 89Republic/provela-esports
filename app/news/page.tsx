@@ -2,14 +2,16 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container, GridSection } from '@/components/layout';
 import { NewsCard } from '@/components/cards';
-import { NEWS_ARTICLES } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 
 export const metadata = {
   title: 'News | Provela Esports',
   description: 'Stay updated with the latest news, announcements, and stories from Provela Esports.',
 };
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const content = await getSiteContent();
+
   return (
     <>
       <Navbar />
@@ -20,7 +22,7 @@ export default function NewsPage() {
       <main className="py-20">
         <Container>
           <GridSection cols={3}>
-            {NEWS_ARTICLES.map((article) => (
+            {content.newsArticles.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}
           </GridSection>

@@ -2,17 +2,18 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container, GridSection } from '@/components/layout';
 import { TournamentCard } from '@/components/cards';
-import { TOURNAMENTS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 
 export const metadata = {
   title: 'Tournaments | Provela Esports',
   description: 'Discover upcoming, active, and past tournaments with massive prize pools.',
 };
 
-export default function TournamentsPage() {
-  const upcoming = TOURNAMENTS.filter((t) => t.status === 'upcoming');
-  const active = TOURNAMENTS.filter((t) => t.status === 'active');
-  const past = TOURNAMENTS.filter((t) => t.status === 'past');
+export default async function TournamentsPage() {
+  const content = await getSiteContent();
+  const upcoming = content.tournaments.filter((t) => t.status === 'upcoming');
+  const active = content.tournaments.filter((t) => t.status === 'active');
+  const past = content.tournaments.filter((t) => t.status === 'past');
 
   return (
     <>

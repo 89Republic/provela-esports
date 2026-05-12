@@ -8,18 +8,20 @@ import {
   StreamersSection,
   CTASection,
 } from '@/components/home-sections';
-import { DIVISIONS, TOURNAMENTS, NEWS_ARTICLES, STREAMERS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/site-content';
 
-export default function Home() {
+export default async function Home() {
+  const content = await getSiteContent();
+
   return (
     <>
       <Navbar />
       <main>
         <HeroSection />
-        <FeaturedDivisionsSection divisions={DIVISIONS} />
-        <UpcomingTournamentsSection tournaments={TOURNAMENTS} />
-        <LatestNewsSection articles={NEWS_ARTICLES} />
-        <StreamersSection streamers={STREAMERS} />
+        <FeaturedDivisionsSection divisions={content.divisions} />
+        <UpcomingTournamentsSection tournaments={content.tournaments} />
+        <LatestNewsSection articles={content.newsArticles} />
+        <StreamersSection streamers={content.streamers} />
         <CTASection />
       </main>
       <Footer />
