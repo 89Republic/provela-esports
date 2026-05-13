@@ -22,12 +22,19 @@ export function HeroSection() {
       </div>
 
       <Container className="relative text-center py-20">
-        <div className="mx-auto max-w-4xl px-6 py-10 md:px-10 md:py-14">
-          <div className="inline-block mb-4 px-4 py-2 bg-primary/20 border border-primary/40 rounded-full">
-            <span className="text-primary text-sm font-semibold">Welcome to Provela Esports</span>
+        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10 md:px-10 md:py-14">
+          <div className="inline-block mb-4 px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/20 border border-primary/40 rounded-full max-w-full">
+            <span className="text-primary text-xs sm:text-sm font-semibold uppercase tracking-widest break-words" style={{ fontFamily: 'var(--font-gaming)' }}>Welcome to Provela Esports</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 text-balance">
-            Competitive Gaming at Its Finest
+          <h1
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 text-center uppercase leading-tight"
+            style={{
+              fontFamily: 'var(--font-gaming)',
+              letterSpacing: 'clamp(0.05em, 2vw, 0.18em)',
+              WebkitTextStroke: '1px rgba(255,255,255,0.15)',
+            }}
+          >
+            Competitive<br />Gaming at<br />Its Finest
           </h1>
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
             Join the premier esports organization with elite players, world-class tournaments, and non-stop entertainment.
@@ -51,7 +58,7 @@ export function HeroSection() {
 }
 
 export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] }) {
-  const featured = divisions.filter((d) => d.featured).slice(0, 3);
+  const featured = divisions.filter((d) => d.featured).slice(0, 4);
 
   return (
     <div className="py-20 bg-background">
@@ -61,11 +68,11 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
           title="Our Divisions"
           description="Explore our competitive divisions across multiple games with the world&apos;s best players."
         />
-        <GridSection cols={3}>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {featured.map((division) => (
             <DivisionCard key={division.id} division={division} />
           ))}
-        </GridSection>
+        </div>
         <div className="text-center mt-12">
           <Link href="/divisions">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
@@ -79,7 +86,7 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
 }
 
 export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tournament[] }) {
-  const upcomingAndActive = tournaments.filter((t) => t.status === 'upcoming' || t.status === 'active').slice(0, 3);
+  const upcomingAndActive = tournaments.filter((t) => t.status === 'upcoming' || t.status === 'active').slice(0, 4);
 
   return (
     <div className="py-20 bg-card">
@@ -89,11 +96,11 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
           title="Tournaments"
           description="Check out the latest tournaments with massive prize pools and intense competition."
         />
-        <GridSection cols={3}>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {upcomingAndActive.map((tournament) => (
             <TournamentCard key={tournament.id} tournament={tournament} />
           ))}
-        </GridSection>
+        </div>
         <div className="text-center mt-12">
           <Link href="/tournaments">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
@@ -107,7 +114,7 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
 }
 
 export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
-  const latest = articles.slice(0, 3);
+  const latest = articles.slice(0, 4);
 
   return (
     <div className="py-20 bg-background">
@@ -117,11 +124,11 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
           title="Latest News"
           description="Stay updated with the latest news, announcements, and stories from the Provela community."
         />
-        <GridSection cols={3}>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {latest.map((article) => (
             <NewsCard key={article.id} article={article} />
           ))}
-        </GridSection>
+        </div>
         <div className="text-center mt-12">
           <Link href="/news">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
@@ -143,11 +150,11 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
           title="Featured Streamers"
           description="Follow our professional streamers and watch the best esports content live."
         />
-        <GridSection cols={4}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {streamers.map((streamer) => (
             <StreamerCard key={streamer.id} streamer={streamer} />
           ))}
-        </GridSection>
+        </div>
         <div className="text-center mt-12">
           <Link href="/streamers">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">

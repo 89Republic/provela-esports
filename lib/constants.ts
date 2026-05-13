@@ -513,7 +513,7 @@ export const TOURNAMENTS: Tournament[] = [
     endDate: '2026-07-19T22:00:00.000Z',
     prizePool: '$10,000',
     registrationOpen: true,
-    image: TOURNAMENT_IMAGE,
+    image: '/images/tournament2.jpg',
     participants: [
       { id: 'u1', name: 'Slots Available', type: 'team' },
       { id: 'u2', name: 'Slots Available', type: 'team' },
