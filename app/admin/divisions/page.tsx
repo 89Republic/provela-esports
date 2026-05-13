@@ -210,9 +210,9 @@ export default function DivisionsAdminPage() {
           <CardBody className="p-0">
             {content.divisions.length === 0 && <EmptyState message="No divisions yet. Add one above." />}
             {content.divisions.map((d, i) => (
-              <div key={d.id} className={`flex items-center gap-4 px-5 py-3.5 ${i < content.divisions.length - 1 ? 'border-b border-border' : ''}`}>
+              <div key={d.id} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 ${i < content.divisions.length - 1 ? 'border-b border-border' : ''}`}>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-foreground text-sm">{d.name}</p>
                     {d.featured && <span className="text-xs px-1.5 py-0.5 rounded bg-primary/10 text-primary">Featured</span>}
                   </div>

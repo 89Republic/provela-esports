@@ -30,7 +30,7 @@ export default function AdminDashboard() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 mb-8">
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 mb-8">
         <StatCard label="Divisions"      value={content?.divisions.length ?? '—'}      color="violet"  />
         <StatCard label="Tournaments"    value={content?.tournaments.length ?? '—'}    color="sky"     />
         <StatCard label="Streamers"      value={content?.streamers.length ?? '—'}      color="emerald" />

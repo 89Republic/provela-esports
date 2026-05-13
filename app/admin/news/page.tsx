@@ -114,7 +114,7 @@ export default function NewsAdminPage() {
           <CardBody className="p-0">
             {content.newsArticles.length === 0 && <EmptyState message="No articles yet." />}
             {content.newsArticles.map((a, i) => (
-              <div key={a.id} className={`flex items-center gap-4 px-5 py-3.5 ${i < content.newsArticles.length - 1 ? 'border-b border-border' : ''}`}>
+              <div key={a.id} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 ${i < content.newsArticles.length - 1 ? 'border-b border-border' : ''}`}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-foreground text-sm">{a.title}</p>

@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Twitch, Youtube, Twitter } from 'lucide-react';
+import { Twitch, Youtube, X, Instagram, Facebook } from 'lucide-react';
 import { BrandLogo } from '@/components/brand-logo';
 import { BRAND_SOCIALS } from '@/lib/constants';
 
 const SOCIAL_ICON_MAP = {
   twitch: Twitch,
   youtube: Youtube,
-  x: Twitter,
+  x: X,
+  instagram: Instagram,
+  facebook: Facebook,
 };
 
 export function Footer() {
@@ -107,7 +109,7 @@ export function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Follow Us</h3>
             <div className="flex space-x-4">
               {socials.map((social) => {
-                const Icon = SOCIAL_ICON_MAP[social.platform as keyof typeof SOCIAL_ICON_MAP] ?? Twitter;
+                const Icon = SOCIAL_ICON_MAP[social.platform as keyof typeof SOCIAL_ICON_MAP] ?? X;
                 return (
                   <a
                     key={`${social.platform}-${social.url}`}

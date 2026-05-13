@@ -125,7 +125,7 @@ export default function StreamersAdminPage() {
           <CardBody className="p-0">
             {content.streamers.length === 0 && <EmptyState message="No streamers yet." />}
             {content.streamers.map((s, i) => (
-              <div key={s.id} className={`flex items-center gap-4 px-5 py-3.5 ${i < content.streamers.length - 1 ? 'border-b border-border' : ''}`}>
+              <div key={s.id} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 ${i < content.streamers.length - 1 ? 'border-b border-border' : ''}`}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="font-medium text-foreground text-sm">{s.name}</p>

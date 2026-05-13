@@ -54,7 +54,7 @@ export function CardHeader({ children, className }: { children: ReactNode; class
 }
 
 export function CardBody({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('p-5', className)}>{children}</div>;
+  return <div className={cn('p-4 sm:p-5', className)}>{children}</div>;
 }
 
 export function Toast({ message, kind }: { message: string; kind: 'success' | 'error' | 'idle' }) {
@@ -72,7 +72,7 @@ export function Toast({ message, kind }: { message: string; kind: 'success' | 'e
 }
 
 export function FieldRow({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('grid gap-4 md:grid-cols-2', className)}>{children}</div>;
+  return <div className={cn('grid gap-4 sm:grid-cols-2', className)}>{children}</div>;
 }
 
 export function Field({ label, children, required }: { label: string; children: ReactNode; required?: boolean }) {

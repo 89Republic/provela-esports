@@ -3,8 +3,8 @@ import type { Division, NewsArticle, SocialLink, Streamer, Tournament } from './
 export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'x', url: 'https://x.com/provelaesports' },
   { platform: 'instagram', url: 'https://instagram.com/provelaesports' },
+  { platform: 'facebook', url: 'https://facebook.com/provelaesports' },
   { platform: 'youtube', url: 'https://youtube.com/@provelaesports' },
-  { platform: 'discord', url: 'https://discord.gg/provela' },
 ];
 
 const CODM_IMAGE = '/images/codm-cover.png';
