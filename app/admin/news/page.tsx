@@ -71,9 +71,9 @@ function ArticleForm({ article, onSave, onCancel }: {
 
 const CATEGORY_STYLES: Record<NewsArticle['category'], string> = {
   Announcements: 'bg-blue-500/10 text-blue-400',
-  Results: 'bg-primary/10 text-primary',
-  Tournaments: 'bg-purple-500/10 text-purple-400',
-  Community: 'bg-green-500/10 text-green-400',
+  Results: 'bg-blue-600/10 text-blue-300',
+  Tournaments: 'bg-blue-500/10 text-blue-400',
+  Community: 'bg-blue-400/10 text-blue-300',
 };
 
 export default function NewsAdminPage() {

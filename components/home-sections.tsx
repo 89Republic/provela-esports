@@ -17,19 +17,18 @@ export function HeroSection() {
           className="absolute inset-0 bg-cover bg-center scale-110"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.25),rgba(2,6,23,0.86)_45%,rgba(2,6,23,0.96))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.28),rgba(2,6,23,0.88)_45%,rgba(2,6,23,0.97))]" />
         <div className="absolute inset-0 opacity-25 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-size-[34px_34px]" />
       </div>
 
       <Container className="relative text-center py-20">
         <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10 md:px-10 md:py-14">
           <div className="inline-block mb-4 px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/20 border border-primary/40 rounded-full max-w-full">
-            <span className="text-primary text-xs sm:text-sm font-semibold uppercase tracking-widest wrap-break-words" style={{ fontFamily: 'var(--font-gaming)' }}>Welcome to Provela Esports</span>
+            <span className="text-primary text-xs sm:text-sm font-semibold uppercase tracking-widest wrap-break-words font-gaming">Welcome to Provela Esports</span>
           </div>
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 text-center uppercase leading-tight"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 text-center uppercase leading-tight font-gaming"
             style={{
-              fontFamily: 'var(--font-gaming)',
               letterSpacing: 'clamp(0.05em, 2vw, 0.18em)',
               WebkitTextStroke: '1px rgba(255,255,255,0.15)',
             }}

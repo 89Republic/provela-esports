@@ -16,12 +16,12 @@ export function PageTitle({ title, subtitle, action }: { title: string; subtitle
 }
 
 const STAT_CARD_THEMES = {
-  violet:  { card: 'bg-violet-500/10  border-violet-500/30',  text: 'text-violet-400',  value: 'text-violet-300'  },
-  sky:     { card: 'bg-sky-500/10     border-sky-500/30',     text: 'text-sky-400',     value: 'text-sky-300'     },
-  emerald: { card: 'bg-emerald-500/10 border-emerald-500/30', text: 'text-emerald-400', value: 'text-emerald-300' },
-  amber:   { card: 'bg-amber-500/10   border-amber-500/30',   text: 'text-amber-400',   value: 'text-amber-300'   },
-  rose:    { card: 'bg-rose-500/10    border-rose-500/30',    text: 'text-rose-400',    value: 'text-rose-300'    },
-  cyan:    { card: 'bg-cyan-500/10    border-cyan-500/30',    text: 'text-cyan-400',    value: 'text-cyan-300'    },
+  violet:  { card: 'bg-blue-500/10 border-blue-500/30', text: 'text-blue-400', value: 'text-blue-300' },
+  sky:     { card: 'bg-blue-500/12 border-blue-400/30', text: 'text-blue-300', value: 'text-blue-200' },
+  emerald: { card: 'bg-blue-600/10 border-blue-600/30', text: 'text-blue-400', value: 'text-blue-300' },
+  amber:   { card: 'bg-blue-400/10 border-blue-400/30', text: 'text-blue-300', value: 'text-blue-200' },
+  rose:    { card: 'bg-blue-700/10 border-blue-700/30', text: 'text-blue-400', value: 'text-blue-300' },
+  cyan:    { card: 'bg-blue-500/8 border-blue-300/30', text: 'text-blue-300', value: 'text-blue-200' },
 } as const;
 
 export type StatCardColor = keyof typeof STAT_CARD_THEMES;

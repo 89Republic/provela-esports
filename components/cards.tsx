@@ -17,8 +17,8 @@ export function DivisionCard({ division }: { division: Division }) {
 
   return (
     <Link href={`/divisions/${division.id}`}>
-      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer">
-        <div className="relative h-44 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedCoverImage}")` }}>
+      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/25 overflow-hidden cursor-pointer will-change-transform">
+        <div className="relative h-44 overflow-hidden bg-cover bg-center transition-transform duration-300 ease-out group-hover:scale-105" style={{ backgroundImage: `url("${encodedCoverImage}")` }}>
           <div className="absolute inset-0 bg-black/45 group-hover:bg-black/30 transition-colors" />
           <div className="absolute inset-x-0 bottom-0 p-4">
             <p className="text-xs uppercase tracking-wide text-primary-foreground/80 mb-1">{division.game}</p>
@@ -57,9 +57,9 @@ export function TournamentCard({ tournament }: { tournament: Tournament }) {
       case 'upcoming':
         return 'bg-blue-500/20 text-blue-400';
       case 'past':
-        return 'bg-gray-500/20 text-gray-400';
+        return 'bg-muted text-muted-foreground';
       default:
-        return 'bg-gray-500/20 text-gray-400';
+        return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -67,8 +67,8 @@ export function TournamentCard({ tournament }: { tournament: Tournament }) {
 
   return (
     <Link href={`/tournaments/${tournament.id}`}>
-      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer">
-        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedTournamentImage}")` }}>
+      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/25 overflow-hidden cursor-pointer will-change-transform">
+        <div className="relative h-40 overflow-hidden bg-cover bg-center transition-transform duration-300 ease-out group-hover:scale-105" style={{ backgroundImage: `url("${encodedTournamentImage}")` }}>
           <div className="absolute inset-0 bg-black/40" />
           <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(tournament.status)} capitalize`}>
             {tournament.status}
@@ -101,8 +101,8 @@ export function NewsCard({ article }: { article: NewsArticle }) {
 
   return (
     <Link href={`/news/${article.id}`}>
-      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 overflow-hidden cursor-pointer flex flex-col">
-        <div className="relative h-40 overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url("${encodedArticleImage}")` }}>
+      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/25 overflow-hidden cursor-pointer flex flex-col will-change-transform">
+        <div className="relative h-40 overflow-hidden bg-cover bg-center transition-transform duration-300 ease-out group-hover:scale-105" style={{ backgroundImage: `url("${encodedArticleImage}")` }}>
           <div className="absolute inset-0 bg-black/40" />
           <div className="absolute top-4 left-4 px-2 py-1 bg-primary text-primary-foreground rounded text-xs font-semibold">
             {article.category}
@@ -126,7 +126,7 @@ export function NewsCard({ article }: { article: NewsArticle }) {
 export function StreamerCard({ streamer }: { streamer: Streamer }) {
   return (
     <a href={streamer.liveUrl} target="_blank" rel="noopener noreferrer">
-      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 p-4 cursor-pointer flex flex-col items-center text-center">
+      <div className="group h-full bg-card border border-border rounded-lg hover:border-primary transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/25 p-4 cursor-pointer flex flex-col items-center text-center will-change-transform">
         <div className="relative mb-4">
           <img
             src={streamer.avatar}

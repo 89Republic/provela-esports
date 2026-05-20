@@ -19,9 +19,9 @@ export default async function Home() {
       <main>
         <HeroSection />
         <FeaturedDivisionsSection divisions={content.divisions} />
+        <StreamersSection streamers={content.streamers} />
         <UpcomingTournamentsSection tournaments={content.tournaments} />
         <LatestNewsSection articles={content.newsArticles} />
-        <StreamersSection streamers={content.streamers} />
         <CTASection />
       </main>
       <Footer />

@@ -9,8 +9,8 @@ export function SectionHeader({
 }) {
   return (
     <div className="text-center mb-12">
-      {subtitle && <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wide">{subtitle}</p>}
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">{title}</h2>
+      {subtitle && <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wide font-gaming">{subtitle}</p>}
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance font-gaming">{title}</h2>
       {description && <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{description}</p>}
     </div>
   );
@@ -24,7 +24,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
   return (
     <div className="bg-card border-b border-border py-12 mt-16">
       <Container>
-        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">{title}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2 font-gaming">{title}</h1>
         {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
       </Container>
     </div>

@@ -2,17 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Twitch, Youtube, X, Instagram, Facebook } from 'lucide-react';
 import { BrandLogo } from '@/components/brand-logo';
+import { SocialIconLink } from '@/components/social-icon';
 import { BRAND_SOCIALS } from '@/lib/constants';
-
-const SOCIAL_ICON_MAP = {
-  twitch: Twitch,
-  youtube: Youtube,
-  x: X,
-  instagram: Instagram,
-  facebook: Facebook,
-};
 
 export function Footer() {
   const [socials, setSocials] = useState(BRAND_SOCIALS);
@@ -107,22 +99,10 @@ export function Footer() {
           {/* Social */}
           <div>
             <h3 className="font-semibold text-foreground mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              {socials.map((social) => {
-                const Icon = SOCIAL_ICON_MAP[social.platform as keyof typeof SOCIAL_ICON_MAP] ?? X;
-                return (
-                  <a
-                    key={`${social.platform}-${social.url}`}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 bg-primary hover:bg-primary/90 rounded-full text-primary-foreground transition-colors"
-                    aria-label={social.platform}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                );
-              })}
+            <div className="flex flex-wrap gap-3">
+              {socials.map((social) => (
+                <SocialIconLink key={`${social.platform}-${social.url}`} social={social} size="lg" />
+              ))}
             </div>
           </div>
         </div>

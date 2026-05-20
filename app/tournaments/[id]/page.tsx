@@ -51,7 +51,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
       ? 'bg-primary/20 text-primary'
       : tournament?.status === 'upcoming'
         ? 'bg-blue-500/20 text-blue-400'
-        : 'bg-gray-500/20 text-gray-400';
+        : 'bg-muted text-muted-foreground';
 
   return (
     <>

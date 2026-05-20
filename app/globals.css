@@ -1,84 +1,163 @@
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Variable'),
+    local('Neue Machina Plain Variable'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainVariable.woff2') format('woff2-variations'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainVariable.woff') format('woff-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Light'),
+    local('Neue Machina Plain Light'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainLight.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Regular'),
+    local('Neue Machina Plain Regular'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainRegular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Medium'),
+    local('Neue Machina Plain Medium'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Bold'),
+    local('Neue Machina Plain Bold'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Ultrabold'),
+    local('Neue Machina Plain Ultrabold'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainUltrabold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src:
+    local('PP Neue Machina Plain Black'),
+    local('Neue Machina Plain Black'),
+    url('/fonts/neue-machina/PPNeueMachina-PlainBlack.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Light theme - not used but keeping for completeness */
+  /* Light fallback theme: blue, white, black */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(0.99 0.005 257);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.58 0.2 258);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --secondary: oklch(0.96 0.01 257);
+  --secondary-foreground: oklch(0.2 0 0);
+  --muted: oklch(0.96 0.01 257);
+  --muted-foreground: oklch(0.45 0.01 257);
+  --accent: oklch(0.58 0.2 258);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.55 0.19 258);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.9 0.01 257);
+  --input: oklch(0.9 0.01 257);
+  --ring: oklch(0.58 0.2 258);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: oklch(0.99 0.005 257);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.58 0.2 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-accent: oklch(0.96 0.01 257);
+  --sidebar-accent-foreground: oklch(0.2 0 0);
+  --sidebar-border: oklch(0.9 0.01 257);
+  --sidebar-ring: oklch(0.58 0.2 258);
 }
 
 .dark {
-  /* Dark gaming esports theme */
-  --background: oklch(0.08 0 0); /* Deep black */
-  --foreground: oklch(0.95 0 0); /* Near white */
-  --card: oklch(0.12 0 0); /* Very dark gray */
-  --card-foreground: oklch(0.95 0 0); /* Near white */
-  --popover: oklch(0.12 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.52 0.218 29.23); /* Vivid orange-red */
-  --primary-foreground: oklch(0.95 0 0); /* White text */
-  --secondary: oklch(0.18 0 0); /* Dark gray for secondary */
-  --secondary-foreground: oklch(0.95 0 0); /* White text */
-  --muted: oklch(0.25 0 0); /* Muted dark gray */
-  --muted-foreground: oklch(0.7 0 0); /* Light gray text */
-  --accent: oklch(0.52 0.218 29.23); /* Same as primary for consistency */
-  --accent-foreground: oklch(0.95 0 0); /* White text */
-  --destructive: oklch(0.52 0.218 29.23); /* Orange-red for warnings */
-  --destructive-foreground: oklch(0.95 0 0); /* White text */
-  --border: oklch(0.2 0 0); /* Dark border */
-  --input: oklch(0.15 0 0); /* Dark input field */
-  --ring: oklch(0.52 0.218 29.23); /* Orange-red focus ring */
-  --chart-1: oklch(0.52 0.218 29.23); /* Orange */
-  --chart-2: oklch(0.65 0.2 264); /* Blue */
-  --chart-3: oklch(0.6 0.2 15); /* Red */
-  --chart-4: oklch(0.55 0.2 150); /* Green */
-  --chart-5: oklch(0.7 0.18 50); /* Yellow */
-  --sidebar: oklch(0.12 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.52 0.218 29.23);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.52 0.218 29.23);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.52 0.218 29.23);
+  /* Dark theme: blue, white, black */
+  --background: oklch(0.14 0.005 257);
+  --foreground: oklch(0.96 0 0);
+  --card: oklch(0.2 0.01 257);
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.2 0.01 257);
+  --popover-foreground: oklch(0.96 0 0);
+  --primary: oklch(0.62 0.2 258);
+  --primary-foreground: oklch(0.96 0 0);
+  --secondary: oklch(0.24 0.01 257);
+  --secondary-foreground: oklch(0.94 0 0);
+  --muted: oklch(0.29 0.01 257);
+  --muted-foreground: oklch(0.76 0.01 257);
+  --accent: oklch(0.62 0.2 258);
+  --accent-foreground: oklch(0.96 0 0);
+  --destructive: oklch(0.58 0.2 258);
+  --destructive-foreground: oklch(0.96 0 0);
+  --border: oklch(0.3 0.01 257);
+  --input: oklch(0.24 0.01 257);
+  --ring: oklch(0.62 0.2 258);
+  --chart-1: oklch(0.62 0.2 258);
+  --chart-2: oklch(0.72 0.16 250);
+  --chart-3: oklch(0.84 0.08 240);
+  --chart-4: oklch(0.5 0.17 265);
+  --chart-5: oklch(0.4 0.1 260);
+  --sidebar: oklch(0.18 0.01 257);
+  --sidebar-foreground: oklch(0.96 0 0);
+  --sidebar-primary: oklch(0.62 0.2 258);
+  --sidebar-primary-foreground: oklch(0.96 0 0);
+  --sidebar-accent: oklch(0.24 0.01 257);
+  --sidebar-accent-foreground: oklch(0.94 0 0);
+  --sidebar-border: oklch(0.3 0.01 257);
+  --sidebar-ring: oklch(0.62 0.2 258);
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: 'Neue Machina', ui-sans-serif, system-ui, sans-serif;
+  --font-gaming: 'Neue Machina', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -122,6 +201,15 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-gaming tracking-wide;
   }
 }
