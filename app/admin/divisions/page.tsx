@@ -3,12 +3,24 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState } from '../admin-ui';
+import {
+  PageTitle,
+  Card,
+  CardHeader,
+  CardBody,
+  Toast,
+  Field,
+  FieldRow,
+  EmptyState,
+  ImagePreview,
+  InfoBanner,
+} from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import type { Division, PlayerProfile } from '@/lib/types';
+import { BRAND_LOGO } from '@/lib/constants';
+import type { Division, DivisionMediaItem, PlayerProfile } from '@/lib/types';
 
 function newDivision(): Division {
   return {
@@ -35,7 +47,7 @@ function newPlayer(): PlayerProfile {
     name: '',
     role: '',
     location: '',
-    avatar: '/placeholder-user.jpg',
+    avatar: BRAND_LOGO,
     socialLinks: [],
   };
 }
@@ -67,7 +79,13 @@ function PlayerEditor({ player, onChange, onRemove }: {
             <Field label="Role"><Input value={player.role} onChange={e => onChange({ ...player, role: e.target.value })} placeholder="Captain, IGL…" /></Field>
             <Field label="Location"><Input value={player.location} onChange={e => onChange({ ...player, location: e.target.value })} placeholder="UK, USA…" /></Field>
           </FieldRow>
-          <Field label="Avatar URL"><Input value={player.avatar} onChange={e => onChange({ ...player, avatar: e.target.value })} placeholder="/placeholder-user.jpg" /></Field>
+          <Field label="Squad Photo URL">
+            <Input value={player.avatar} onChange={e => onChange({ ...player, avatar: e.target.value })} placeholder={BRAND_LOGO} />
+            <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => onChange({ ...player, avatar: BRAND_LOGO })}>
+              Use Provela logo
+            </Button>
+            <ImagePreview src={player.avatar} alt={player.name || player.tag} contain />
+          </Field>
         </div>
       )}
     </div>
@@ -92,6 +110,16 @@ function DivisionForm({ division, onSave, onCancel }: {
     set('achievements', form.achievements.map((a, idx) => idx === i ? { ...a, [key]: val } : a));
   const removeAchievement = (i: number) => set('achievements', form.achievements.filter((_, idx) => idx !== i));
 
+  const addMedia = () =>
+    set('media', [...form.media, { id: `media-${Date.now()}`, type: 'image', title: '', url: '' }]);
+  const updateMedia = (i: number, key: keyof DivisionMediaItem, val: string) =>
+    set('media', form.media.map((m, idx) => (idx === i ? { ...m, [key]: val } : m)));
+  const removeMedia = (i: number) => set('media', form.media.filter((_, idx) => idx !== i));
+
+  const handleSave = () => {
+    onSave({ ...form, players: form.roster.length });
+  };
+
   return (
     <div className="space-y-6">
       <FieldRow>
@@ -107,9 +135,48 @@ function DivisionForm({ division, onSave, onCancel }: {
       </FieldRow>
       <Field label="Tagline"><Input value={form.tagline} onChange={e => set('tagline', e.target.value)} placeholder="Short tagline" /></Field>
       <Field label="Description"><Textarea value={form.description} onChange={e => set('description', e.target.value)} placeholder="Full description…" className="min-h-24" /></Field>
-      <div className="flex items-center gap-2">
-        <input type="checkbox" id="featured" checked={!!form.featured} onChange={e => set('featured', e.target.checked)} className="size-4 accent-primary" />
-        <label htmlFor="featured" className="text-sm text-foreground">Featured on homepage</label>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <input type="checkbox" id="featured" checked={!!form.featured} onChange={e => set('featured', e.target.checked)} className="size-4 accent-primary" />
+          <label htmlFor="featured" className="text-sm text-foreground">Featured on homepage (desktop grid)</label>
+        </div>
+        <InfoBanner>
+          Mobile homepage shows all divisions in a swipe carousel. Squad photos use the Provela logo by default — set a custom URL per player if needed.
+        </InfoBanner>
+      </div>
+
+      {/* Media */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-semibold text-foreground">Media & Cover Image</h3>
+          <Button type="button" variant="outline" size="sm" onClick={addMedia}><Plus className="size-3 mr-1" />Add Media</Button>
+        </div>
+        <p className="text-xs text-muted-foreground mb-3">The first image is used as the division cover on cards and the detail page hero.</p>
+        <div className="space-y-3">
+          {form.media.map((m, i) => (
+            <div key={m.id} className="rounded-lg border border-border p-3 space-y-2">
+              <FieldRow>
+                <Field label="Title"><Input value={m.title} onChange={e => updateMedia(i, 'title', e.target.value)} placeholder="Matchday photo" /></Field>
+                <Field label="Type">
+                  <select
+                    value={m.type}
+                    onChange={e => updateMedia(i, 'type', e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+                  >
+                    <option value="image">Image</option>
+                    <option value="clip">Clip</option>
+                  </select>
+                </Field>
+              </FieldRow>
+              <Field label="URL">
+                <Input value={m.url} onChange={e => updateMedia(i, 'url', e.target.value)} placeholder="/images/codm-cover.png" />
+                {m.type === 'image' && <ImagePreview src={m.url} alt={m.title} />}
+              </Field>
+              <button type="button" onClick={() => removeMedia(i)} className="text-xs text-destructive hover:underline">Remove</button>
+            </div>
+          ))}
+          {form.media.length === 0 && <p className="text-xs text-muted-foreground">No media yet.</p>}
+        </div>
       </div>
 
       {/* Roster */}
@@ -146,7 +213,7 @@ function DivisionForm({ division, onSave, onCancel }: {
       </div>
 
       <div className="flex gap-3 pt-2">
-        <Button onClick={() => onSave(form)} disabled={!form.name || !form.game}>Save Division</Button>
+        <Button onClick={handleSave} disabled={!form.name || !form.game}>Save Division</Button>
         <Button variant="outline" onClick={onCancel}><X className="size-4 mr-1" />Cancel</Button>
       </div>
     </div>
@@ -186,7 +253,7 @@ export default function DivisionsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Divisions"
-        subtitle={`${content.divisions.length} division${content.divisions.length !== 1 ? 's' : ''}`}
+        subtitle={`${content.divisions.length} division${content.divisions.length !== 1 ? 's' : ''} · ${content.divisions.filter((d) => d.featured).length} featured for desktop homepage`}
         action={
           !editing && (
             <Button onClick={() => { setEditing(newDivision()); setIsNew(true); }} disabled={isSaving}>

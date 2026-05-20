@@ -21,9 +21,14 @@ export default async function NewsPage() {
       />
       <main className="py-20">
         <Container>
-          <GridSection cols={3}>
+          <div className="flex flex-col gap-6 md:hidden">
             {content.newsArticles.map((article) => (
-              <NewsCard key={article.id} article={article} />
+              <NewsCard key={article.id} article={article} variant="mobile" />
+            ))}
+          </div>
+          <GridSection cols={3} className="hidden md:grid">
+            {content.newsArticles.map((article) => (
+              <NewsCard key={article.id} article={article} variant="desktop" />
             ))}
           </GridSection>
         </Container>

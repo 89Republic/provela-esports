@@ -94,3 +94,24 @@ export function EmptyState({ message }: { message: string }) {
     </div>
   );
 }
+
+export function InfoBanner({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={cn('rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-muted-foreground', className)}>
+      {children}
+    </div>
+  );
+}
+
+export function ImagePreview({ src, alt, contain }: { src: string; alt: string; contain?: boolean }) {
+  if (!src) return null;
+  return (
+    <div className="mt-2 overflow-hidden rounded-md border border-border bg-black h-20 w-full max-w-[200px]">
+      <img
+        src={src}
+        alt={alt}
+        className={cn('h-full w-full', contain ? 'object-contain p-2' : 'object-cover')}
+      />
+    </div>
+  );
+}

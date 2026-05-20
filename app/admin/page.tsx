@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Swords, Trophy, Radio, Newspaper, ExternalLink, RefreshCw } from 'lucide-react';
+import { Swords, Trophy, Radio, Newspaper, Handshake, ExternalLink, RefreshCw } from 'lucide-react';
 import { AdminLayout } from './admin-layout';
-import { StatCard, Card, CardHeader, CardBody, PageTitle, Toast } from './admin-ui';
+import { StatCard, Card, CardHeader, CardBody, PageTitle, Toast, InfoBanner } from './admin-ui';
 import { useAdminContent } from './use-admin-content';
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +12,7 @@ const QUICK_LINKS = [
   { href: '/admin/tournaments', label: 'Manage Tournaments', icon: Trophy, desc: 'Create, update and close tournaments' },
   { href: '/admin/streamers', label: 'Manage Streamers', icon: Radio, desc: 'Update streamer profiles and status' },
   { href: '/admin/news', label: 'Manage News', icon: Newspaper, desc: 'Publish and edit news articles' },
+  { href: '/admin/sponsors', label: 'Manage Sponsors', icon: Handshake, desc: 'Edit homepage partner marquee logos' },
 ];
 
 export default function AdminDashboard() {
@@ -30,13 +31,18 @@ export default function AdminDashboard() {
         }
       />
 
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 mb-8">
-        <StatCard label="Divisions"      value={content?.divisions.length ?? '—'}      color="violet"  />
-        <StatCard label="Tournaments"    value={content?.tournaments.length ?? '—'}    color="sky"     />
-        <StatCard label="Streamers"      value={content?.streamers.length ?? '—'}      color="emerald" />
-        <StatCard label="News Articles"  value={content?.newsArticles.length ?? '—'}   color="amber"   />
-        <StatCard label="Social Links"   value={content?.brandSocials.length ?? '—'}   color="rose"    />
-        <StatCard label="Contact Topics" value={content?.contactTopics.length ?? '—'}  color="cyan"    />
+      <InfoBanner className="mb-6">
+        Homepage uses swipeable carousels on mobile for divisions, streamers, tournaments, and news. Desktop shows featured divisions in a grid; all divisions are swipeable on mobile.
+      </InfoBanner>
+
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 mb-8">
+        <StatCard label="Divisions" value={content?.divisions.length ?? '—'} sub={content ? `${content.divisions.filter((d) => d.featured).length} featured` : undefined} color="violet" />
+        <StatCard label="Tournaments" value={content?.tournaments.length ?? '—'} color="sky" />
+        <StatCard label="Streamers" value={content?.streamers.length ?? '—'} color="emerald" />
+        <StatCard label="News Articles" value={content?.newsArticles.length ?? '—'} color="amber" />
+        <StatCard label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />
+        <StatCard label="Social Links" value={content?.brandSocials.length ?? '—'} color="cyan" />
+        <StatCard label="Contact Topics" value={content?.contactTopics.length ?? '—'} color="violet" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 mb-8">

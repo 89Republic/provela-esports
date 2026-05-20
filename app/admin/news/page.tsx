@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,7 +51,10 @@ function ArticleForm({ article, onSave, onCancel }: {
             </SelectContent>
           </Select>
         </Field>
-        <Field label="Cover Image URL"><Input value={form.image} onChange={e => set('image', e.target.value)} placeholder="/images/…" /></Field>
+        <Field label="Cover Image URL">
+          <Input value={form.image} onChange={e => set('image', e.target.value)} placeholder="/images/…" />
+          <ImagePreview src={form.image} alt={form.title} />
+        </Field>
       </FieldRow>
       <Field label="Article Body (one paragraph per line)">
         <Textarea
@@ -100,7 +103,7 @@ export default function NewsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="News"
-        subtitle={`${content.newsArticles.length} article${content.newsArticles.length !== 1 ? 's' : ''}`}
+        subtitle={`${content.newsArticles.length} article${content.newsArticles.length !== 1 ? 's' : ''} · homepage shows latest in a mobile swipe carousel`}
         action={!editing && <Button onClick={() => { setEditing(newArticle()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />New Article</Button>}
       />
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -78,7 +78,10 @@ function TournamentForm({ tournament, onSave, onCancel }: {
         <Field label="Start Date"><Input type="datetime-local" value={form.startDate.slice(0, 16)} onChange={e => set('startDate', new Date(e.target.value).toISOString())} /></Field>
         <Field label="End Date"><Input type="datetime-local" value={form.endDate.slice(0, 16)} onChange={e => set('endDate', new Date(e.target.value).toISOString())} /></Field>
       </FieldRow>
-      <Field label="Image URL"><Input value={form.image} onChange={e => set('image', e.target.value)} placeholder="/images/tournament.jpg" /></Field>
+      <Field label="Image URL">
+        <Input value={form.image} onChange={e => set('image', e.target.value)} placeholder="/images/tournament.jpg" />
+        <ImagePreview src={form.image} alt={form.name} />
+      </Field>
       <Field label="Overview"><Textarea value={form.overview} onChange={e => set('overview', e.target.value)} className="min-h-20" /></Field>
       <Field label="Format"><Textarea value={form.format} onChange={e => set('format', e.target.value)} className="min-h-16" /></Field>
       <div className="flex items-center gap-2">
@@ -188,7 +191,7 @@ export default function TournamentsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Tournaments"
-        subtitle={`${content.tournaments.length} tournament${content.tournaments.length !== 1 ? 's' : ''}`}
+        subtitle={`${content.tournaments.length} tournament${content.tournaments.length !== 1 ? 's' : ''} · upcoming/active shown on homepage carousel`}
         action={!editing && <Button onClick={() => { setEditing(newTournament()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Tournament</Button>}
       />
 

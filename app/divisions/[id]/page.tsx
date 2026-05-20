@@ -96,22 +96,25 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
         <Container>
           <SquadCarousel roster={division.roster} divisionName={division.name} />
 
-          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-12">
-            <article className="rounded-lg border border-border bg-card p-5">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Teams</p>
-              <p className="text-3xl font-bold text-foreground mt-1">{division.teams}</p>
+          <section className="grid grid-cols-4 gap-2 sm:gap-4 mb-12">
+            <article className="rounded-lg border border-border bg-card p-3 sm:p-5 min-w-0 overflow-hidden">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-muted-foreground leading-tight truncate">Teams</p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground mt-1">{division.teams}</p>
             </article>
-            <article className="rounded-lg border border-border bg-card p-5">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Players</p>
-              <p className="text-3xl font-bold text-foreground mt-1">{division.players}</p>
+            <article className="rounded-lg border border-border bg-card p-3 sm:p-5 min-w-0 overflow-hidden">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-muted-foreground leading-tight truncate">Players</p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground mt-1">{division.players}</p>
             </article>
-            <article className="rounded-lg border border-border bg-card p-5">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Achievements</p>
-              <p className="text-3xl font-bold text-foreground mt-1">{division.achievements.length}</p>
+            <article className="rounded-lg border border-border bg-card p-3 sm:p-5 min-w-0 overflow-hidden">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-muted-foreground leading-tight truncate">Achievements</p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground mt-1">{division.achievements.length}</p>
             </article>
-            <article className="rounded-lg border border-border bg-card p-5">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Completed Matches</p>
-              <p className="text-3xl font-bold text-foreground mt-1">{completedMatches}</p>
+            <article className="rounded-lg border border-border bg-card p-3 sm:p-5 min-w-0 overflow-hidden">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-muted-foreground leading-tight truncate">
+                <span className="sm:hidden">Matches</span>
+                <span className="hidden sm:inline">Completed Matches</span>
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground mt-1">{completedMatches}</p>
             </article>
           </section>
 

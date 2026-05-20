@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { unstable_noStore as noStore } from 'next/cache';
-import { BRAND_SOCIALS, CONTACT_TOPICS, DIVISIONS, NEWS_ARTICLES, STREAMERS, TOURNAMENTS } from '@/lib/constants';
-import type { Division, NewsArticle, SocialLink, Streamer, Tournament } from '@/lib/types';
+import { BRAND_SOCIALS, CONTACT_TOPICS, DIVISIONS, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
+import type { Division, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
 
 export interface SiteContent {
   brandSocials: SocialLink[];
@@ -10,6 +10,7 @@ export interface SiteContent {
   tournaments: Tournament[];
   streamers: Streamer[];
   newsArticles: NewsArticle[];
+  sponsors: Sponsor[];
   contactTopics: string[];
 }
 
@@ -21,6 +22,7 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
   tournaments: TOURNAMENTS,
   streamers: STREAMERS,
   newsArticles: NEWS_ARTICLES,
+  sponsors: SPONSORS,
   contactTopics: [...CONTACT_TOPICS],
 };
 
@@ -42,6 +44,7 @@ function normalizeContent(candidate: unknown): SiteContent {
     tournaments: Array.isArray(content.tournaments) ? content.tournaments : fallback.tournaments,
     streamers: Array.isArray(content.streamers) ? content.streamers : fallback.streamers,
     newsArticles: Array.isArray(content.newsArticles) ? content.newsArticles : fallback.newsArticles,
+    sponsors: Array.isArray(content.sponsors) ? content.sponsors : fallback.sponsors,
     contactTopics: Array.isArray(content.contactTopics) ? content.contactTopics : fallback.contactTopics,
   };
 }

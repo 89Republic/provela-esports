@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Plus, Trash2, RotateCcw } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, ImagePreview, InfoBanner } from '../admin-ui';
+import { BRAND_LOGO } from '@/lib/constants';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import type { SiteContent } from '@/lib/site-content';
 import type { SocialLink } from '@/lib/types';
 
-const PLATFORMS: SocialLink['platform'][] = ['x', 'instagram', 'youtube', 'twitch', 'tiktok', 'discord'];
+const PLATFORMS: SocialLink['platform'][] = ['x', 'instagram', 'facebook', 'youtube', 'twitch', 'tiktok', 'discord'];
 
 function useSyncedForm(content: SiteContent | null) {
   const [socials, setSocials] = useState<SocialLink[]>([]);
@@ -63,6 +64,36 @@ export default function SettingsAdminPage() {
       />
 
       <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <h2 className="text-sm font-semibold text-foreground">Brand Assets</h2>
+          </CardHeader>
+          <CardBody className="space-y-4">
+            <Field label="Site logo (navbar, footer, favicon)">
+              <Input value={BRAND_LOGO} disabled className="opacity-70 font-mono text-xs" />
+              <ImagePreview src={BRAND_LOGO} alt="Provela logo" contain />
+            </Field>
+            <p className="text-xs text-muted-foreground">
+              Logo file: <code className="bg-muted px-1 py-0.5 rounded">public{BRAND_LOGO}</code>. Replace that file to update the logo site-wide. Squad photos default to this logo in division rosters.
+            </p>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <h2 className="text-sm font-semibold text-foreground">Homepage Layout</h2>
+          </CardHeader>
+          <CardBody>
+            <InfoBanner>
+              <ul className="list-disc list-inside space-y-1 text-xs">
+                <li>Mobile: swipe carousels for divisions, streamers, tournaments, and news (2 cards visible)</li>
+                <li>Desktop: grid layouts; divisions marked &quot;featured&quot; appear in the homepage grid</li>
+                <li>Sponsors: managed under Admin → Sponsors (bottom marquee)</li>
+              </ul>
+            </InfoBanner>
+          </CardBody>
+        </Card>
+
         {/* Social Links */}
         <Card>
           <CardHeader>
@@ -144,6 +175,7 @@ export default function SettingsAdminPage() {
                   { label: 'Tournaments', value: content.tournaments.length },
                   { label: 'Streamers', value: content.streamers.length },
                   { label: 'News Articles', value: content.newsArticles.length },
+                  { label: 'Sponsors', value: content.sponsors.length },
                   { label: 'Social Links', value: socials.length },
                   { label: 'Contact Topics', value: topics.length },
                 ].map(({ label, value }) => (

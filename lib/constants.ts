@@ -1,4 +1,4 @@
-import type { Division, NewsArticle, SocialLink, Streamer, Tournament } from './types';
+import type { Division, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
 
 export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'x', url: 'https://x.com/provelaesports' },
@@ -7,6 +7,7 @@ export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'youtube', url: 'https://youtube.com/@provelaesports' },
 ];
 
+export const BRAND_LOGO = '/images/LOGOS-03.png';
 const CODM_IMAGE = '/images/codm-cover.png';
 const EAFC_IMAGE = '/images/eafc .jpg';
 const EAFC_CLUBS_IMAGE = '/images/eafc-cover.jpeg';
@@ -32,7 +33,7 @@ export const DIVISIONS: Division[] = [
         name: 'Tariq Sadiq',
         role: 'Captain',
         location: 'UK',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [
           { platform: 'x', url: 'https://x.com' },
           { platform: 'instagram', url: 'https://instagram.com' },
@@ -44,7 +45,7 @@ export const DIVISIONS: Division[] = [
         name: 'Adam Farouk',
         role: 'Attacking Specialist',
         location: 'Morocco',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -53,7 +54,7 @@ export const DIVISIONS: Division[] = [
         name: 'Nathan Cole',
         role: 'Defensive Specialist',
         location: 'USA',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
     ],
@@ -109,7 +110,7 @@ export const DIVISIONS: Division[] = [
         name: 'Isaac Rivera',
         role: 'Coach',
         location: 'Spain',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -118,7 +119,7 @@ export const DIVISIONS: Division[] = [
         name: 'Karim Benali',
         role: 'CAM',
         location: 'France',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
       {
@@ -127,7 +128,7 @@ export const DIVISIONS: Division[] = [
         name: 'Jack Muir',
         role: 'CB',
         location: 'Scotland',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
     ],
@@ -184,7 +185,7 @@ export const DIVISIONS: Division[] = [
         name: 'Liam Ortega',
         role: 'IGL',
         location: 'Mexico',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -193,7 +194,7 @@ export const DIVISIONS: Division[] = [
         name: 'Ari Tan',
         role: 'Entry',
         location: 'Singapore',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
       {
@@ -202,7 +203,7 @@ export const DIVISIONS: Division[] = [
         name: 'Noah Chan',
         role: 'Anchor',
         location: 'Malaysia',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [
           { platform: 'x', url: 'https://x.com' },
           { platform: 'youtube', url: 'https://youtube.com' },
@@ -214,7 +215,7 @@ export const DIVISIONS: Division[] = [
         name: 'Diego Santos',
         role: 'Support',
         location: 'Philippines',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [
           { platform: 'twitch', url: 'https://twitch.tv' },
           { platform: 'discord', url: 'https://discord.com' },
@@ -226,7 +227,7 @@ export const DIVISIONS: Division[] = [
         name: 'Maya Singh',
         role: 'Slayer',
         location: 'India',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [
           { platform: 'instagram', url: 'https://instagram.com' },
           { platform: 'tiktok', url: 'https://tiktok.com' },
@@ -238,7 +239,7 @@ export const DIVISIONS: Division[] = [
         name: 'Kenji Watanabe',
         role: 'Flex',
         location: 'Japan',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -247,7 +248,7 @@ export const DIVISIONS: Division[] = [
         name: 'Omar Hassan',
         role: 'Sniper',
         location: 'UAE',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [
           { platform: 'youtube', url: 'https://youtube.com' },
           { platform: 'instagram', url: 'https://instagram.com' },
@@ -259,7 +260,7 @@ export const DIVISIONS: Division[] = [
         name: 'Elena Petrova',
         role: 'Substitute',
         location: 'Poland',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'twitch', url: 'https://twitch.tv' }],
       },
     ],
@@ -315,7 +316,7 @@ export const DIVISIONS: Division[] = [
         name: 'Yusuf Haleem',
         role: 'Lead Player',
         location: 'UAE',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -324,7 +325,7 @@ export const DIVISIONS: Division[] = [
         name: 'Riko Tanaka',
         role: 'Midfield Control',
         location: 'Japan',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
       {
@@ -333,7 +334,7 @@ export const DIVISIONS: Division[] = [
         name: 'Samir Nasser',
         role: 'Set Piece Analyst',
         location: 'Egypt',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
     ],
@@ -390,7 +391,7 @@ export const DIVISIONS: Division[] = [
         name: 'Mira Kazim',
         role: 'Tournament Director',
         location: 'UK',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -399,7 +400,7 @@ export const DIVISIONS: Division[] = [
         name: 'Harun Malik',
         role: 'Bracket Operations',
         location: 'Germany',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
       {
@@ -408,7 +409,7 @@ export const DIVISIONS: Division[] = [
         name: 'Elena Petrova',
         role: 'Broadcast Producer',
         location: 'Poland',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'youtube', url: 'https://youtube.com' }],
       },
     ],
@@ -464,7 +465,7 @@ export const DIVISIONS: Division[] = [
         name: 'Nadia Rehan',
         role: 'Creator Lead',
         location: 'Saudi Arabia',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'youtube', url: 'https://youtube.com' }],
       },
       {
@@ -473,7 +474,7 @@ export const DIVISIONS: Division[] = [
         name: 'Sami Ward',
         role: 'Host',
         location: 'UK',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'x', url: 'https://x.com' }],
       },
       {
@@ -482,7 +483,7 @@ export const DIVISIONS: Division[] = [
         name: 'Yara Abbas',
         role: 'Community Creator',
         location: 'Jordan',
-        avatar: '/placeholder-user.jpg',
+        avatar: BRAND_LOGO,
         socialLinks: [{ platform: 'instagram', url: 'https://instagram.com' }],
       },
     ],
@@ -755,6 +756,21 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       'Interested entrants can register through the tournament page and review the event handbook before confirmation.',
     ],
   },
+];
+
+export const SPONSORS: Sponsor[] = [
+  { id: 'razer', name: 'Razer', slug: 'razer', color: '44D62C' },
+  { id: 'nvidia', name: 'NVIDIA', slug: 'nvidia', color: '76B900' },
+  { id: 'intel', name: 'Intel', slug: 'intel', color: '0071C5' },
+  { id: 'logitech', name: 'Logitech G', slug: 'logitech', color: '00B8FC' },
+  { id: 'redbull', name: 'Red Bull', slug: 'redbull', color: 'DB0A40' },
+  { id: 'corsair', name: 'Corsair', slug: 'corsair', color: 'FFFFFF' },
+  { id: 'asus', name: 'ASUS ROG', slug: 'asus', color: 'FFFFFF' },
+  { id: 'steelseries', name: 'SteelSeries', slug: 'steelseries', color: 'FF5200' },
+  { id: 'monster', name: 'Monster Energy', slug: 'monster', color: '86C440' },
+  { id: 'elgato', name: 'Elgato', slug: 'elgato', color: 'FFFFFF' },
+  { id: 'hyperx', name: 'HyperX', color: 'E21836', logo: '/sponsors/hyperx.svg' },
+  { id: 'alienware', name: 'Alienware', slug: 'alienware', color: '007CC0' },
 ];
 
 export const CONTACT_TOPICS = [

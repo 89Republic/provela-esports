@@ -1,6 +1,14 @@
 export interface SocialLink {
-  platform: 'x' | 'instagram' | 'youtube' | 'twitch' | 'tiktok' | 'discord';
+  platform: 'x' | 'instagram' | 'youtube' | 'twitch' | 'tiktok' | 'discord' | 'facebook';
   url: string;
+}
+
+export interface Sponsor {
+  id: string;
+  name: string;
+  slug?: string;
+  color: string;
+  logo?: string;
 }
 
 export interface PlayerProfile {

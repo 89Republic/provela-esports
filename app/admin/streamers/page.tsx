@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,7 +65,10 @@ function StreamerForm({ streamer, onSave, onCancel }: {
       </FieldRow>
       <FieldRow>
         <Field label="Followers"><Input type="number" value={form.followers} onChange={e => set('followers', Number(e.target.value))} /></Field>
-        <Field label="Avatar URL"><Input value={form.avatar} onChange={e => set('avatar', e.target.value)} placeholder="/placeholder-user.jpg" /></Field>
+        <Field label="Avatar URL">
+          <Input value={form.avatar} onChange={e => set('avatar', e.target.value)} placeholder="/images/…" />
+          <ImagePreview src={form.avatar} alt={form.name} />
+        </Field>
       </FieldRow>
       <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" /></Field>
       <FieldRow>
@@ -111,7 +114,7 @@ export default function StreamersAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Streamers"
-        subtitle={`${content.streamers.length} streamer${content.streamers.length !== 1 ? 's' : ''}`}
+        subtitle={`${content.streamers.length} streamer${content.streamers.length !== 1 ? 's' : ''} · homepage mobile swipe carousel`}
         action={!editing && <Button onClick={() => { setEditing(newStreamer()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Streamer</Button>}
       />
 

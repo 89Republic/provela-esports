@@ -4,8 +4,30 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Container, SectionHeader, GridSection } from '@/components/layout';
 import { DivisionCard, TournamentCard, NewsCard, StreamerCard } from '@/components/cards';
-import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
+import type { Division, Tournament, NewsArticle, Sponsor, Streamer } from '@/lib/types';
 import { ArrowRight } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+
+const carouselNavClass =
+  'top-1/2 -translate-y-1/2 size-9 border-primary/30 bg-card text-primary hover:bg-primary/10';
+
+const mobileCarouselItemClass = 'pl-4 basis-1/2 min-w-0 flex';
+
+function MobileCardCarousel({ children }: { children: React.ReactNode }) {
+  return (
+    <Carousel opts={{ align: 'start', dragFree: true }} className="relative min-h-[22.5rem] md:hidden">
+      <CarouselContent className="-ml-4 items-stretch">{children}</CarouselContent>
+      <CarouselPrevious className={`left-0 ${carouselNavClass}`} />
+      <CarouselNext className={`right-0 ${carouselNavClass}`} />
+    </Carousel>
+  );
+}
 
 export function HeroSection() {
   const heroImage = '/images/hero.png';
@@ -67,9 +89,17 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
           title="Our Divisions"
           description="Explore our competitive divisions across multiple games with the world&apos;s best players."
         />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <MobileCardCarousel>
+          {divisions.map((division) => (
+            <CarouselItem key={division.id} className={mobileCarouselItemClass}>
+              <DivisionCard division={division} variant="mobile" />
+            </CarouselItem>
+          ))}
+        </MobileCardCarousel>
+
+        <div className="hidden md:grid md:grid-cols-3 gap-6">
           {featured.map((division) => (
-            <DivisionCard key={division.id} division={division} />
+            <DivisionCard key={division.id} division={division} variant="desktop" />
           ))}
         </div>
         <div className="text-center mt-12">
@@ -95,9 +125,17 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
           title="Tournaments"
           description="Check out the latest tournaments with massive prize pools and intense competition."
         />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <MobileCardCarousel>
           {upcomingAndActive.map((tournament) => (
-            <TournamentCard key={tournament.id} tournament={tournament} />
+            <CarouselItem key={tournament.id} className={mobileCarouselItemClass}>
+              <TournamentCard tournament={tournament} variant="mobile" />
+            </CarouselItem>
+          ))}
+        </MobileCardCarousel>
+
+        <div className="hidden md:grid md:grid-cols-3 gap-6">
+          {upcomingAndActive.map((tournament) => (
+            <TournamentCard key={tournament.id} tournament={tournament} variant="desktop" />
           ))}
         </div>
         <div className="text-center mt-12">
@@ -123,9 +161,17 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
           title="Latest News"
           description="Stay updated with the latest news, announcements, and stories from the Provela community."
         />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <MobileCardCarousel>
+          {articles.map((article) => (
+            <CarouselItem key={article.id} className={mobileCarouselItemClass}>
+              <NewsCard article={article} variant="mobile" />
+            </CarouselItem>
+          ))}
+        </MobileCardCarousel>
+
+        <div className="hidden md:grid md:grid-cols-3 gap-6">
           {latest.map((article) => (
-            <NewsCard key={article.id} article={article} />
+            <NewsCard key={article.id} article={article} variant="desktop" />
           ))}
         </div>
         <div className="text-center mt-12">
@@ -149,7 +195,15 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
           title="Featured Streamers"
           description="Follow our professional streamers and watch the best esports content live."
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <MobileCardCarousel>
+          {streamers.map((streamer) => (
+            <CarouselItem key={streamer.id} className={mobileCarouselItemClass}>
+              <StreamerCard streamer={streamer} />
+            </CarouselItem>
+          ))}
+        </MobileCardCarousel>
+
+        <div className="hidden md:grid md:grid-cols-4 gap-6">
           {streamers.map((streamer) => (
             <StreamerCard key={streamer.id} streamer={streamer} />
           ))}
@@ -181,5 +235,48 @@ export function CTASection() {
         </Link>
       </Container>
     </div>
+  );
+}
+
+function sponsorLogoSrc(sponsor: Sponsor) {
+  if (sponsor.logo) return sponsor.logo;
+  if (sponsor.slug) return `https://cdn.simpleicons.org/${sponsor.slug}/${sponsor.color}`;
+  return '/placeholder-logo.svg';
+}
+
+export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
+  const marqueeItems = [...sponsors, ...sponsors];
+
+  return (
+    <section className="py-16 bg-background overflow-hidden border-t border-border">
+      <Container>
+        <SectionHeader
+          subtitle="Partners"
+          title="Our Sponsors"
+          description="Powered by brands that help us compete at the highest level."
+        />
+      </Container>
+
+      <div className="relative mt-10">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-background to-transparent sm:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-background to-transparent sm:w-28" />
+
+        <div className="group flex w-max animate-sponsor-marquee items-center gap-8 px-4 hover:[animation-play-state:paused]">
+          {marqueeItems.map((sponsor, index) => (
+            <div
+              key={`${sponsor.id}-${index}`}
+              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-card/80 px-6 transition-all duration-300 hover:border-primary/40 hover:bg-card"
+              title={sponsor.name}
+            >
+              <img
+                src={sponsorLogoSrc(sponsor)}
+                alt={sponsor.name}
+                className="h-9 w-full max-w-[120px] object-contain opacity-90 transition-opacity group-hover:opacity-100"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

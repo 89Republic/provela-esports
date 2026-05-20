@@ -39,14 +39,18 @@ export function SquadCarousel({
         </div>
 
         <CarouselContent className="-ml-4">
-          {roster.map((member) => (
+          {roster.map((member) => {
+            const isBrandLogo = member.avatar?.includes('LOGOS-03');
+            return (
             <CarouselItem key={member.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-[30%]">
               <article className="group h-full rounded-xl border border-primary/20 bg-card/95 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/15">
-                <div className="relative h-56 bg-black/20">
+                <div className="relative h-56 bg-black">
                   <img
                     src={member.avatar || '/placeholder-user.jpg'}
                     alt={member.name}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className={`h-full w-full transition-transform duration-300 group-hover:scale-105 ${
+                      isBrandLogo ? 'object-contain p-6' : 'object-cover'
+                    }`}
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.65),rgba(0,0,0,0.1))]" />
                   <p className="absolute left-4 bottom-4 text-primary font-semibold tracking-wide text-sm uppercase">
@@ -72,7 +76,8 @@ export function SquadCarousel({
                 </div>
               </article>
             </CarouselItem>
-          ))}
+          );
+          })}
         </CarouselContent>
       </Carousel>
     </section>

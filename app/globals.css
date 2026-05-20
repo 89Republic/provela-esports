@@ -213,3 +213,32 @@
     @apply font-gaming tracking-wide;
   }
 }
+
+@keyframes sponsor-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-sponsor-marquee {
+  animation: sponsor-marquee 35s linear infinite;
+}
+
+@utility animate-sponsor-marquee-reverse {
+  animation: sponsor-marquee 40s linear infinite reverse;
+}
+
+@utility animate-sponsor-marquee-slow {
+  animation: sponsor-marquee 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-sponsor-marquee,
+  .animate-sponsor-marquee-reverse,
+  .animate-sponsor-marquee-slow {
+    animation: none;
+  }
+}
