@@ -8,7 +8,7 @@ export function SectionHeader({
   description?: string;
 }) {
   return (
-    <div className="text-center mb-12">
+    <div className="text-center mb-6">
       {subtitle && <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wide font-gaming">{subtitle}</p>}
       <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance font-gaming">{title}</h2>
       {description && <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{description}</p>}

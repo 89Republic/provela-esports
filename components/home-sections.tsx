@@ -15,14 +15,29 @@ import {
 } from '@/components/ui/carousel';
 
 const carouselNavClass =
-  'top-1/2 -translate-y-1/2 size-9 border-primary/30 bg-card text-primary hover:bg-primary/10';
+  'z-10 top-1/2 -translate-y-1/2 size-9 border-primary/30 bg-card text-primary hover:bg-primary/10';
 
 const mobileCarouselItemClass = 'pl-4 basis-1/2 min-w-0 flex';
 
+const homeSectionClass = 'pt-8 pb-6 md:pt-10 md:pb-8';
+const homeSectionCtaClass = 'text-center mt-8 px-3 sm:mt-9 md:mt-6 md:px-0';
+
 function MobileCardCarousel({ children }: { children: React.ReactNode }) {
   return (
-    <Carousel opts={{ align: 'start', dragFree: true }} className="relative min-h-[22.5rem] md:hidden">
+    <Carousel opts={{ align: 'start', dragFree: true }} className="relative mb-4 min-h-[22.5rem] md:hidden">
       <CarouselContent className="-ml-4 items-stretch">{children}</CarouselContent>
+      <CarouselPrevious className={`left-0 ${carouselNavClass}`} />
+      <CarouselNext className={`right-0 ${carouselNavClass}`} />
+    </Carousel>
+  );
+}
+
+const streamersCarouselItemClass = 'pl-4 basis-1/2 min-w-0';
+
+function StreamersMobileCarousel({ children }: { children: React.ReactNode }) {
+  return (
+    <Carousel opts={{ align: 'start', dragFree: true }} className="relative mb-4 md:hidden">
+      <CarouselContent className="-ml-4 items-center">{children}</CarouselContent>
       <CarouselPrevious className={`left-0 ${carouselNavClass}`} />
       <CarouselNext className={`right-0 ${carouselNavClass}`} />
     </Carousel>
@@ -45,8 +60,8 @@ export function HeroSection() {
 
       <Container className="relative text-center py-20">
         <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10 md:px-10 md:py-14">
-          <div className="inline-block mb-4 px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/20 border border-primary/40 rounded-full max-w-full">
-            <span className="text-primary text-xs sm:text-sm font-semibold uppercase tracking-widest wrap-break-words font-gaming">Welcome to Provela Esports</span>
+          <div className="inline-block mb-4 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full max-w-full border border-sky-400/40 bg-sky-500/15 backdrop-blur-sm">
+            <span className="text-sky-200 text-xs sm:text-sm font-semibold uppercase tracking-widest wrap-break-words font-gaming">Welcome to Provela Esports</span>
           </div>
           <h1
             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 text-center uppercase leading-tight font-gaming"
@@ -82,7 +97,7 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
   const featured = divisions.filter((d) => d.featured).slice(0, 4);
 
   return (
-    <div className="py-20 bg-background">
+    <div className={`${homeSectionClass} bg-background`}>
       <Container>
         <SectionHeader
           subtitle="Featured"
@@ -102,9 +117,9 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
             <DivisionCard key={division.id} division={division} variant="desktop" />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Link href="/divisions">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+        <div className={homeSectionCtaClass}>
+          <Link href="/divisions" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
+            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
               View All Divisions <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
@@ -118,7 +133,7 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
   const upcomingAndActive = tournaments.filter((t) => t.status === 'upcoming' || t.status === 'active').slice(0, 4);
 
   return (
-    <div className="py-20 bg-card">
+    <div className={`${homeSectionClass} bg-background`}>
       <Container>
         <SectionHeader
           subtitle="Competitions"
@@ -138,9 +153,9 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
             <TournamentCard key={tournament.id} tournament={tournament} variant="desktop" />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Link href="/tournaments">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+        <div className={homeSectionCtaClass}>
+          <Link href="/tournaments" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
+            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
               View All Tournaments <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
@@ -154,7 +169,7 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
   const latest = articles.slice(0, 4);
 
   return (
-    <div className="py-20 bg-background">
+    <div className={`${homeSectionClass} bg-card`}>
       <Container>
         <SectionHeader
           subtitle="Updates"
@@ -174,9 +189,9 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
             <NewsCard key={article.id} article={article} variant="desktop" />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Link href="/news">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+        <div className={homeSectionCtaClass}>
+          <Link href="/news" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
+            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
               Read More News <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
@@ -188,29 +203,29 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
 
 export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
   return (
-    <div className="py-20 bg-card">
+    <div className={`${homeSectionClass} bg-card`}>
       <Container>
         <SectionHeader
           subtitle="Live Streams"
           title="Featured Streamers"
           description="Follow our professional streamers and watch the best esports content live."
         />
-        <MobileCardCarousel>
+        <StreamersMobileCarousel>
           {streamers.map((streamer) => (
-            <CarouselItem key={streamer.id} className={mobileCarouselItemClass}>
+            <CarouselItem key={streamer.id} className={streamersCarouselItemClass}>
               <StreamerCard streamer={streamer} />
             </CarouselItem>
           ))}
-        </MobileCardCarousel>
+        </StreamersMobileCarousel>
 
         <div className="hidden md:grid md:grid-cols-4 gap-6">
           {streamers.map((streamer) => (
             <StreamerCard key={streamer.id} streamer={streamer} />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Link href="/streamers">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+        <div className={homeSectionCtaClass}>
+          <Link href="/streamers" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
+            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
               View All Streamers <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
@@ -222,7 +237,7 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
 
 export function CTASection() {
   return (
-    <div className="py-20 bg-linear-to-r from-primary/10 to-primary/5 border-y border-primary/20">
+    <div className={`${homeSectionClass} bg-linear-to-r from-primary/10 to-primary/5 border-y border-primary/20`}>
       <Container className="text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Ready to Join the Action?</h2>
         <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
@@ -248,7 +263,7 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
   const marqueeItems = [...sponsors, ...sponsors];
 
   return (
-    <section className="py-16 bg-background overflow-hidden border-t border-border">
+    <section className={`${homeSectionClass} bg-background overflow-hidden border-t border-border`}>
       <Container>
         <SectionHeader
           subtitle="Partners"
@@ -257,7 +272,7 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
         />
       </Container>
 
-      <div className="relative mt-10">
+      <div className="relative mt-6">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-background to-transparent sm:w-28" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-background to-transparent sm:w-28" />
 

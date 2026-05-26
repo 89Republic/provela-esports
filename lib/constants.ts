@@ -762,7 +762,7 @@ export const SPONSORS: Sponsor[] = [
   { id: 'razer', name: 'Razer', slug: 'razer', color: '44D62C' },
   { id: 'nvidia', name: 'NVIDIA', slug: 'nvidia', color: '76B900' },
   { id: 'intel', name: 'Intel', slug: 'intel', color: '0071C5' },
-  { id: 'logitech', name: 'Logitech G', slug: 'logitech', color: '00B8FC' },
+  { id: 'logitech', name: 'Logitech G', color: '00B8FC', logo: '/sponsors/logitech.svg' },
   { id: 'redbull', name: 'Red Bull', slug: 'redbull', color: 'DB0A40' },
   { id: 'corsair', name: 'Corsair', slug: 'corsair', color: 'FFFFFF' },
   { id: 'asus', name: 'ASUS ROG', slug: 'asus', color: 'FFFFFF' },
