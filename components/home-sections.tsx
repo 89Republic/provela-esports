@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Container, SectionHeader, GridSection } from '@/components/layout';
+import { Container, SectionHeader } from '@/components/layout';
 import { DivisionCard, TournamentCard, NewsCard, StreamerCard } from '@/components/cards';
 import type { Division, Tournament, NewsArticle, Sponsor, Streamer } from '@/lib/types';
 import { ArrowRight } from 'lucide-react';
@@ -19,8 +20,17 @@ const carouselNavClass =
 
 const mobileCarouselItemClass = 'pl-4 basis-1/2 min-w-0 flex';
 
-const homeSectionClass = 'pt-8 pb-6 md:pt-10 md:pb-8';
+const homeSectionClass = 'pt-8 pb-6 md:pt-10 md:pb-8 border-t border-border/50';
+const homeSectionShadeA = 'bg-section-a';
+const homeSectionShadeB = 'bg-section-b';
+const homeSectionShadeC = 'bg-section-c';
+const homeSectionShadeD = 'bg-section-d';
+const homeSectionShadeE = 'bg-section-e';
 const homeSectionCtaClass = 'text-center mt-8 px-3 sm:mt-9 md:mt-6 md:px-0';
+const homeSectionLinkClass =
+  'group inline-flex cursor-pointer items-center text-sm font-semibold text-primary transition-all duration-200 hover:text-primary/90';
+const homeSectionLinkArrowClass =
+  'ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1';
 
 function MobileCardCarousel({ children }: { children: React.ReactNode }) {
   return (
@@ -45,51 +55,77 @@ function StreamersMobileCarousel({ children }: { children: React.ReactNode }) {
 }
 
 export function HeroSection() {
-  const heroImage = '/images/hero.png';
+  const heroImage = '/images/provela-hero-bg.png';
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-b from-background via-card to-background pt-16">
+    <section className="relative min-h-screen overflow-hidden bg-background pt-16">
+      {/* Background layers */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-110"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-hero-ken-burns"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.28),rgba(2,6,23,0.88)_45%,rgba(2,6,23,0.97))]" />
-        <div className="absolute inset-0 opacity-25 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-size-[34px_34px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.65)_50%,rgba(0,0,0,0.9)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(255,255,255,0.04),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.08),transparent_40%)]" />
+        <div className="absolute inset-0 opacity-15 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-size-[40px_40px]" />
+        <div className="absolute bottom-0 inset-x-0 h-32 bg-linear-to-t from-background to-transparent" />
       </div>
 
-      <Container className="relative text-center py-20">
-        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10 md:px-10 md:py-14">
-          <div className="inline-block mb-4 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full max-w-full border border-sky-400/40 bg-sky-500/15 backdrop-blur-sm">
-            <span className="text-sky-200 text-xs sm:text-sm font-semibold uppercase tracking-widest wrap-break-words font-gaming">Welcome to Provela Esports</span>
-          </div>
-          <h1
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 text-center uppercase leading-tight font-gaming"
-            style={{
-              letterSpacing: 'clamp(0.05em, 2vw, 0.18em)',
-              WebkitTextStroke: '1px rgba(255,255,255,0.15)',
-            }}
-          >
-            Competitive<br />Gaming at<br />Its Finest
-          </h1>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            Join the premier esports organization with elite players, world-class tournaments, and non-stop entertainment.
+      {/* Animated accent lines */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 h-px w-72 rotate-12 bg-linear-to-r from-transparent via-primary/60 to-transparent animate-hero-sweep" />
+        <div className="absolute top-2/3 -right-10 h-px w-96 -rotate-6 bg-linear-to-r from-transparent via-primary/40 to-transparent animate-hero-sweep-delayed" />
+      </div>
+
+      <Container className="relative z-10 flex min-h-[calc(100vh-4rem)] flex-col items-center justify-start pt-6 pb-16 md:pt-10">
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <Image
+            src="/images/LOGOS-03.png"
+            alt="Provela Esports"
+            width={420}
+            height={130}
+            className="mb-5 h-auto w-full max-w-[min(100%,22rem)] sm:max-w-xs md:mb-6 md:max-w-sm drop-shadow-[0_0_40px_rgba(59,130,246,0.35)]"
+            priority
+          />
+
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary/90 font-gaming md:mb-3">
+            Forge Victory
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          <h1 className="mb-4 text-4xl font-black uppercase leading-[1.05] text-white sm:text-5xl md:mb-5 md:text-6xl lg:text-7xl font-gaming">
+            Competitive
+            <br />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-white to-primary">
+              Gaming
+            </span>
+            <br />
+            At Its Finest
+          </h1>
+
+          <p className="mx-auto max-w-lg text-base text-white/75 sm:text-lg md:text-xl">
+            Elite players. World-class tournaments. Non-stop entertainment across EA FC, CODM, eFootball, and beyond.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center md:mt-10">
             <Link href="/divisions">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                Explore Divisions <ArrowRight className="w-4 h-4 ml-2" />
+              <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_24px_rgba(59,130,246,0.35)]">
+                Explore Divisions <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <Link href="/tournaments">
-              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto border-white/30 bg-white/5 text-white backdrop-blur-sm hover:bg-white/10 hover:text-white"
+              >
                 View Tournaments
               </Button>
             </Link>
           </div>
         </div>
       </Container>
-    </div>
+    </section>
   );
 }
 
@@ -97,7 +133,7 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
   const featured = divisions.filter((d) => d.featured).slice(0, 4);
 
   return (
-    <div className={`${homeSectionClass} bg-background`}>
+    <div className={`${homeSectionClass} ${homeSectionShadeA}`}>
       <Container>
         <SectionHeader
           subtitle="Featured"
@@ -118,10 +154,8 @@ export function FeaturedDivisionsSection({ divisions }: { divisions: Division[] 
           ))}
         </div>
         <div className={homeSectionCtaClass}>
-          <Link href="/divisions" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
-            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
-              View All Divisions <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+          <Link href="/divisions" className={homeSectionLinkClass}>
+            View All Divisions <ArrowRight className={homeSectionLinkArrowClass} />
           </Link>
         </div>
       </Container>
@@ -133,7 +167,7 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
   const upcomingAndActive = tournaments.filter((t) => t.status === 'upcoming' || t.status === 'active').slice(0, 4);
 
   return (
-    <div className={`${homeSectionClass} bg-background`}>
+    <div className={`${homeSectionClass} ${homeSectionShadeC}`}>
       <Container>
         <SectionHeader
           subtitle="Competitions"
@@ -154,10 +188,8 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
           ))}
         </div>
         <div className={homeSectionCtaClass}>
-          <Link href="/tournaments" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
-            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
-              View All Tournaments <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+          <Link href="/tournaments" className={homeSectionLinkClass}>
+            View All Tournaments <ArrowRight className={homeSectionLinkArrowClass} />
           </Link>
         </div>
       </Container>
@@ -169,7 +201,7 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
   const latest = articles.slice(0, 4);
 
   return (
-    <div className={`${homeSectionClass} bg-card`}>
+    <div className={`${homeSectionClass} ${homeSectionShadeD}`}>
       <Container>
         <SectionHeader
           subtitle="Updates"
@@ -190,10 +222,8 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
           ))}
         </div>
         <div className={homeSectionCtaClass}>
-          <Link href="/news" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
-            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
-              Read More News <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+          <Link href="/news" className={homeSectionLinkClass}>
+            Read More News <ArrowRight className={homeSectionLinkArrowClass} />
           </Link>
         </div>
       </Container>
@@ -203,7 +233,7 @@ export function LatestNewsSection({ articles }: { articles: NewsArticle[] }) {
 
 export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
   return (
-    <div className={`${homeSectionClass} bg-card`}>
+    <div className={`${homeSectionClass} ${homeSectionShadeB}`}>
       <Container>
         <SectionHeader
           subtitle="Live Streams"
@@ -224,30 +254,10 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
           ))}
         </div>
         <div className={homeSectionCtaClass}>
-          <Link href="/streamers" className="inline-block max-md:mx-auto max-md:block max-md:w-full max-md:max-w-sm">
-            <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 sm:w-auto">
-              View All Streamers <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+          <Link href="/streamers" className={homeSectionLinkClass}>
+            View All Streamers <ArrowRight className={homeSectionLinkArrowClass} />
           </Link>
         </div>
-      </Container>
-    </div>
-  );
-}
-
-export function CTASection() {
-  return (
-    <div className={`${homeSectionClass} bg-linear-to-r from-primary/10 to-primary/5 border-y border-primary/20`}>
-      <Container className="text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Ready to Join the Action?</h2>
-        <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-          Whether you&apos;re a player, fan, or aspiring esports professional, there&apos;s a place for you at Provela.
-        </p>
-        <Link href="/contact">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            Get Started <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </Link>
       </Container>
     </div>
   );
@@ -263,7 +273,7 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
   const marqueeItems = [...sponsors, ...sponsors];
 
   return (
-    <section className={`${homeSectionClass} bg-background overflow-hidden border-t border-border`}>
+    <section className={`${homeSectionClass} ${homeSectionShadeE} overflow-hidden`}>
       <Container>
         <SectionHeader
           subtitle="Partners"
@@ -273,20 +283,20 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
       </Container>
 
       <div className="relative mt-6">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-background to-transparent sm:w-28" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-background to-transparent sm:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-linear-to-r from-section-e to-transparent sm:w-16 md:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-linear-to-l from-section-e to-transparent sm:w-16 md:w-28" />
 
-        <div className="group flex w-max animate-sponsor-marquee items-center gap-8 px-4 hover:[animation-play-state:paused]">
+        <div className="group flex w-max animate-sponsor-marquee items-center gap-4 px-4 hover:[animation-play-state:paused] sm:gap-6 md:gap-8">
           {marqueeItems.map((sponsor, index) => (
             <div
               key={`${sponsor.id}-${index}`}
-              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-card/80 px-6 transition-all duration-300 hover:border-primary/40 hover:bg-card"
+              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-card px-4 transition-all duration-300 hover:border-primary/35 hover:bg-secondary md:h-24 md:w-52 md:px-6"
               title={sponsor.name}
             >
               <img
                 src={sponsorLogoSrc(sponsor)}
                 alt={sponsor.name}
-                className="h-9 w-full max-w-[120px] object-contain opacity-90 transition-opacity group-hover:opacity-100"
+                className="h-9 w-full max-w-[120px] object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-[168px]"
               />
             </div>
           ))}

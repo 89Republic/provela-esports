@@ -1,162 +1,57 @@
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Variable'),
-    local('Neue Machina Plain Variable'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainVariable.woff2') format('woff2-variations'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainVariable.woff') format('woff-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Light'),
-    local('Neue Machina Plain Light'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainLight.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Regular'),
-    local('Neue Machina Plain Regular'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainRegular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Medium'),
-    local('Neue Machina Plain Medium'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainMedium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Bold'),
-    local('Neue Machina Plain Bold'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainBold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Ultrabold'),
-    local('Neue Machina Plain Ultrabold'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainUltrabold.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Machina';
-  src:
-    local('PP Neue Machina Plain Black'),
-    local('Neue Machina Plain Black'),
-    url('/fonts/neue-machina/PPNeueMachina-PlainBlack.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  /* Light fallback theme: blue, white, black */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(0.99 0.005 257);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.58 0.2 258);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0.01 257);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.96 0.01 257);
-  --muted-foreground: oklch(0.45 0.01 257);
-  --accent: oklch(0.58 0.2 258);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.55 0.19 258);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.9 0.01 257);
-  --input: oklch(0.9 0.01 257);
-  --ring: oklch(0.58 0.2 258);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.99 0.005 257);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.58 0.2 258);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.96 0.01 257);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.9 0.01 257);
-  --sidebar-ring: oklch(0.58 0.2 258);
-}
-
+:root,
 .dark {
-  /* Dark theme: blue, white, black */
-  --background: oklch(0.14 0.005 257);
-  --foreground: oklch(0.96 0 0);
-  --card: oklch(0.2 0.01 257);
-  --card-foreground: oklch(0.96 0 0);
-  --popover: oklch(0.2 0.01 257);
-  --popover-foreground: oklch(0.96 0 0);
-  --primary: oklch(0.62 0.2 258);
-  --primary-foreground: oklch(0.96 0 0);
-  --secondary: oklch(0.24 0.01 257);
+  /* Black theme: layered charcoal surfaces with blue accent */
+  color-scheme: dark;
+  --background: oklch(0.07 0.004 264);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.15 0.008 264);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.13 0.006 264);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.64 0.19 258);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.16 0.008 264);
   --secondary-foreground: oklch(0.94 0 0);
-  --muted: oklch(0.29 0.01 257);
-  --muted-foreground: oklch(0.76 0.01 257);
-  --accent: oklch(0.62 0.2 258);
-  --accent-foreground: oklch(0.96 0 0);
+  --muted: oklch(0.14 0.007 264);
+  --muted-foreground: oklch(0.62 0.012 264);
+  --accent: oklch(0.64 0.19 258);
+  --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.58 0.2 258);
-  --destructive-foreground: oklch(0.96 0 0);
-  --border: oklch(0.3 0.01 257);
-  --input: oklch(0.24 0.01 257);
-  --ring: oklch(0.62 0.2 258);
-  --chart-1: oklch(0.62 0.2 258);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.22 0.01 264);
+  --input: oklch(0.1 0.006 264);
+  --ring: oklch(0.64 0.19 258);
+  --chart-1: oklch(0.64 0.19 258);
   --chart-2: oklch(0.72 0.16 250);
   --chart-3: oklch(0.84 0.08 240);
-  --chart-4: oklch(0.5 0.17 265);
-  --chart-5: oklch(0.4 0.1 260);
-  --sidebar: oklch(0.18 0.01 257);
-  --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.62 0.2 258);
-  --sidebar-primary-foreground: oklch(0.96 0 0);
-  --sidebar-accent: oklch(0.24 0.01 257);
+  --chart-4: oklch(0.52 0.17 265);
+  --chart-5: oklch(0.42 0.1 260);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.05 0.003 264);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.64 0.19 258);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.12 0.007 264);
   --sidebar-accent-foreground: oklch(0.94 0 0);
-  --sidebar-border: oklch(0.3 0.01 257);
-  --sidebar-ring: oklch(0.62 0.2 258);
+  --sidebar-border: oklch(0.2 0.01 264);
+  --sidebar-ring: oklch(0.64 0.19 258);
+  /* Section shades — stepped blacks for visual separation */
+  --section-a: oklch(0.1 0.006 264);
+  --section-b: oklch(0.13 0.007 264);
+  --section-c: oklch(0.09 0.005 264);
+  --section-d: oklch(0.12 0.007 264);
+  --section-e: oklch(0.08 0.004 264);
+  --section-f: oklch(0.11 0.006 264);
 }
 
 @theme inline {
-  --font-sans: 'Neue Machina', ui-sans-serif, system-ui, sans-serif;
-  --font-gaming: 'Neue Machina', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-provela-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-gaming: var(--font-provela-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -194,14 +89,33 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-section-a: var(--section-a);
+  --color-section-b: var(--section-b);
+  --color-section-c: var(--section-c);
+  --color-section-d: var(--section-d);
+  --color-section-e: var(--section-e);
+  --color-section-f: var(--section-f);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    background-color: var(--background);
+  }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(ellipse 120% 80% at 50% 0%, oklch(0.18 0.008 264 / 0.35), transparent 55%),
+      radial-gradient(ellipse 70% 55% at 100% 40%, oklch(0.12 0.006 264 / 0.25), transparent 50%),
+      radial-gradient(ellipse 70% 55% at 0% 70%, oklch(0.1 0.005 264 / 0.22), transparent 50%),
+      linear-gradient(180deg, oklch(0.14 0.007 264 / 0.28) 0%, transparent 40%, transparent 60%, oklch(0.05 0.003 264 / 0.4) 100%);
+    background-attachment: scroll;
+    background-size: 100% 100%;
   }
 
   h1,
@@ -235,10 +149,51 @@
   animation: sponsor-marquee 50s linear infinite;
 }
 
+@keyframes hero-ken-burns {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes hero-sweep {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(12deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(200%) rotate(12deg);
+  }
+}
+
+@utility animate-hero-ken-burns {
+  animation: hero-ken-burns 20s ease-in-out infinite alternate;
+}
+
+@utility animate-hero-sweep {
+  animation: hero-sweep 8s ease-in-out infinite;
+}
+
+@utility animate-hero-sweep-delayed {
+  animation: hero-sweep 8s ease-in-out 4s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-sponsor-marquee,
   .animate-sponsor-marquee-reverse,
-  .animate-sponsor-marquee-slow {
+  .animate-sponsor-marquee-slow,
+  .animate-hero-ken-burns,
+  .animate-hero-sweep,
+  .animate-hero-sweep-delayed {
     animation: none;
+  }
+
+  .ambient-scroll-layer {
+    transform: none !important;
+    opacity: 0.35 !important;
   }
 }

@@ -169,7 +169,7 @@ function DivisionForm({ division, onSave, onCancel }: {
                 </Field>
               </FieldRow>
               <Field label="URL">
-                <Input value={m.url} onChange={e => updateMedia(i, 'url', e.target.value)} placeholder="/images/codm-cover.png" />
+                <Input value={m.url} onChange={e => updateMedia(i, 'url', e.target.value)} placeholder="/images/codm.jpg" />
                 {m.type === 'image' && <ImagePreview src={m.url} alt={m.title} />}
               </Field>
               <button type="button" onClick={() => removeMedia(i)} className="text-xs text-destructive hover:underline">Remove</button>

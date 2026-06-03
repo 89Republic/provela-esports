@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { Tournament, TournamentParticipant, TournamentScheduleItem, TournamentStandingsEntry } from '@/lib/types';
+import { formatPrizePool } from '@/lib/utils';
 
 function newTournament(): Tournament {
   return {
@@ -72,7 +73,7 @@ function TournamentForm({ tournament, onSave, onCancel }: {
             </SelectContent>
           </Select>
         </Field>
-        <Field label="Prize Pool"><Input value={form.prizePool} onChange={e => set('prizePool', e.target.value)} placeholder="$50,000" /></Field>
+        <Field label="Prize Pool"><Input value={form.prizePool} onChange={e => set('prizePool', e.target.value)} placeholder="GH₵5,000" /></Field>
       </FieldRow>
       <FieldRow>
         <Field label="Start Date"><Input type="datetime-local" value={form.startDate.slice(0, 16)} onChange={e => set('startDate', new Date(e.target.value).toISOString())} /></Field>
@@ -211,7 +212,7 @@ export default function TournamentsAdminPage() {
                     <p className="font-medium text-foreground text-sm">{t.name}</p>
                     <span className={`text-xs px-1.5 py-0.5 rounded capitalize ${STATUS_STYLES[t.status]}`}>{t.status}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">{t.game} · {t.prizePool} · {t.participants.length} teams</p>
+                  <p className="text-xs text-muted-foreground">{t.game} · {formatPrizePool(t.prizePool)} · {t.participants.length} teams</p>
                 </div>
                 <div className="flex gap-2 shrink-0">
                   <Button variant="outline" size="sm" onClick={() => { setEditing(t); setIsNew(false); }}><Pencil className="size-3 mr-1" />Edit</Button>

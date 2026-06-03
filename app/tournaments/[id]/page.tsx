@@ -1,8 +1,8 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { PageHeader, Container } from '@/components/layout';
+import { PageHeader, Container, backLinkClass, backLinkArrowClass } from '@/components/layout';
 import { getSiteContent } from '@/lib/site-content';
-import { Button } from '@/components/ui/button';
+import { formatPrizePool } from '@/lib/utils';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Trophy, Users } from 'lucide-react';
 
@@ -25,11 +25,9 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
         <div className="py-20">
           <Container className="text-center">
             <p className="text-muted-foreground mb-4">We couldn&apos;t find the tournament you&apos;re looking for.</p>
-            <Link href="/tournaments">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Tournaments
-              </Button>
+            <Link href="/tournaments" className={backLinkClass}>
+              <ArrowLeft className={backLinkArrowClass} />
+              Back to Tournaments
             </Link>
           </Container>
         </div>
@@ -92,7 +90,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                       <Trophy className="w-5 h-5" />
                       <span className="text-sm font-semibold">Prize Pool</span>
                     </div>
-                    <p className="text-foreground font-semibold">{tournament.prizePool}</p>
+                    <p className="text-foreground font-semibold">{formatPrizePool(tournament.prizePool)}</p>
                   </div>
                   <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center space-x-2 text-primary mb-2">
@@ -172,7 +170,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Prize Pool</p>
-                    <p className="text-2xl font-bold text-primary">{tournament.prizePool}</p>
+                    <p className="text-2xl font-bold text-primary">{formatPrizePool(tournament.prizePool)}</p>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Participating Teams</p>
@@ -187,11 +185,9 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
           </div>
 
           <div className="border-t border-border pt-8 mt-12">
-            <Link href="/tournaments">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Tournaments
-              </Button>
+            <Link href="/tournaments" className={backLinkClass}>
+              <ArrowLeft className={backLinkArrowClass} />
+              Back to Tournaments
             </Link>
           </div>
         </Container>

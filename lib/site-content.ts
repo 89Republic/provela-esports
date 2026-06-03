@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { unstable_noStore as noStore } from 'next/cache';
-import { BRAND_SOCIALS, CONTACT_TOPICS, DIVISIONS, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
+import { BRAND_SOCIALS, DIVISIONS, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
 import type { Division, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
 
 export interface SiteContent {
@@ -11,7 +11,6 @@ export interface SiteContent {
   streamers: Streamer[];
   newsArticles: NewsArticle[];
   sponsors: Sponsor[];
-  contactTopics: string[];
 }
 
 const CONTENT_FILE_PATH = path.join(process.cwd(), 'data', 'site-content.override.json');
@@ -23,7 +22,6 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
   streamers: STREAMERS,
   newsArticles: NEWS_ARTICLES,
   sponsors: SPONSORS,
-  contactTopics: [...CONTACT_TOPICS],
 };
 
 function deepClone<T>(value: T): T {
@@ -45,7 +43,6 @@ function normalizeContent(candidate: unknown): SiteContent {
     streamers: Array.isArray(content.streamers) ? content.streamers : fallback.streamers,
     newsArticles: Array.isArray(content.newsArticles) ? content.newsArticles : fallback.newsArticles,
     sponsors: Array.isArray(content.sponsors) ? content.sponsors : fallback.sponsors,
-    contactTopics: Array.isArray(content.contactTopics) ? content.contactTopics : fallback.contactTopics,
   };
 }
 

@@ -1,3 +1,4 @@
+import { formatCedis } from '@/lib/utils';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container, SectionHeader } from '@/components/layout';
@@ -17,7 +18,7 @@ export default function AboutPage() {
         subtitle="Building the future of professional gaming"
       />
       <main>
-        <div className="py-20 bg-background">
+        <div className="py-20 bg-section-a border-t border-border/50">
           <Container>
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
@@ -39,7 +40,7 @@ export default function AboutPage() {
           </Container>
         </div>
 
-        <div className="py-20 bg-card">
+        <div className="py-20 bg-section-b border-t border-border/50">
           <Container>
             <SectionHeader
               title="Our Values"
@@ -83,7 +84,7 @@ export default function AboutPage() {
           </Container>
         </div>
 
-        <div className="py-20 bg-background">
+        <div className="py-20 bg-section-d border-t border-border/50">
           <Container>
             <SectionHeader
               title="By The Numbers"
@@ -99,7 +100,7 @@ export default function AboutPage() {
                 <p className="text-muted-foreground">Professional Players</p>
               </div>
               <div className="text-center">
-                <p className="text-4xl font-bold text-primary mb-2">$2M+</p>
+                <p className="text-4xl font-bold text-primary mb-2">{formatCedis(5_000)}+</p>
                 <p className="text-muted-foreground">Prize Pools</p>
               </div>
               <div className="text-center">

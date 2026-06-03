@@ -42,7 +42,6 @@ export default function AdminDashboard() {
         <StatCard label="News Articles" value={content?.newsArticles.length ?? '—'} color="amber" />
         <StatCard label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />
         <StatCard label="Social Links" value={content?.brandSocials.length ?? '—'} color="cyan" />
-        <StatCard label="Contact Topics" value={content?.contactTopics.length ?? '—'} color="violet" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 mb-8">

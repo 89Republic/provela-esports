@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
 import { Dot } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, formatPrizePool } from '@/lib/utils';
 
 const NEWS_DATE_FORMATTER = new Intl.DateTimeFormat('en-GB', {
   timeZone: 'UTC',
@@ -158,7 +158,7 @@ export function TournamentCard({ tournament, variant = 'desktop' }: { tournament
       title={tournament.name}
       subtitle={tournament.game}
       rows={[
-        { label: 'Prize Pool', value: tournament.prizePool, primary: true },
+        { label: 'Prize Pool', value: formatPrizePool(tournament.prizePool), primary: true },
         { label: 'Participants', value: String(tournament.participants.length) },
       ]}
     />
@@ -188,7 +188,7 @@ export function TournamentCard({ tournament, variant = 'desktop' }: { tournament
         <div className="space-y-2 border-t border-border pt-4">
           <div className={mobileRowClass}>
             <span className="text-muted-foreground">Prize Pool</span>
-            <span className="font-semibold text-primary truncate max-w-[58%]">{tournament.prizePool}</span>
+            <span className="font-semibold text-primary truncate max-w-[58%]">{formatPrizePool(tournament.prizePool)}</span>
           </div>
           <div className={mobileRowClass}>
             <span className="text-muted-foreground">Participants</span>

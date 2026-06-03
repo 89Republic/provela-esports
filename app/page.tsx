@@ -6,7 +6,6 @@ import {
   UpcomingTournamentsSection,
   LatestNewsSection,
   StreamersSection,
-  CTASection,
   SponsorsSection,
 } from '@/components/home-sections';
 import { getSiteContent } from '@/lib/site-content';
@@ -23,7 +22,6 @@ export default async function Home() {
         <StreamersSection streamers={content.streamers} />
         <UpcomingTournamentsSection tournaments={content.tournaments} />
         <LatestNewsSection articles={content.newsArticles} />
-        <CTASection />
         <SponsorsSection sponsors={content.sponsors} />
       </main>
       <Footer />

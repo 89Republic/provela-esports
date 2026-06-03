@@ -1,8 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { PageHeader, Container } from '@/components/layout';
+import { PageHeader, Container, backLinkClass, backLinkArrowClass } from '@/components/layout';
 import { getSiteContent } from '@/lib/site-content';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
@@ -25,11 +24,9 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
         <div className="py-20">
           <Container className="text-center">
             <p className="text-muted-foreground mb-4">We couldn&apos;t find the article you&apos;re looking for.</p>
-            <Link href="/news">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to News
-              </Button>
+            <Link href="/news" className={backLinkClass}>
+              <ArrowLeft className={backLinkArrowClass} />
+              Back to News
             </Link>
           </Container>
         </div>
@@ -112,11 +109,9 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
           </div>
 
           <div className="border-t border-border pt-8 mt-12">
-            <Link href="/news">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to News
-              </Button>
+            <Link href="/news" className={backLinkClass}>
+              <ArrowLeft className={backLinkArrowClass} />
+              Back to News
             </Link>
           </div>
         </Container>

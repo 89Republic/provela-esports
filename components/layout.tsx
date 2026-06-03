@@ -1,3 +1,12 @@
+export const backLinkClass =
+  'group inline-flex cursor-pointer items-center text-sm font-semibold text-primary transition-all duration-200 hover:text-primary/90';
+
+export const backLinkHeroClass =
+  'group mb-8 inline-flex cursor-pointer items-center text-sm font-semibold text-white/85 transition-all duration-200 hover:text-white';
+
+export const backLinkArrowClass =
+  'mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1';
+
 export function SectionHeader({
   title,
   subtitle,
@@ -22,7 +31,7 @@ export function Container({ children, className = '' }: { children: React.ReactN
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div className="bg-card border-b border-border py-12 mt-16">
+    <div className="bg-section-c border-b border-border/50 py-12 mt-16">
       <Container>
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2 font-gaming">{title}</h1>
         {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}

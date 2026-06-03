@@ -1,6 +1,5 @@
 'use client';
 
-import { MapPin } from 'lucide-react';
 import type { PlayerProfile } from '@/lib/types';
 import { SocialIconLink } from '@/components/social-icon';
 import {
@@ -38,45 +37,47 @@ export function SquadCarousel({
           </div>
         </div>
 
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="-ml-3">
           {roster.map((member) => {
             const isBrandLogo = member.avatar?.includes('LOGOS-03');
             return (
-            <CarouselItem key={member.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-[30%]">
-              <article className="group h-full rounded-xl border border-primary/20 bg-card/95 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/15">
-                <div className="relative h-56 bg-black">
+              <CarouselItem
+                key={member.id}
+                className="pl-3 basis-[44%] sm:basis-[31%] md:basis-[23%] lg:basis-[18%] xl:basis-[15%]"
+              >
+                <article className="group relative aspect-[3/5] w-full overflow-hidden rounded-lg border border-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/15">
                   <img
                     src={member.avatar || '/placeholder-user.jpg'}
                     alt={member.name}
-                    className={`h-full w-full transition-transform duration-300 group-hover:scale-105 ${
-                      isBrandLogo ? 'object-contain p-6' : 'object-cover'
+                    className={`absolute inset-0 h-full w-full transition-transform duration-300 group-hover:scale-105 ${
+                      isBrandLogo ? 'object-contain bg-black p-4' : 'object-cover'
                     }`}
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.65),rgba(0,0,0,0.1))]" />
-                  <p className="absolute left-4 bottom-4 text-primary font-semibold tracking-wide text-sm uppercase">
-                    {member.tag}
-                  </p>
-                </div>
+                  <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.45)_42%,rgba(0,0,0,0.12)_68%,transparent_100%)]" />
 
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                  <p className="text-sm text-muted-foreground">{member.role}</p>
-                  <div className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
-                    <MapPin className="w-3 h-3" />
-                    <span>{member.location}</span>
+                  <div className="absolute inset-0 flex flex-col justify-end p-3">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-primary sm:text-xs">
+                      {member.tag}
+                    </p>
+                    <h3 className="mt-1 text-sm font-bold leading-tight text-white sm:text-base">{member.name}</h3>
+                    <p className="mt-0.5 text-[11px] text-white/80 sm:text-xs">{member.role}</p>
+
+                    {member.socialLinks.length > 0 && (
+                      <div className="mt-2.5 flex flex-wrap gap-1.5">
+                        {member.socialLinks.map((social) => (
+                          <SocialIconLink
+                            key={`${member.id}-${social.platform}`}
+                            social={social}
+                            size="sm"
+                            className="border-white/20 bg-black/45 text-white hover:border-primary/50 hover:bg-primary/25"
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
-
-                  {member.socialLinks.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {member.socialLinks.map((social) => (
-                        <SocialIconLink key={`${member.id}-${social.platform}`} social={social} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </article>
-            </CarouselItem>
-          );
+                </article>
+              </CarouselItem>
+            );
           })}
         </CarouselContent>
       </Carousel>

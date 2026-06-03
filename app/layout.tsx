@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
-import { Geist_Mono } from 'next/font/google'
+import { Chakra_Petch, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { AmbientScrollBackground } from '@/components/ambient-background'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
+
+const provelaSans = Chakra_Petch({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-provela-sans',
+  display: 'swap',
+})
 
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
 
@@ -21,9 +30,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`font-sans antialiased bg-background text-foreground ${geistMono.variable}`}>
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body
+        className={`font-sans antialiased bg-background text-foreground ${provelaSans.variable} ${geistMono.variable}`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
+          <AmbientScrollBackground />
+          <div className="relative z-10">{children}</div>
+        </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

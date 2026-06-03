@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Plus, Trash2, RotateCcw } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, ImagePreview, InfoBanner } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, ImagePreview, InfoBanner } from '../admin-ui';
 import { BRAND_LOGO } from '@/lib/constants';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
@@ -16,35 +16,29 @@ const PLATFORMS: SocialLink['platform'][] = ['x', 'instagram', 'facebook', 'yout
 
 function useSyncedForm(content: SiteContent | null) {
   const [socials, setSocials] = useState<SocialLink[]>([]);
-  const [topics, setTopics] = useState<string[]>([]);
 
   useEffect(() => {
     if (content) {
       setSocials(content.brandSocials);
-      setTopics(content.contactTopics);
     }
   }, [content]);
 
-  return { socials, setSocials, topics, setTopics };
+  return { socials, setSocials };
 }
 
 export default function SettingsAdminPage() {
   const { content, isLoading, isSaving, toast, save, resetToDefaults } = useAdminContent();
-  const { socials, setSocials, topics, setTopics } = useSyncedForm(content);
+  const { socials, setSocials } = useSyncedForm(content);
 
   const handleSave = async () => {
     if (!content) return;
-    await save({ ...content, brandSocials: socials, contactTopics: topics });
+    await save({ ...content, brandSocials: socials });
   };
 
   const addSocial = () => setSocials(s => [...s, { platform: 'x', url: '' }]);
   const updateSocial = (i: number, key: keyof SocialLink, val: string) =>
     setSocials(s => s.map((item, idx) => idx === i ? { ...item, [key]: val } : item));
   const removeSocial = (i: number) => setSocials(s => s.filter((_, idx) => idx !== i));
-
-  const addTopic = () => setTopics(t => [...t, '']);
-  const updateTopic = (i: number, val: string) => setTopics(t => t.map((x, idx) => idx === i ? val : x));
-  const removeTopic = (i: number) => setTopics(t => t.filter((_, idx) => idx !== i));
 
   return (
     <AdminLayout>
@@ -94,7 +88,6 @@ export default function SettingsAdminPage() {
           </CardBody>
         </Card>
 
-        {/* Social Links */}
         <Card>
           <CardHeader>
             <h2 className="text-sm font-semibold text-foreground">Brand Social Links</h2>
@@ -122,47 +115,6 @@ export default function SettingsAdminPage() {
           </CardBody>
         </Card>
 
-        {/* Contact Topics */}
-        <Card>
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-foreground">Contact Form Topics</h2>
-            <Button variant="outline" size="sm" onClick={addTopic}><Plus className="size-3 mr-1" />Add Topic</Button>
-          </CardHeader>
-          <CardBody>
-            <p className="text-xs text-muted-foreground mb-4">Options shown in the contact page subject selector.</p>
-            <div className="space-y-2">
-              {topics.map((t, i) => (
-                <div key={i} className="grid grid-cols-[1fr_auto] gap-3 items-center">
-                  <Input value={t} onChange={e => updateTopic(i, e.target.value)} placeholder="General Enquiry" />
-                  <button onClick={() => removeTopic(i)} className="text-muted-foreground hover:text-destructive p-2 transition-colors">
-                    <Trash2 className="size-4" />
-                  </button>
-                </div>
-              ))}
-              {topics.length === 0 && <p className="text-xs text-muted-foreground">No topics configured.</p>}
-            </div>
-          </CardBody>
-        </Card>
-
-        {/* Website Info Panel */}
-        <Card>
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-foreground">Site Info</h2>
-          </CardHeader>
-          <CardBody className="space-y-3">
-            <FieldRow>
-              <Field label="Contact Email">
-                <Input defaultValue="contact@provela.gg" disabled className="opacity-60" />
-              </Field>
-              <Field label="Business Email">
-                <Input defaultValue="business@provela.gg" disabled className="opacity-60" />
-              </Field>
-            </FieldRow>
-            <p className="text-xs text-muted-foreground">Contact emails are currently hardcoded in the contact page. Edit <code className="text-xs bg-muted px-1 py-0.5 rounded">app/contact/page.tsx</code> to update them.</p>
-          </CardBody>
-        </Card>
-
-        {/* Content Stats */}
         {content && (
           <Card>
             <CardHeader>
@@ -177,7 +129,6 @@ export default function SettingsAdminPage() {
                   { label: 'News Articles', value: content.newsArticles.length },
                   { label: 'Sponsors', value: content.sponsors.length },
                   { label: 'Social Links', value: socials.length },
-                  { label: 'Contact Topics', value: topics.length },
                 ].map(({ label, value }) => (
                   <div key={label}>
                     <p className="text-xs text-muted-foreground">{label}</p>

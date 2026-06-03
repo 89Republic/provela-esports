@@ -8,7 +8,7 @@ export const BRAND_SOCIALS: SocialLink[] = [
 ];
 
 export const BRAND_LOGO = '/images/LOGOS-03.png';
-const CODM_IMAGE = '/images/codm-cover.png';
+const CODM_IMAGE = '/images/codm.jpg';
 const EAFC_IMAGE = '/images/eafc .jpg';
 const EAFC_CLUBS_IMAGE = '/images/eafc-cover.jpeg';
 const STREAMERS_IMAGE = '/images/streaming.jpg';
@@ -536,7 +536,7 @@ export const TOURNAMENTS: Tournament[] = [
     format: '8 teams, double round-robin groups, top 4 to single elimination playoffs.',
     startDate: '2026-05-01T18:00:00.000Z',
     endDate: '2026-06-15T22:00:00.000Z',
-    prizePool: '$50,000',
+    prizePool: 'GH₵5,000',
     registrationOpen: false,
     image: TOURNAMENT_IMAGE,
     participants: [
@@ -569,7 +569,7 @@ export const TOURNAMENTS: Tournament[] = [
     format: '32 entrants, seeded single elimination bracket with best-of-three rounds.',
     startDate: '2026-07-08T19:00:00.000Z',
     endDate: '2026-07-19T22:00:00.000Z',
-    prizePool: '$10,000',
+    prizePool: 'GH₵1,000',
     registrationOpen: true,
     image: '/images/tournament2.jpg',
     participants: [
@@ -597,7 +597,7 @@ export const TOURNAMENTS: Tournament[] = [
     format: 'Two groups of four, top two from each group to playoffs.',
     startDate: '2026-03-01T18:00:00.000Z',
     endDate: '2026-03-18T22:00:00.000Z',
-    prizePool: '$25,000',
+    prizePool: 'GH₵5,000',
     registrationOpen: false,
     image: TOURNAMENT_IMAGE,
     participants: [
@@ -759,23 +759,28 @@ export const NEWS_ARTICLES: NewsArticle[] = [
 ];
 
 export const SPONSORS: Sponsor[] = [
-  { id: 'razer', name: 'Razer', slug: 'razer', color: '44D62C' },
-  { id: 'nvidia', name: 'NVIDIA', slug: 'nvidia', color: '76B900' },
-  { id: 'intel', name: 'Intel', slug: 'intel', color: '0071C5' },
-  { id: 'logitech', name: 'Logitech G', color: '00B8FC', logo: '/sponsors/logitech.svg' },
-  { id: 'redbull', name: 'Red Bull', slug: 'redbull', color: 'DB0A40' },
-  { id: 'corsair', name: 'Corsair', slug: 'corsair', color: 'FFFFFF' },
-  { id: 'asus', name: 'ASUS ROG', slug: 'asus', color: 'FFFFFF' },
-  { id: 'steelseries', name: 'SteelSeries', slug: 'steelseries', color: 'FF5200' },
-  { id: 'monster', name: 'Monster Energy', slug: 'monster', color: '86C440' },
-  { id: 'elgato', name: 'Elgato', slug: 'elgato', color: 'FFFFFF' },
-  { id: 'hyperx', name: 'HyperX', color: 'E21836', logo: '/sponsors/hyperx.svg' },
-  { id: 'alienware', name: 'Alienware', slug: 'alienware', color: '007CC0' },
+  {
+    id: 'gaming-hub',
+    name: "Let's Hang Out Game Hub",
+    color: 'F97316',
+    logo: '/sponsors/gaming-hub.png',
+  },
+  {
+    id: 'mr-klass',
+    name: 'MR KLASS ONLINE',
+    color: '3B82F6',
+    logo: '/sponsors/mr-klass.png',
+  },
+  {
+    id: 'esports-ghana',
+    name: 'Esports Association Ghana',
+    color: 'FFFFFF',
+    logo: '/sponsors/esports-ghana.png',
+  },
+  {
+    id: 'the-bear',
+    name: 'The Bear Fufu and Grill',
+    color: 'FFFFFF',
+    logo: '/sponsors/the-bear.png',
+  },
 ];
-
-export const CONTACT_TOPICS = [
-  'General Enquiry',
-  'Partnerships',
-  'Join Provela',
-  'Tournament Registration',
-] as const;
