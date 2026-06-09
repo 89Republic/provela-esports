@@ -17,14 +17,6 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
   const content = await getSiteContent();
   const division = content.divisions.find((d) => d.id === params.id);
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  };
-
   if (!division) {
     return (
       <>
@@ -44,7 +36,6 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
   }
 
   const heroImage = division.media.find((item) => item.type === 'image')?.url ?? '/images/hero.png';
-  const nextMatch = division.schedule.find((entry) => entry.status === 'upcoming');
 
   return (
     <>
@@ -56,33 +47,16 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.28),transparent_45%)]" />
 
         <Container className="relative py-14 md:py-20">
-          <div className="grid gap-10 md:grid-cols-3 md:items-end">
-            <div className="md:col-span-2">
-              <Link href="/divisions" className={backLinkHeroClass}>
-                <ArrowLeft className={backLinkArrowClass} />
-                All Divisions
-              </Link>
+          <Link href="/divisions" className={backLinkHeroClass}>
+            <ArrowLeft className={backLinkArrowClass} />
+            All Divisions
+          </Link>
 
-              <p className="mb-2 text-xs uppercase tracking-[0.25em] text-primary font-semibold">{division.game}</p>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white uppercase font-gaming">
-                {division.name}
-              </h1>
-              <p className="mt-4 max-w-2xl text-white/85 text-lg">{division.tagline}</p>
-            </div>
-
-            <aside className="rounded-xl border border-white/20 bg-black/35 p-5 backdrop-blur-sm">
-              <p className="text-xs uppercase tracking-widest text-primary mb-2">Next Match</p>
-              {nextMatch ? (
-                <>
-                  <p className="text-white font-semibold">{nextMatch.competition}</p>
-                  <p className="text-white/80 text-sm mt-1">vs {nextMatch.opponent}</p>
-                  <p className="text-primary font-semibold mt-3 text-sm">{formatDate(nextMatch.date)}</p>
-                </>
-              ) : (
-                <p className="text-white/80 text-sm">No upcoming matches right now.</p>
-              )}
-            </aside>
-          </div>
+          <p className="mb-2 text-xs uppercase tracking-[0.25em] text-primary font-semibold">{division.game}</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white uppercase font-gaming">
+            {division.name}
+          </h1>
+          <p className="mt-4 max-w-2xl text-white/85 text-lg">{division.tagline}</p>
         </Container>
       </section>
 
