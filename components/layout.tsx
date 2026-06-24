@@ -31,10 +31,31 @@ export function Container({ children, className = '' }: { children: React.ReactN
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div className="bg-section-c border-b border-border/50 py-12 mt-16">
-      <Container>
-        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2 font-gaming">{title}</h1>
-        {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
+    <div className="scanlines relative mt-16 overflow-hidden py-16 md:py-20 bg-[radial-gradient(ellipse_90%_130%_at_0%_0%,_oklch(0.66_0.17_256/0.22),_transparent_55%),radial-gradient(ellipse_65%_110%_at_100%_100%,_oklch(0.84_0.12_218/0.13),_transparent_52%),linear-gradient(to_bottom,_var(--section-c),_var(--void-black))]">
+      {/* faint blueprint grid, faded toward the edges */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(oklch(1_0_0/0.045)_1px,transparent_1px),linear-gradient(90deg,oklch(1_0_0/0.045)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_70%_100%_at_30%_0%,black,transparent_75%)]"
+      />
+      {/* oversized ghost wordmark */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-4 bottom-[-2.5rem] select-none font-gaming text-[8rem] font-bold uppercase leading-none tracking-tighter text-cold/[0.035] md:text-[12rem]"
+      >
+        {title}
+      </span>
+      {/* accent underline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(to_right,transparent,oklch(0.66_0.17_256/0.55),oklch(0.84_0.12_218/0.35),transparent)]"
+      />
+
+      <Container className="relative">
+        <span aria-hidden className="mb-5 block h-1 w-12 bg-provela" />
+        <h1 className="mb-2 font-gaming text-4xl font-bold uppercase tracking-tight text-foreground md:text-6xl">
+          {title}
+        </h1>
+        {subtitle && <p className="max-w-2xl text-lg text-muted-foreground">{subtitle}</p>}
       </Container>
     </div>
   );

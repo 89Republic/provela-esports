@@ -7,31 +7,40 @@
 .dark {
   /* Black theme: layered charcoal surfaces with blue accent */
   color-scheme: dark;
-  --background: oklch(0.07 0.004 264);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.15 0.008 264);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.13 0.006 264);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.64 0.19 258);
+  --background: oklch(0.055 0.012 255);
+  --foreground: oklch(0.98 0.006 250);
+  --card: oklch(0.13 0.018 252);
+  --card-foreground: oklch(0.98 0.006 250);
+  --popover: oklch(0.11 0.016 252);
+  --popover-foreground: oklch(0.98 0.006 250);
+  --primary: oklch(0.66 0.17 256);
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.16 0.008 264);
   --secondary-foreground: oklch(0.94 0 0);
   --muted: oklch(0.14 0.007 264);
   --muted-foreground: oklch(0.62 0.012 264);
-  --accent: oklch(0.64 0.19 258);
+  --accent: oklch(0.66 0.17 256);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.58 0.2 258);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.22 0.01 264);
   --input: oklch(0.1 0.006 264);
-  --ring: oklch(0.64 0.19 258);
+  --ring: oklch(0.66 0.17 256);
   --chart-1: oklch(0.64 0.19 258);
   --chart-2: oklch(0.72 0.16 250);
   --chart-3: oklch(0.84 0.08 240);
   --chart-4: oklch(0.52 0.17 265);
   --chart-5: oklch(0.42 0.1 260);
   --radius: 0.625rem;
+  /* === Provela "Signal" broadcast palette === */
+  --void-black: oklch(0.045 0.012 255); /* #020409 */
+  --abyss-navy: oklch(0.13 0.026 252); /* #06111F */
+  --provela-blue: oklch(0.66 0.17 256); /* #2F8CFF */
+  --ion-cyan: oklch(0.84 0.12 218); /* #56D8FF */
+  --cold-white: oklch(0.98 0.006 250); /* #F4F8FF */
+  --steel-gray: oklch(0.63 0.014 256); /* #7E8796 */
+  --impact-red: oklch(0.62 0.235 23); /* #FF2D3D */
+  --victory-gold: oklch(0.84 0.142 85); /* #FFC84A */
   --sidebar: oklch(0.05 0.003 264);
   --sidebar-foreground: oklch(0.98 0 0);
   --sidebar-primary: oklch(0.64 0.19 258);
@@ -40,13 +49,13 @@
   --sidebar-accent-foreground: oklch(0.94 0 0);
   --sidebar-border: oklch(0.2 0.01 264);
   --sidebar-ring: oklch(0.64 0.19 258);
-  /* Section shades — stepped blacks for visual separation */
-  --section-a: oklch(0.1 0.006 264);
-  --section-b: oklch(0.13 0.007 264);
-  --section-c: oklch(0.09 0.005 264);
-  --section-d: oklch(0.12 0.007 264);
-  --section-e: oklch(0.08 0.004 264);
-  --section-f: oklch(0.11 0.006 264);
+  /* Section shades — stepped blue-blacks for visual separation */
+  --section-a: oklch(0.085 0.016 254);
+  --section-b: oklch(0.115 0.02 252);
+  --section-c: oklch(0.07 0.013 255);
+  --section-d: oklch(0.105 0.018 252);
+  --section-e: oklch(0.06 0.012 255);
+  --section-f: oklch(0.09 0.016 253);
 }
 
 @theme inline {
@@ -95,6 +104,15 @@
   --color-section-d: var(--section-d);
   --color-section-e: var(--section-e);
   --color-section-f: var(--section-f);
+  /* Signal palette utilities → text-ion, bg-provela, border-victory, signal/40, etc. */
+  --color-void: var(--void-black);
+  --color-abyss: var(--abyss-navy);
+  --color-provela: var(--provela-blue);
+  --color-ion: var(--ion-cyan);
+  --color-cold: var(--cold-white);
+  --color-steel: var(--steel-gray);
+  --color-signal: var(--impact-red);
+  --color-victory: var(--victory-gold);
 }
 
 @layer base {
@@ -104,16 +122,17 @@
 
   html {
     background-color: var(--background);
+    overflow-x: clip;
   }
 
   body {
     @apply text-foreground font-sans;
     background-color: var(--background);
     background-image:
-      radial-gradient(ellipse 120% 80% at 50% 0%, oklch(0.18 0.008 264 / 0.35), transparent 55%),
-      radial-gradient(ellipse 70% 55% at 100% 40%, oklch(0.12 0.006 264 / 0.25), transparent 50%),
-      radial-gradient(ellipse 70% 55% at 0% 70%, oklch(0.1 0.005 264 / 0.22), transparent 50%),
-      linear-gradient(180deg, oklch(0.14 0.007 264 / 0.28) 0%, transparent 40%, transparent 60%, oklch(0.05 0.003 264 / 0.4) 100%);
+      radial-gradient(ellipse 120% 70% at 50% 100%, oklch(0.2 0.09 256 / 0.28), transparent 60%),
+      radial-gradient(ellipse 90% 60% at 50% 0%, oklch(0.16 0.04 252 / 0.4), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 100% 30%, oklch(0.14 0.05 250 / 0.22), transparent 50%),
+      linear-gradient(180deg, oklch(0.12 0.02 252 / 0.3) 0%, transparent 45%, transparent 55%, oklch(0.04 0.01 255 / 0.5) 100%);
     background-attachment: scroll;
     background-size: 100% 100%;
   }
@@ -182,14 +201,164 @@
   animation: hero-sweep 8s ease-in-out 4s infinite;
 }
 
+/* ============================================================
+   "SIGNAL" BROADCAST SYSTEM — chrome, texture, kinetic type
+   ============================================================ */
+
+/* Extruded 3D effect for accent headline words */
+.text-extrude {
+  text-shadow:
+    0 1px 0 #2767ad,
+    0 2px 0 #1f548f,
+    0 3px 0 #194574,
+    0 4px 0 #12365b,
+    0 5px 0 #0d2944,
+    0 6px 0 #081d31,
+    0 8px 10px rgba(0, 0, 0, 0.45),
+    0 12px 22px rgba(0, 0, 0, 0.55);
+}
+
+/* Custom cursor replaces the native pointer (text fields keep theirs) */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [role='button'] {
+  cursor: none;
+}
+.has-custom-cursor input,
+.has-custom-cursor textarea,
+.has-custom-cursor select,
+.has-custom-cursor [contenteditable='true'] {
+  cursor: auto;
+}
+
+/* Film grain — a fixed turbulence layer that shifts subtly */
+.grain-overlay {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.6s steps(2) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -3%); }
+  75% { transform: translate(-2%, -2%); }
+  100% { transform: translate(2%, 3%); }
+}
+
+/* Scanline shimmer — viewport reads as a camera feed */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(1 0 0 / 0.025) 0px,
+    oklch(1 0 0 / 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* HUD corner brackets */
+.hud-bracket {
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--provela-blue);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 55;
+}
+.hud-bracket.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.hud-bracket.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+.hud-bracket.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
+.hud-bracket.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+
+/* Kinetic line reveal — headlines arrive, never fade */
+.kinetic-line-wrap { overflow: hidden; display: block; }
+
+@keyframes kinetic-rise {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+.kinetic-line {
+  display: block;
+  transform: translateY(110%);
+}
+.kinetic-line.play {
+  animation: kinetic-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Impact accent: a single subtle camera nudge (not a shake) */
+@keyframes impact-nudge {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+.impact-shake { animation: impact-nudge 0.18s ease-out 1; }
+
+/* Live indicator pulse */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 oklch(0.62 0.235 23 / 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 5px oklch(0.62 0.235 23 / 0); }
+}
+.live-dot { animation: live-pulse 1.6s ease-in-out infinite; }
+
+/* Perpetual light sweep across a primary CTA face */
+@keyframes cta-sweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+.cta-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.25), transparent);
+  animation: cta-sweep 3.5s ease-in-out infinite;
+}
+
+/* CRT power-on for broadcast-wall cards */
+@keyframes crt-on {
+  0% { transform: scaleY(0.004) scaleX(0.9); opacity: 0; filter: brightness(3); }
+  40% { transform: scaleY(0.02) scaleX(1); opacity: 1; filter: brightness(3); }
+  60% { transform: scaleY(1) scaleX(1); filter: brightness(1.6); }
+  100% { transform: scaleY(1) scaleX(1); filter: brightness(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-sponsor-marquee,
   .animate-sponsor-marquee-reverse,
   .animate-sponsor-marquee-slow,
   .animate-hero-ken-burns,
   .animate-hero-sweep,
-  .animate-hero-sweep-delayed {
-    animation: none;
+  .animate-hero-sweep-delayed,
+  .grain-overlay,
+  .cta-sweep::before,
+  .live-dot {
+    animation: none !important;
+  }
+
+  .grain-overlay { opacity: 0.03; }
+
+  .kinetic-line,
+  .kinetic-line.play {
+    transform: none !important;
+    animation: none !important;
   }
 
   .ambient-scroll-layer {

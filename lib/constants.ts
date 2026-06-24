@@ -758,6 +758,120 @@ export const NEWS_ARTICLES: NewsArticle[] = [
   },
 ];
 
+/* ============================================================
+   Landing-page "broadcast" data — homepage scenes only.
+   ============================================================ */
+
+export interface LiveSignalItem {
+  kind: 'live' | 'next' | 'stat';
+  label: string;
+  value: string;
+}
+
+export const LIVE_SIGNAL: LiveSignalItem[] = [
+  { kind: 'live', label: 'Live Now', value: 'FCX Open Qualifier' },
+  { kind: 'next', label: 'Next Match', value: 'Shokunin vs Atlas · 20:00 GMT' },
+  { kind: 'stat', label: 'Total Players', value: '110' },
+  { kind: 'stat', label: 'Active Divisions', value: '4' },
+  { kind: 'stat', label: 'Stream Network', value: '1M+ Monthly Views' },
+];
+
+export interface DivisionVisual {
+  id: string;
+  shortName: string;
+  wordmark: string;
+  tag: string;
+  keyArt: string;
+  /** oklch tint used for the per-scene ambient grade + accents */
+  tint: string;
+  accentText: string;
+  accentBorder: string;
+}
+
+/** Ordered featured divisions for the "Worlds, Not Cards" rail. */
+export const DIVISION_VISUALS: DivisionVisual[] = [
+  {
+    id: 'ea-fc-comp-squad',
+    shortName: 'EA FC',
+    wordmark: 'EAFC',
+    tag: 'EA SPORTS FC',
+    keyArt: EAFC_IMAGE,
+    tint: 'oklch(0.7 0.16 160)',
+    accentText: 'text-emerald-300',
+    accentBorder: 'border-emerald-300/60',
+  },
+  {
+    id: 'provela-shokunin',
+    shortName: 'Shokunin',
+    wordmark: 'CODM',
+    tag: 'Call of Duty Mobile',
+    keyArt: CODM_IMAGE,
+    tint: 'oklch(0.66 0.17 256)',
+    accentText: 'text-provela',
+    accentBorder: 'border-provela/60',
+  },
+  {
+    id: 'fcx',
+    shortName: 'FCX',
+    wordmark: 'FCX',
+    tag: 'Tournament Division',
+    keyArt: TOURNAMENT_IMAGE,
+    tint: 'oklch(0.84 0.142 85)',
+    accentText: 'text-victory',
+    accentBorder: 'border-victory/60',
+  },
+  {
+    id: 'provela-e',
+    shortName: 'Provela-e',
+    wordmark: 'EFTBL',
+    tag: 'eFootball',
+    keyArt: '/images/e-football.jpeg',
+    tint: 'oklch(0.84 0.12 218)',
+    accentText: 'text-ion',
+    accentBorder: 'border-ion/60',
+  },
+];
+
+export interface FeaturedMatch {
+  teamA: string;
+  teamB: string;
+  division: string;
+  when: string;
+  streamUrl: string;
+}
+
+export const FEATURED_MATCH: FeaturedMatch = {
+  teamA: 'Shokunin',
+  teamB: 'Vanguard',
+  division: 'CODM · FCX Open Qualifier',
+  when: 'Tonight · 20:00 GMT',
+  streamUrl: 'https://youtube.com/@provelaesports/live',
+};
+
+export interface CommunityStat {
+  label: string;
+  value: number;
+  suffix?: string;
+}
+
+export const COMMUNITY_STATS: CommunityStat[] = [
+  { label: 'Players Registered', value: 1240 },
+  { label: 'Teams Formed', value: 86 },
+  { label: 'Matches Played', value: 3120 },
+  { label: 'Monthly Viewers', value: 1, suffix: 'M+' },
+];
+
+export const COMMUNITY_FEED: string[] = [
+  'PVL Raze advanced to FCX Quarters',
+  'North Core 2 — 2 Rapid XI',
+  'New team registered: Atlas Mobile',
+  'Shokunin clinch Map 3 on Search',
+  'PVL Nova hit 67K followers',
+  'Volt Prime eliminated · Round of 16',
+  'FCX Open Cup: 12 slots remaining',
+  'PVL Lens live — FCX Watchalong',
+];
+
 export const SPONSORS: Sponsor[] = [
   {
     id: 'gaming-hub',

@@ -34,7 +34,7 @@ const homeSectionLinkArrowClass =
 
 function MobileCardCarousel({ children }: { children: React.ReactNode }) {
   return (
-    <Carousel opts={{ align: 'start', dragFree: true }} className="relative mb-4 min-h-[22.5rem] md:hidden">
+    <Carousel opts={{ align: 'start', dragFree: true }} className="relative mb-4 min-h-90 md:hidden">
       <CarouselContent className="-ml-4 items-stretch">{children}</CarouselContent>
       <CarouselPrevious className={`left-0 ${carouselNavClass}`} />
       <CarouselNext className={`right-0 ${carouselNavClass}`} />
@@ -296,7 +296,7 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
               <img
                 src={sponsorLogoSrc(sponsor)}
                 alt={sponsor.name}
-                className="h-9 w-full max-w-[120px] object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-[168px]"
+                className="h-9 w-full max-w-30 object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-42"
               />
             </div>
           ))}
