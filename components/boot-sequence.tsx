@@ -21,29 +21,47 @@ export function BootSequence() {
     setShow(true);
     document.body.style.overflow = 'hidden';
 
+    let cancelled = false;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let typer: ReturnType<typeof setInterval> | undefined;
+
     const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      if (typer) clearInterval(typer);
+      timers.forEach(clearTimeout);
       sessionStorage.setItem(KEY, '1');
       document.body.style.overflow = '';
       setShow(false);
     };
 
-    if (reduced) {
-      const t = setTimeout(finish, 300);
-      return () => clearTimeout(t);
-    }
+    const cleanup = () => {
+      cancelled = true;
+      if (typer) clearInterval(typer);
+      timers.forEach(clearTimeout);
+      document.body.style.overflow = '';
+    };
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
+    if (reduced) {
+      timers.push(setTimeout(finish, 300));
+      return cleanup;
+    }
 
     // type the bootline
     let i = 0;
-    const typer = setInterval(() => {
+    typer = setInterval(() => {
+      if (cancelled) return;
       i += 1;
       setTyped(BOOTLINE.slice(0, i));
-      if (i >= BOOTLINE.length) clearInterval(typer);
+      if (i >= BOOTLINE.length && typer) clearInterval(typer);
     }, 18);
 
-    timers.push(setTimeout(() => setPhase('flash'), 760));
-    timers.push(setTimeout(() => setPhase('done'), 900));
+    timers.push(setTimeout(() => {
+      if (!cancelled) setPhase('flash');
+    }, 760));
+    timers.push(setTimeout(() => {
+      if (!cancelled) setPhase('done');
+    }, 900));
     timers.push(setTimeout(finish, 1250));
 
     const skip = () => finish();
@@ -53,13 +71,11 @@ export function BootSequence() {
     window.addEventListener('pointerdown', skip);
 
     return () => {
-      clearInterval(typer);
-      timers.forEach(clearTimeout);
       window.removeEventListener('keydown', skip);
       window.removeEventListener('wheel', skip);
       window.removeEventListener('touchstart', skip);
       window.removeEventListener('pointerdown', skip);
-      document.body.style.overflow = '';
+      cleanup();
     };
   }, []);
 
@@ -102,7 +118,7 @@ export function BootSequence() {
                   className="h-auto w-56 drop-shadow-[0_0_40px_oklch(0.66_0.17_256/0.45)] md:w-72"
                 />
               </motion.div>
-              <p className="font-mono text-[0.65rem] tracking-[0.32em] text-ion sm:text-xs">
+              <p className="max-w-xs text-center font-mono text-[0.55rem] tracking-[0.18em] text-ion sm:max-w-none sm:text-[0.65rem] sm:tracking-[0.32em] md:text-xs">
                 {typed}
                 <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-ion align-middle" />
               </p>

@@ -97,9 +97,9 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
   if (!active) return null;
 
   return (
-    <section className="relative overflow-hidden bg-section-c py-20 md:py-28">
+    <section className="relative overflow-hidden bg-section-c py-14 sm:py-20 md:py-28">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_30%,oklch(0.2_0.1_85/0.12),transparent_70%)]" />
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SceneHeader
           index="03"
           eyebrow="Tournament Command"
@@ -143,15 +143,15 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-steel">
                   Grand Final In
                 </p>
-                <div className="mt-3 grid grid-cols-4 gap-2 text-center">
+                <div className="mt-3 grid grid-cols-4 gap-1.5 text-center sm:gap-2">
                   {[
                     ['D', d],
                     ['H', h],
                     ['M', m],
                     ['S', s],
                   ].map(([label, val]) => (
-                    <div key={label as string} className="bg-void/60 py-2">
-                      <span className="block font-gaming text-2xl font-bold tabular-nums text-cold">
+                    <div key={label as string} className="bg-void/60 py-1.5 sm:py-2">
+                      <span className="block font-gaming text-xl font-bold tabular-nums text-cold sm:text-2xl">
                         {String(val).padStart(2, '0')}
                       </span>
                       <span className="font-mono text-[0.55rem] tracking-[0.2em] text-steel">

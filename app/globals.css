@@ -123,10 +123,12 @@
   html {
     background-color: var(--background);
     overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply text-foreground font-sans;
+    overflow-x: clip;
     background-color: var(--background);
     background-image:
       radial-gradient(ellipse 120% 70% at 50% 100%, oklch(0.2 0.09 256 / 0.28), transparent 60%),
@@ -284,6 +286,24 @@
 .hud-bracket.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
 .hud-bracket.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
 .hud-bracket.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+
+@media (max-width: 767px) {
+  .hud-bracket {
+    display: none;
+  }
+
+  .grain-overlay {
+    opacity: 0.03;
+  }
+
+  .text-extrude {
+    text-shadow:
+      0 1px 0 #2767ad,
+      0 2px 0 #1f548f,
+      0 3px 0 #194574,
+      0 4px 6px rgba(0, 0, 0, 0.35);
+  }
+}
 
 /* Kinetic line reveal — headlines arrive, never fade */
 .kinetic-line-wrap { overflow: hidden; display: block; }

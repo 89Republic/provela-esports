@@ -19,7 +19,7 @@ export default async function DivisionsPage() {
         title="Divisions"
         subtitle="Explore our competitive divisions featuring the world's best players"
       />
-      <main className="relative overflow-hidden py-20">
+      <main className="relative overflow-hidden py-12 sm:py-16 md:py-20">
         {/* ambient gradient field — keeps the page from reading as flat black */}
         <div
           aria-hidden

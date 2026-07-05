@@ -18,7 +18,7 @@ export default function AboutPage() {
         subtitle="Building the future of professional gaming"
       />
       <main>
-        <div className="py-20 bg-section-a border-t border-border/50">
+        <div className="py-12 sm:py-16 md:py-20 bg-section-a border-t border-border/50">
           <Container>
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
@@ -40,13 +40,13 @@ export default function AboutPage() {
           </Container>
         </div>
 
-        <div className="py-20 bg-section-b border-t border-border/50">
+        <div className="py-12 sm:py-16 md:py-20 bg-section-b border-t border-border/50">
           <Container>
             <SectionHeader
               title="Our Values"
               description="The principles that guide everything we do at Provela Esports"
             />
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto">
               <div className="text-center">
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
@@ -84,13 +84,13 @@ export default function AboutPage() {
           </Container>
         </div>
 
-        <div className="py-20 bg-section-d border-t border-border/50">
+        <div className="py-12 sm:py-16 md:py-20 bg-section-d border-t border-border/50">
           <Container>
             <SectionHeader
               title="By The Numbers"
               description="Provela Esports at a glance"
             />
-            <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 max-w-5xl mx-auto">
               <div className="text-center">
                 <p className="text-4xl font-bold text-primary mb-2">5</p>
                 <p className="text-muted-foreground">Active Divisions</p>

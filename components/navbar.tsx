@@ -28,6 +28,15 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   return (
     <nav
       className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
@@ -86,7 +95,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="scanlines fixed inset-0 top-0 z-40 flex flex-col bg-void/97 backdrop-blur-xl md:hidden"
+            className="scanlines fixed inset-0 top-0 z-[100] flex flex-col bg-void/97 backdrop-blur-xl md:hidden"
           >
             <div
               className="absolute inset-0 opacity-[0.06]"
@@ -102,7 +111,7 @@ export function Navbar() {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="relative flex flex-1 flex-col justify-center gap-2 px-8">
+            <div className="relative flex flex-1 flex-col justify-center gap-1 overflow-y-auto px-6 pb-8 sm:gap-2 sm:px-8">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={`${link.href}-${i}`}
@@ -113,10 +122,10 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-baseline gap-4 border-b border-cold/10 py-4"
+                    className="flex items-baseline gap-3 border-b border-cold/10 py-3 sm:gap-4 sm:py-4"
                   >
                     <span className="font-mono text-xs text-provela">0{i + 1}</span>
-                    <span className="font-gaming text-2xl font-bold uppercase tracking-wide text-cold">
+                    <span className="font-gaming text-xl font-bold uppercase tracking-wide text-cold sm:text-2xl">
                       {link.label}
                     </span>
                   </Link>

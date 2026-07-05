@@ -35,7 +35,7 @@ export function FeaturedMatchScene() {
   return (
     <section
       ref={ref}
-      className="scanlines relative flex min-h-[62vh] items-center overflow-hidden bg-void py-16 md:min-h-[88vh] md:py-20"
+      className="scanlines relative flex min-h-[55vh] items-center overflow-hidden bg-void py-12 sm:min-h-[62vh] sm:py-16 md:min-h-[88vh] md:py-20"
     >
       {/* faceoff backdrop */}
       <div className="absolute inset-0">
@@ -51,26 +51,26 @@ export function FeaturedMatchScene() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
-        <p className="mb-10 text-center font-mono text-[0.7rem] tracking-[0.4em] text-signal">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <p className="mb-8 text-center font-mono text-[0.6rem] tracking-[0.25em] text-signal sm:mb-10 sm:text-[0.7rem] sm:tracking-[0.4em]">
           ◢ FEATURED MATCH ◣
         </p>
 
-        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row sm:gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-4">
           <motion.span
             style={{ x: reduced ? 0 : aX }}
-            className="text-center font-gaming text-4xl font-bold uppercase tracking-tight text-cold sm:text-left sm:text-6xl md:text-7xl"
+            className="max-w-full text-center font-gaming text-2xl font-bold uppercase tracking-tight text-cold break-words sm:text-left sm:text-4xl md:text-6xl lg:text-7xl"
           >
             {FEATURED_MATCH.teamA}
           </motion.span>
 
-          <span className="shrink-0 font-gaming text-xl font-bold text-provela sm:text-4xl">
+          <span className="shrink-0 font-gaming text-lg font-bold text-provela sm:text-2xl md:text-4xl">
             VS
           </span>
 
           <motion.span
             style={{ x: reduced ? 0 : bX }}
-            className="text-center font-gaming text-4xl font-bold uppercase tracking-tight text-cold sm:text-right sm:text-6xl md:text-7xl"
+            className="max-w-full text-center font-gaming text-2xl font-bold uppercase tracking-tight text-cold break-words sm:text-right sm:text-4xl md:text-6xl lg:text-7xl"
           >
             {FEATURED_MATCH.teamB}
           </motion.span>
@@ -78,7 +78,7 @@ export function FeaturedMatchScene() {
 
         <motion.div
           style={{ opacity: reduced ? 1 : cardOpacity, scale: reduced ? 1 : cardScale }}
-          className="mx-auto mt-12 max-w-md border border-provela/30 bg-abyss/60 p-6 text-center backdrop-blur-sm"
+          className="mx-auto mt-8 max-w-md border border-provela/30 bg-abyss/60 p-4 text-center backdrop-blur-sm sm:mt-12 sm:p-6"
         >
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-steel">
             {FEATURED_MATCH.division}

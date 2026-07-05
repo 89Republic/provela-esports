@@ -19,8 +19,8 @@ export function SectionHeader({
   return (
     <div className="text-center mb-6">
       {subtitle && <p className="text-primary text-sm font-semibold mb-2 uppercase tracking-wide font-gaming">{subtitle}</p>}
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance font-gaming">{title}</h2>
-      {description && <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{description}</p>}
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance font-gaming">{title}</h2>
+      {description && <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-2 sm:px-0">{description}</p>}
     </div>
   );
 }
@@ -31,7 +31,7 @@ export function Container({ children, className = '' }: { children: React.ReactN
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div className="scanlines relative mt-16 overflow-hidden py-16 md:py-20 bg-[radial-gradient(ellipse_90%_130%_at_0%_0%,_oklch(0.66_0.17_256/0.22),_transparent_55%),radial-gradient(ellipse_65%_110%_at_100%_100%,_oklch(0.84_0.12_218/0.13),_transparent_52%),linear-gradient(to_bottom,_var(--section-c),_var(--void-black))]">
+    <div className="scanlines relative mt-16 overflow-hidden py-12 sm:py-16 md:py-20 bg-[radial-gradient(ellipse_90%_130%_at_0%_0%,_oklch(0.66_0.17_256/0.22),_transparent_55%),radial-gradient(ellipse_65%_110%_at_100%_100%,_oklch(0.84_0.12_218/0.13),_transparent_52%),linear-gradient(to_bottom,_var(--section-c),_var(--void-black))]">
       {/* faint blueprint grid, faded toward the edges */}
       <div
         aria-hidden
@@ -40,7 +40,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
       {/* oversized ghost wordmark */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -right-4 bottom-[-2.5rem] select-none font-gaming text-[8rem] font-bold uppercase leading-none tracking-tighter text-cold/[0.035] md:text-[12rem]"
+        className="pointer-events-none absolute -right-2 bottom-[-1.5rem] select-none font-gaming text-[3.5rem] font-bold uppercase leading-none tracking-tighter text-cold/[0.035] sm:-right-4 sm:bottom-[-2.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[12rem]"
       >
         {title}
       </span>
@@ -52,10 +52,10 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
 
       <Container className="relative">
         <span aria-hidden className="mb-5 block h-1 w-12 bg-provela" />
-        <h1 className="mb-2 font-gaming text-4xl font-bold uppercase tracking-tight text-foreground md:text-6xl">
+        <h1 className="mb-2 font-gaming text-3xl font-bold uppercase tracking-tight text-foreground sm:text-4xl md:text-6xl">
           {title}
         </h1>
-        {subtitle && <p className="max-w-2xl text-lg text-muted-foreground">{subtitle}</p>}
+        {subtitle && <p className="max-w-2xl text-base sm:text-lg text-muted-foreground">{subtitle}</p>}
       </Container>
     </div>
   );
@@ -72,9 +72,9 @@ export function GridSection({
 }) {
   const colsClass = {
     1: 'grid-cols-1',
-    2: 'grid-cols-2',
-    3: 'grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-2 md:grid-cols-4',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
   };
 
   return <div className={`grid ${colsClass[cols]} gap-6 ${className}`}>{children}</div>;

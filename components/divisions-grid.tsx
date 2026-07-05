@@ -11,7 +11,7 @@ import { DivisionMonogram, divisionTint } from '@/components/division-monogram';
 export function DivisionsGrid({ divisions }: { divisions: Division[] }) {
   return (
     <div className="border-l border-t border-cold/10">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
         {divisions.map((division) => {
           const { tint } = divisionTint(division.id);
           return (
@@ -19,7 +19,7 @@ export function DivisionsGrid({ divisions }: { divisions: Division[] }) {
               key={division.id}
               href={`/divisions/${division.id}`}
               style={{ ['--tint' as string]: tint }}
-              className="group relative flex h-52 flex-col justify-between overflow-hidden border-b border-r border-cold/10 p-6 ring-1 ring-inset ring-transparent transition-colors duration-300 hover:bg-[var(--tint)]/[0.04] focus-visible:outline-none focus-visible:ring-[var(--tint)]/50 group-hover:ring-[var(--tint)]/25"
+              className="group relative flex h-44 flex-col justify-between overflow-hidden border-b border-r border-cold/10 p-4 ring-1 ring-inset ring-transparent transition-colors duration-300 hover:bg-[var(--tint)]/[0.04] focus-visible:outline-none focus-visible:ring-[var(--tint)]/50 group-hover:ring-[var(--tint)]/25 sm:h-52 sm:p-6"
             >
               {/* tint wash on hover */}
               <span

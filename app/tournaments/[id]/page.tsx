@@ -54,28 +54,28 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
   return (
     <>
       <Navbar />
-      <div className="relative h-80 overflow-hidden bg-cover bg-center mt-16" style={{ backgroundImage: `url(${tournament.image})` }}>
+      <div className="relative mt-16 h-56 overflow-hidden bg-cover bg-center sm:h-72 md:h-80" style={{ backgroundImage: `url(${tournament.image})` }}>
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 flex items-end">
-          <Container className="pb-8 w-full">
-            <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 capitalize ${statusBadge}`}>
+          <Container className="w-full pb-6 sm:pb-8">
+            <div className={`mb-3 inline-block rounded-full px-3 py-1 text-xs font-semibold capitalize sm:mb-4 ${statusBadge}`}>
               {tournament.status}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">{tournament.name}</h1>
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">{tournament.name}</h1>
           </Container>
         </div>
       </div>
 
-      <main className="py-20">
+      <main className="py-12 sm:py-16 md:py-20">
         <Container>
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid gap-8 md:grid-cols-3 md:gap-12">
             <div className="md:col-span-2">
-              <div className="bg-card border border-border rounded-lg p-8 mb-8">
-                <h2 className="text-2xl font-bold text-foreground mb-4">Tournament Details</h2>
-                <p className="text-lg text-muted-foreground mb-3">{tournament.overview}</p>
-                <p className="text-muted-foreground mb-6">{tournament.format}</p>
+              <div className="mb-8 rounded-lg border border-border bg-card p-4 sm:p-6 md:p-8">
+                <h2 className="mb-4 text-xl font-bold text-foreground sm:text-2xl">Tournament Details</h2>
+                <p className="mb-3 text-base text-muted-foreground sm:text-lg">{tournament.overview}</p>
+                <p className="mb-6 text-sm text-muted-foreground sm:text-base">{tournament.format}</p>
 
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                   <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center space-x-2 text-primary mb-2">
                       <Calendar className="w-5 h-5" />
@@ -124,11 +124,11 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                     <p className="text-muted-foreground">Standings will be published once bracket play starts.</p>
                   )}
                   {tournament.standings.map((row) => (
-                    <div key={row.rank} className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-4 text-sm">
-                      <span className="text-primary font-semibold">#{row.rank}</span>
-                      <span className="text-foreground font-medium">{row.name}</span>
+                    <div key={row.rank} className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-2 text-xs sm:gap-4 sm:text-sm">
+                      <span className="font-semibold text-primary">#{row.rank}</span>
+                      <span className="truncate font-medium text-foreground">{row.name}</span>
                       <span className="text-muted-foreground">P:{row.played}</span>
-                      <span className="text-foreground font-semibold">{row.points} pts</span>
+                      <span className="font-semibold text-foreground">{row.points} pts</span>
                     </div>
                   ))}
                 </div>
@@ -136,12 +136,12 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
                 <h3 className="text-xl font-bold text-foreground mb-4 mt-8">Schedule</h3>
                 <div className="bg-background rounded-lg p-6 space-y-3">
                   {tournament.schedule.map((match) => (
-                    <div key={match.id} className="flex items-center justify-between gap-4">
-                      <div>
+                    <div key={match.id} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                      <div className="min-w-0">
                         <p className="font-semibold text-foreground">{match.label}</p>
                         <p className="text-sm text-muted-foreground">{match.stage}</p>
                       </div>
-                      <span className="text-sm text-primary font-semibold">{formatDate(match.date)}</span>
+                      <span className="shrink-0 text-sm font-semibold text-primary">{formatDate(match.date)}</span>
                     </div>
                   ))}
                 </div>
@@ -159,7 +159,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
             </div>
 
             <div className="md:col-span-1">
-              <div className="bg-card border border-border rounded-lg p-6 sticky top-24">
+              <div className="sticky top-20 rounded-lg border border-border bg-card p-4 sm:top-24 sm:p-6">
                 <h3 className="text-lg font-bold text-foreground mb-6">Quick Info</h3>
                 <div className="space-y-6">
                   <div>

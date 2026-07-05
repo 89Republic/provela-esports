@@ -25,8 +25,8 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
   if (!lead) return null;
 
   return (
-    <section className="relative bg-section-d py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative bg-section-d py-14 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SceneHeader
           index="06"
           eyebrow="Provela Dispatch"
@@ -75,13 +75,13 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
               >
                 <Link
                   href={`/news/${article.id}`}
-                  className="group flex items-center gap-4 border-b border-cold/10 py-4 transition-colors hover:border-provela/40"
+                  className="group flex items-start gap-3 border-b border-cold/10 py-4 transition-colors hover:border-provela/40 sm:items-center sm:gap-4"
                 >
-                  <span className="font-gaming text-2xl font-bold text-provela/40 transition-colors group-hover:text-provela">
+                  <span className="hidden font-gaming text-2xl font-bold text-provela/40 transition-colors group-hover:text-provela sm:inline">
                     0{i + 1}
                   </span>
                   <div
-                    className="h-16 w-24 shrink-0 overflow-hidden rounded bg-cover bg-center grayscale transition-all duration-500 group-hover:grayscale-0"
+                    className="h-14 w-20 shrink-0 overflow-hidden rounded bg-cover bg-center grayscale transition-all duration-500 group-hover:grayscale-0 sm:h-16 sm:w-24"
                     style={{ backgroundImage: `url("${encodeURI(article.image)}")` }}
                   />
                   <div className="min-w-0">

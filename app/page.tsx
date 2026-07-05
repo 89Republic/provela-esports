@@ -1,7 +1,6 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { HeroScene } from '@/components/scenes/hero-scene';
-import { LiveSignalStrip } from '@/components/scenes/live-signal';
 import { DivisionsScene } from '@/components/scenes/divisions-scene';
 import { TournamentCenter } from '@/components/scenes/tournament-center';
 import { FeaturedMatchScene } from '@/components/scenes/featured-match';
@@ -20,7 +19,6 @@ export default async function Home() {
       <Navbar />
       <main>
         <HeroScene />
-        <LiveSignalStrip />
         <DivisionsScene divisions={content.divisions} />
         <TournamentCenter tournaments={content.tournaments} />
         <FeaturedMatchScene />

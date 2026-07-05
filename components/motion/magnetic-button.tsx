@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
+import { cn } from '@/lib/utils';
 
 /**
  * Magnetic pull toward the cursor. Wrap a link/button.
@@ -39,10 +40,10 @@ export function Magnetic({
   return (
     <motion.div
       ref={ref}
-      className={className}
+      className={cn('inline-block', className)}
       onMouseMove={onMove}
       onMouseLeave={reset}
-      style={{ x: sx, y: sy, display: 'inline-block' }}
+      style={{ x: sx, y: sy }}
       data-cursor="target"
     >
       {children}

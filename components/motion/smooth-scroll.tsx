@@ -12,22 +12,35 @@ export function SmoothScroll() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.matchMedia('(pointer: coarse)').matches) return; // native momentum on touch
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 1,
-      smoothWheel: true,
-    });
-
+    let lenis: Lenis | null = null;
     let raf = 0;
-    const loop = (time: number) => {
-      lenis.raf(time);
+    let active = true;
+
+    try {
+      lenis = new Lenis({
+        lerp: 0.1,
+        wheelMultiplier: 1,
+        smoothWheel: true,
+      });
+
+      const loop = (time: number) => {
+        if (!active || !lenis) return;
+        lenis.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
       raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
+    } catch {
+      return;
+    }
 
     return () => {
+      active = false;
       cancelAnimationFrame(raf);
-      lenis.destroy();
+      try {
+        lenis?.destroy();
+      } catch {
+        // Lenis can throw during HMR teardown; ignore.
+      }
     };
   }, []);
 

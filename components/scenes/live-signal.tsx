@@ -7,7 +7,7 @@ export function LiveSignalStrip() {
   const items = LIVE_SIGNAL.map((item, i) => (
     <div
       key={i}
-      className="flex items-center gap-3 whitespace-nowrap border-r border-cold/10 px-8 py-3.5 font-mono text-[0.72rem] uppercase tracking-[0.18em]"
+      className="flex items-center gap-2 whitespace-nowrap border-r border-cold/10 px-4 py-3 font-mono text-[0.62rem] uppercase tracking-[0.12em] sm:gap-3 sm:px-8 sm:py-3.5 sm:text-[0.72rem] sm:tracking-[0.18em]"
     >
       {item.kind === 'live' ? (
         <span className="live-dot inline-block h-2 w-2 rounded-full bg-signal" />

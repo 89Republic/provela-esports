@@ -10,16 +10,20 @@ export function Footer() {
   const [socials, setSocials] = useState(BRAND_SOCIALS);
 
   useEffect(() => {
+    let cancelled = false;
+
     const loadSocials = async () => {
       try {
         const response = await fetch('/api/admin/content', { cache: 'no-store' });
+        if (!response.ok || cancelled) return;
+
         const payload = (await response.json()) as {
           data?: {
             brandSocials?: typeof BRAND_SOCIALS;
           };
         };
 
-        if (Array.isArray(payload.data?.brandSocials)) {
+        if (!cancelled && Array.isArray(payload.data?.brandSocials)) {
           setSocials(payload.data.brandSocials);
         }
       } catch {
@@ -27,13 +31,19 @@ export function Footer() {
       }
     };
 
-    void loadSocials();
+    void loadSocials().catch(() => {
+      // Prevent dev-time unhandledRejection noise from aborted fetches.
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
     <footer className="bg-section-f border-t border-border/50 mt-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="grid grid-cols-1 gap-8 mb-8 sm:grid-cols-2 md:grid-cols-4">
           {/* Brand */}
           <div>
             <BrandLogo className="mb-4" />

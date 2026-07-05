@@ -56,7 +56,7 @@ export function HeroScene() {
     <section
       ref={ref}
       onPointerMove={onPointer}
-      className="scanlines relative min-h-screen overflow-hidden bg-void"
+      className="scanlines relative min-h-[100dvh] overflow-hidden bg-void sm:min-h-screen"
     >
       {/* L1 — arena architecture (deepest) */}
       <motion.div className="absolute inset-0" style={{ scale: bgScale }}>
@@ -116,61 +116,63 @@ export function HeroScene() {
       {/* CONTENT */}
       <motion.div
         style={{ y: reduced ? 0 : contentY, opacity: reduced ? 1 : contentOpacity }}
-        className="relative z-10 flex min-h-screen flex-col items-center justify-start px-4 pb-16 pt-32 text-center sm:pt-36 md:pt-40"
+        className="relative z-10 flex min-h-[100dvh] flex-col items-center px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-24 text-center sm:min-h-screen sm:justify-start sm:pb-16 sm:pt-36 md:pt-40"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Image
-            src="/images/LOGOS-03.png"
-            alt="Provela Esports"
-            width={640}
-            height={200}
-            priority
-            className="mb-1 md:mb-12 h-auto w-32 drop-shadow-[0_0_30px_oklch(0.66_0.17_256/0.4)] sm:w-40 md:w-48 lg:w-40"
-          />
-        </motion.div>
+        <div className="flex flex-1 flex-col items-center justify-center gap-6 sm:flex-none sm:justify-start sm:gap-0">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Image
+              src="/images/LOGOS-03.png"
+              alt="Provela Esports"
+              width={640}
+              height={200}
+              priority
+              className="mb-0 h-auto w-40 drop-shadow-[0_0_30px_oklch(0.66_0.17_256/0.4)] sm:mb-12 sm:w-40 md:w-48 lg:w-40"
+            />
+          </motion.div>
 
-        <ImpactOnView variant="element" amount={0.6}>
-          <KineticHeading
-            as="h1"
-            lines={['ARE YOU', 'COMPETITIVE?']}
-            flickerWords={['COMPETITIVE']}
-            className="font-gaming text-5xl font-bold uppercase leading-[0.95] tracking-tight text-cold sm:text-6xl md:text-8xl lg:text-9xl"
-          />
-        </ImpactOnView>
+          <ImpactOnView variant="element" amount={0.6}>
+            <KineticHeading
+              as="h1"
+              lines={['ARE YOU', 'COMPETITIVE?']}
+              flickerWords={['COMPETITIVE']}
+              className="font-gaming text-[2.75rem] font-bold uppercase leading-[0.92] tracking-tight text-cold sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl"
+            />
+          </ImpactOnView>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          className="mx-auto mt-5 max-w-xl text-[0.8rem] leading-relaxed text-steel sm:mt-6 sm:text-lg"
-        >
-          Elite tournaments, creator-led broadcasts, and competitive divisions across
-          EA FC, CODM, eFootball, and beyond.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.75 }}
+            className="mx-auto max-w-xl px-1 text-base leading-relaxed text-steel sm:mt-6 sm:px-0 sm:text-lg"
+          >
+            Elite tournaments, creator-led broadcasts, and competitive divisions across
+            EA FC, CODM, eFootball, and beyond.
+          </motion.p>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.95 }}
-          className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          className="mt-auto flex w-full max-w-md shrink-0 flex-col items-stretch gap-3 pt-8 sm:mt-9 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 sm:pt-0"
         >
-          <Magnetic>
+          <Magnetic className="w-full sm:w-auto">
             <Link
               href="/divisions"
-              className="cta-sweep group relative inline-flex items-center gap-2 overflow-hidden rounded-md bg-provela px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-void shadow-[0_0_30px_oklch(0.66_0.17_256/0.45)] transition-shadow hover:shadow-[0_0_44px_oklch(0.66_0.17_256/0.65)]"
+              className="cta-sweep group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-md bg-provela px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-void shadow-[0_0_30px_oklch(0.66_0.17_256/0.45)] transition-shadow hover:shadow-[0_0_44px_oklch(0.66_0.17_256/0.65)] sm:w-auto"
             >
               Enter The Arena
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Magnetic>
-          <Magnetic strength={0.2}>
+          <Magnetic strength={0.2} className="w-full sm:w-auto">
             <Link
               href="/tournaments"
-              className="group inline-flex items-center gap-2 rounded-md border border-cold/25 bg-cold/5 px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-cold backdrop-blur-sm transition-colors hover:border-provela/60 hover:bg-provela/10"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-cold/25 bg-cold/5 px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-cold backdrop-blur-sm transition-colors hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
             >
               <Play className="h-3.5 w-3.5 fill-current" />
               View Live Brackets

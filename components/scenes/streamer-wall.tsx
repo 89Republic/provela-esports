@@ -55,8 +55,8 @@ function Monitor({ streamer, index }: { streamer: Streamer; index: number }) {
 
 export function StreamerWall({ streamers }: { streamers: Streamer[] }) {
   return (
-    <section className="relative overflow-hidden bg-section-b py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative overflow-hidden bg-section-b py-14 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SceneHeader
           index="05"
           eyebrow="On Air"
@@ -65,7 +65,7 @@ export function StreamerWall({ streamers }: { streamers: Streamer[] }) {
           align="left"
         />
         <div
-          className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6"
+          className="mt-12 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 md:grid-cols-4 md:gap-6"
           style={{ perspective: '1200px' }}
         >
           {streamers.map((streamer, i) => (

@@ -39,7 +39,7 @@ export function SceneHeader({
         as="h2"
         lines={titleLines}
         flickerWords={flickerWords}
-        className="mt-5 font-gaming text-4xl font-bold uppercase leading-[0.95] tracking-tight text-cold sm:text-5xl md:text-6xl"
+        className="mt-5 font-gaming text-3xl font-bold uppercase leading-[0.95] tracking-tight text-cold sm:text-4xl md:text-5xl lg:text-6xl"
       />
 
       {description && (
