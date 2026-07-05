@@ -1,12 +1,7 @@
 import type { Metadata } from 'next'
 import { Chakra_Petch, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { AmbientScrollBackground } from '@/components/ambient-background'
-import { ThemeProvider } from '@/components/theme-provider'
-import { SmoothScroll } from '@/components/motion/smooth-scroll'
-import { CustomCursor } from '@/components/motion/custom-cursor'
-import { ImpactProvider } from '@/components/motion/impact-frame'
-import { BootSequence } from '@/components/boot-sequence'
+import { ClientLayout } from '@/components/client-layout'
 import './globals.css'
 
 const provelaSans = Chakra_Petch({
@@ -44,21 +39,7 @@ export default function RootLayout({
       <body
         className={`font-sans antialiased bg-background text-foreground ${provelaSans.variable} ${geistMono.variable}`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
-          <ImpactProvider>
-            <SmoothScroll />
-            <BootSequence />
-            <AmbientScrollBackground />
-            <div className="relative z-10">{children}</div>
-            {/* broadcast chrome */}
-            <div className="grain-overlay" aria-hidden />
-            <span className="hud-bracket tl" aria-hidden />
-            <span className="hud-bracket tr" aria-hidden />
-            <span className="hud-bracket bl" aria-hidden />
-            <span className="hud-bracket br" aria-hidden />
-            <CustomCursor />
-          </ImpactProvider>
-        </ThemeProvider>
+        <ClientLayout>{children}</ClientLayout>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
