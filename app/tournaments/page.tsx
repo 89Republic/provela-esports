@@ -22,7 +22,7 @@ export default async function TournamentsPage() {
         title="Tournaments"
         subtitle="World-class competitions with amazing prizes"
       />
-      <main className="py-20">
+      <main className="py-12 sm:py-16 md:py-20">
         <Container>
           {active.length > 0 && (
             <div className="mb-16">

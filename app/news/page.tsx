@@ -19,7 +19,7 @@ export default async function NewsPage() {
         title="News"
         subtitle="Latest updates from the Provela community"
       />
-      <main className="py-20">
+      <main className="py-12 sm:py-16 md:py-20">
         <Container>
           <GridSection cols={3}>
             {content.newsArticles.map((article) => (

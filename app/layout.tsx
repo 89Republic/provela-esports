@@ -3,6 +3,10 @@ import { Chakra_Petch, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AmbientScrollBackground } from '@/components/ambient-background'
 import { ThemeProvider } from '@/components/theme-provider'
+import { SmoothScroll } from '@/components/motion/smooth-scroll'
+import { CustomCursor } from '@/components/motion/custom-cursor'
+import { ImpactProvider } from '@/components/motion/impact-frame'
+import { BootSequence } from '@/components/boot-sequence'
 import './globals.css'
 
 const provelaSans = Chakra_Petch({
@@ -24,6 +28,12 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,8 +45,19 @@ export default function RootLayout({
         className={`font-sans antialiased bg-background text-foreground ${provelaSans.variable} ${geistMono.variable}`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
-          <AmbientScrollBackground />
-          <div className="relative z-10">{children}</div>
+          <ImpactProvider>
+            <SmoothScroll />
+            <BootSequence />
+            <AmbientScrollBackground />
+            <div className="relative z-10">{children}</div>
+            {/* broadcast chrome */}
+            <div className="grain-overlay" aria-hidden />
+            <span className="hud-bracket tl" aria-hidden />
+            <span className="hud-bracket tr" aria-hidden />
+            <span className="hud-bracket bl" aria-hidden />
+            <span className="hud-bracket br" aria-hidden />
+            <CustomCursor />
+          </ImpactProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

@@ -1,0 +1,69 @@
+'use client';
+
+import { useEffect, useRef, useState, createElement } from 'react';
+
+/**
+ * Headlines arrive — they never fade. Each line rises from a clipped wrapper
+ * with a stagger when the heading enters view.
+ */
+export function KineticHeading({
+  lines,
+  as = 'h2',
+  className = '',
+  lineClassName = '',
+  stagger = 0.06,
+  flickerWords = [],
+}: {
+  lines: string[];
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  className?: string;
+  lineClassName?: string;
+  stagger?: number;
+  flickerWords?: string[];
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setPlay(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return createElement(
+    as,
+    { ref, className },
+    lines.map((line, i) => (
+      <span key={i} className="kinetic-line-wrap">
+        <span
+          className={`kinetic-line ${play ? 'play' : ''} ${lineClassName}`}
+          style={{ animationDelay: `${i * stagger}s` }}
+        >
+          {line.split(' ').map((word, w) => {
+            const isAccent = flickerWords.includes(word.replace(/[^A-Za-z]/g, ''));
+            return (
+              <span
+                key={w}
+                className={isAccent ? 'text-extrude' : undefined}
+                style={isAccent ? { color: 'var(--provela-blue)' } : undefined}
+              >
+                {word}
+                {w < line.split(' ').length - 1 ? ' ' : ''}
+              </span>
+            );
+          })}
+        </span>
+      </span>
+    )),
+  );
+}

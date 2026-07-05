@@ -43,26 +43,26 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
     <>
       <Navbar />
       <div
-        className="relative h-96 overflow-hidden bg-cover bg-center mt-16"
+        className="relative mt-16 h-64 overflow-hidden bg-cover bg-center sm:h-80 md:h-96"
         style={{ backgroundImage: `url(${article.image})` }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 flex items-end">
-          <Container className="pb-8 w-full">
-            <div className="inline-block px-3 py-1 bg-primary text-primary-foreground rounded-full text-xs font-semibold mb-4">
+          <Container className="w-full pb-6 sm:pb-8">
+            <div className="mb-3 inline-block rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground sm:mb-4">
               {article.category}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">{article.title}</h1>
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">{article.title}</h1>
           </Container>
         </div>
       </div>
 
-      <main className="py-20">
+      <main className="py-12 sm:py-16 md:py-20">
         <Container>
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid gap-8 md:grid-cols-3 md:gap-12">
             <div className="md:col-span-2">
               <div className="prose prose-invert max-w-none">
-                <div className="flex items-center space-x-4 text-muted-foreground mb-8 pb-8 border-b border-border">
+                <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-border pb-6 text-sm text-muted-foreground sm:pb-8">
                   <span>{article.author}</span>
                   <span>•</span>
                   <span>{new Date(article.date).toLocaleDateString('en-US', {
@@ -72,7 +72,7 @@ export default async function NewsDetailPage(props: NewsDetailPageProps) {
                   })}</span>
                 </div>
 
-                <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
+                <div className="space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
                   {article.content.map((paragraph, idx) => (
                     <p key={idx} className="text-foreground">
                       {paragraph}

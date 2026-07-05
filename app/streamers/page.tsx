@@ -21,7 +21,7 @@ export default async function StreamersPage() {
         title="Streamers"
         subtitle="Follow our professional streamers and watch live content"
       />
-      <main className="py-20">
+      <main className="py-12 sm:py-16 md:py-20">
         <Container>
           {liveStreamers.length > 0 && (
             <div className="mb-16">
