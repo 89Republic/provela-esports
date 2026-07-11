@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview, InfoBanner, SocialLinksEditor } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,11 +70,22 @@ function StreamerForm({ streamer, onSave, onCancel }: {
           <ImagePreview src={form.avatar} alt={form.name} />
         </Field>
       </FieldRow>
-      <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" /></Field>
+      <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" placeholder="Optional — not shown on homepage" /></Field>
       <FieldRow>
-        <Field label="Embed URL"><Input value={form.embedUrl} onChange={e => set('embedUrl', e.target.value)} placeholder="https://www.youtube.com/embed/…" /></Field>
-        <Field label="Live URL"><Input value={form.liveUrl} onChange={e => set('liveUrl', e.target.value)} placeholder="https://youtube.com/…/live" /></Field>
+        <Field label="Live URL" required>
+          <Input value={form.liveUrl} onChange={e => set('liveUrl', e.target.value)} placeholder="https://youtube.com/…/live" />
+          <p className="text-xs text-muted-foreground mt-1">Used by Streamer Wall monitors and /streamers cards.</p>
+        </Field>
+        <Field label="Embed URL">
+          <Input value={form.embedUrl} onChange={e => set('embedUrl', e.target.value)} placeholder="https://www.youtube.com/embed/…" />
+        </Field>
       </FieldRow>
+      <Field label="Social Links">
+        <SocialLinksEditor
+          links={form.socialLinks}
+          onChange={links => set('socialLinks', links)}
+        />
+      </Field>
       <Field label="Highlights (one per line)">
         <Textarea className="min-h-20 font-mono text-xs" value={form.highlights.join('\n')} onChange={e => set('highlights', e.target.value.split('\n'))} />
       </Field>
@@ -114,9 +125,13 @@ export default function StreamersAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Streamers"
-        subtitle={`${content.streamers.length} streamer${content.streamers.length !== 1 ? 's' : ''} · homepage mobile swipe carousel`}
+        subtitle={`${content.streamers.length} streamer${content.streamers.length !== 1 ? 's' : ''} · ${content.streamers.filter(s => s.status === 'live').length} live · Streamer Wall`}
         action={!editing && <Button onClick={() => { setEditing(newStreamer()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Streamer</Button>}
       />
+
+      <InfoBanner className="mb-6">
+        Streamer Wall shows avatar, name, game, followers, and live status. Set status to &quot;Live&quot; for the red LIVE badge. Cards link to the Live URL.
+      </InfoBanner>
 
       {editing ? (
         <Card>

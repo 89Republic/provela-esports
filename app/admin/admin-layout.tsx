@@ -86,16 +86,16 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background flex">
       {/* Desktop sidebar */}
-      <div className="hidden md:flex md:w-60 md:shrink-0 md:flex-col">
+      <div className="hidden md:flex md:w-60 md:shrink-0 md:sticky md:top-0 md:self-start md:h-screen">
         <Sidebar />
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
-          <div className="w-64 shrink-0 flex flex-col">
+          <div className="w-64 shrink-0 flex flex-col h-full">
             <Sidebar onClose={() => setMobileOpen(false)} />
           </div>
           <button
@@ -107,9 +107,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Main area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col min-w-0">
         {/* Mobile topbar */}
-        <header className="flex items-center gap-3 border-b border-border bg-card px-4 py-3 md:hidden">
+        <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-border bg-card px-4 py-3 md:hidden">
           <button
             onClick={() => setMobileOpen(true)}
             className="p-1 text-muted-foreground hover:text-foreground transition-colors"
@@ -121,7 +121,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           <span className="ml-auto text-xs text-muted-foreground font-semibold uppercase tracking-wide">Admin</span>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-5 md:p-8">
+        <main className="flex-1 p-5 md:p-8">
           {children}
         </main>
       </div>

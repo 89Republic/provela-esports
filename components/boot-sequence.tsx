@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'motion/react';
 
 const KEY = 'provela-signal-acquired';
@@ -10,11 +11,13 @@ const BOOTLINE = 'SIGNAL ACQUIRED — PROVELA ESPORTS NETWORK';
 type Phase = 'boot' | 'flash' | 'done';
 
 export function BootSequence() {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [phase, setPhase] = useState<Phase>('boot');
   const [typed, setTyped] = useState('');
 
   useEffect(() => {
+    if (pathname.startsWith('/admin')) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (sessionStorage.getItem(KEY)) return;
 
@@ -77,7 +80,7 @@ export function BootSequence() {
       window.removeEventListener('pointerdown', skip);
       cleanup();
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <AnimatePresence>

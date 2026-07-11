@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
 /**
@@ -8,7 +9,10 @@ import Lenis from 'lenis';
  * without it. Disabled automatically when the user prefers reduced motion.
  */
 export function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    if (pathname.startsWith('/admin')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.matchMedia('(pointer: coarse)').matches) return; // native momentum on touch
 
@@ -42,7 +46,7 @@ export function SmoothScroll() {
         // Lenis can throw during HMR teardown; ignore.
       }
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

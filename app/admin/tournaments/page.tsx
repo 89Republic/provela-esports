@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview, InfoBanner } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -192,9 +192,13 @@ export default function TournamentsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Tournaments"
-        subtitle={`${content.tournaments.length} tournament${content.tournaments.length !== 1 ? 's' : ''} · upcoming/active shown on homepage carousel`}
+        subtitle={`${content.tournaments.length} tournament${content.tournaments.length !== 1 ? 's' : ''} · ${content.tournaments.filter(t => t.status === 'active').length} active · Tournament Center`}
         action={!editing && <Button onClick={() => { setEditing(newTournament()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Tournament</Button>}
       />
+
+      <InfoBanner className="mb-6">
+        Tournament Center on the homepage highlights the active tournament with bracket, countdown, and standings. Set status to &quot;Active&quot; for homepage prominence.
+      </InfoBanner>
 
       {editing ? (
         <Card>

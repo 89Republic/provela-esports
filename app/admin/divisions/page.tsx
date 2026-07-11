@@ -14,6 +14,7 @@ import {
   EmptyState,
   ImagePreview,
   InfoBanner,
+  SocialLinksEditor,
 } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
@@ -86,6 +87,12 @@ function PlayerEditor({ player, onChange, onRemove }: {
             </Button>
             <ImagePreview src={player.avatar} alt={player.name || player.tag} contain />
           </Field>
+          <Field label="Social Links">
+            <SocialLinksEditor
+              links={player.socialLinks}
+              onChange={links => onChange({ ...player, socialLinks: links })}
+            />
+          </Field>
         </div>
       )}
     </div>
@@ -127,7 +134,10 @@ function DivisionForm({ division, onSave, onCancel }: {
         <Field label="Game" required><Input value={form.game} onChange={e => set('game', e.target.value)} placeholder="EA SPORTS FC" /></Field>
       </FieldRow>
       <FieldRow>
-        <Field label="Icon / Badge"><Input value={form.icon} onChange={e => set('icon', e.target.value)} placeholder="FC" /></Field>
+        <Field label="Monogram / Icon" required>
+          <Input value={form.icon} onChange={e => set('icon', e.target.value)} placeholder="FC" />
+          <p className="text-xs text-muted-foreground mt-1">Shown as the division logo on the homepage grid and /divisions page.</p>
+        </Field>
         <FieldRow className="grid-cols-2">
           <Field label="Teams"><Input type="number" value={form.teams} onChange={e => set('teams', Number(e.target.value))} /></Field>
           <Field label="Players"><Input type="number" value={form.players} onChange={e => set('players', Number(e.target.value))} /></Field>
@@ -135,15 +145,9 @@ function DivisionForm({ division, onSave, onCancel }: {
       </FieldRow>
       <Field label="Tagline"><Input value={form.tagline} onChange={e => set('tagline', e.target.value)} placeholder="Short tagline" /></Field>
       <Field label="Description"><Textarea value={form.description} onChange={e => set('description', e.target.value)} placeholder="Full description…" className="min-h-24" /></Field>
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <input type="checkbox" id="featured" checked={!!form.featured} onChange={e => set('featured', e.target.checked)} className="size-4 accent-primary" />
-          <label htmlFor="featured" className="text-sm text-foreground">Featured on homepage (desktop grid)</label>
-        </div>
-        <InfoBanner>
-          Mobile homepage shows all divisions in a swipe carousel. Squad photos use the Provela logo by default — set a custom URL per player if needed.
-        </InfoBanner>
-      </div>
+      <InfoBanner>
+        All divisions appear on the homepage Divisions Scene and /divisions grid. Squad photos default to the Provela logo — set a custom URL per player if needed.
+      </InfoBanner>
 
       {/* Media */}
       <div>
@@ -151,7 +155,7 @@ function DivisionForm({ division, onSave, onCancel }: {
           <h3 className="text-sm font-semibold text-foreground">Media & Cover Image</h3>
           <Button type="button" variant="outline" size="sm" onClick={addMedia}><Plus className="size-3 mr-1" />Add Media</Button>
         </div>
-        <p className="text-xs text-muted-foreground mb-3">The first image is used as the division cover on cards and the detail page hero.</p>
+        <p className="text-xs text-muted-foreground mb-3">The first image is used as the detail page hero. Division list pages use monograms, not cover images.</p>
         <div className="space-y-3">
           {form.media.map((m, i) => (
             <div key={m.id} className="rounded-lg border border-border p-3 space-y-2">
@@ -253,7 +257,7 @@ export default function DivisionsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="Divisions"
-        subtitle={`${content.divisions.length} division${content.divisions.length !== 1 ? 's' : ''} · ${content.divisions.filter((d) => d.featured).length} featured for desktop homepage`}
+        subtitle={`${content.divisions.length} division${content.divisions.length !== 1 ? 's' : ''} · all shown on homepage & /divisions`}
         action={
           !editing && (
             <Button onClick={() => { setEditing(newDivision()); setIsNew(true); }} disabled={isSaving}>
@@ -281,7 +285,7 @@ export default function DivisionsAdminPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-foreground text-sm">{d.name}</p>
-                    {d.featured && <span className="text-xs px-1.5 py-0.5 rounded bg-primary/10 text-primary">Featured</span>}
+                    {d.icon && <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono">{d.icon}</span>}
                   </div>
                   <p className="text-xs text-muted-foreground">{d.game} · {d.players} players · {d.roster.length} roster</p>
                 </div>

@@ -1,7 +1,44 @@
 'use client';
 
 import { type ReactNode } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import type { SocialLink } from '@/lib/types';
+
+const SOCIAL_PLATFORMS: SocialLink['platform'][] = ['x', 'instagram', 'facebook', 'youtube', 'twitch', 'tiktok', 'discord'];
+
+export function SocialLinksEditor({ links, onChange }: { links: SocialLink[]; onChange: (links: SocialLink[]) => void }) {
+  const add = () => onChange([...links, { platform: 'x', url: '' }]);
+  const update = (i: number, key: keyof SocialLink, val: string) =>
+    onChange(links.map((item, idx) => (idx === i ? { ...item, [key]: val } : item)));
+  const remove = (i: number) => onChange(links.filter((_, idx) => idx !== i));
+
+  return (
+    <div className="space-y-3">
+      {links.map((s, i) => (
+        <div key={i} className="grid grid-cols-[160px_1fr_auto] gap-2 items-center">
+          <Select value={s.platform} onValueChange={v => update(i, 'platform', v)}>
+            <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              {SOCIAL_PLATFORMS.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Input placeholder="https://…" value={s.url} onChange={e => update(i, 'url', e.target.value)} />
+          <button type="button" onClick={() => remove(i)} className="text-muted-foreground hover:text-destructive p-2 transition-colors">
+            <Trash2 className="size-4" />
+          </button>
+        </div>
+      ))}
+      <Button type="button" variant="outline" size="sm" onClick={add}>
+        <Plus className="size-3 mr-1" />Add Link
+      </Button>
+      {links.length === 0 && <p className="text-xs text-muted-foreground">No social links yet.</p>}
+    </div>
+  );
+}
 
 export function PageTitle({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
@@ -26,10 +63,10 @@ const STAT_CARD_THEMES = {
 
 export type StatCardColor = keyof typeof STAT_CARD_THEMES;
 
-export function StatCard({ label, value, sub, color }: { label: string; value: string | number; sub?: string; color?: StatCardColor }) {
+export function StatCard({ label, value, sub, color, className }: { label: string; value: string | number; sub?: string; color?: StatCardColor; className?: string }) {
   const theme = color ? STAT_CARD_THEMES[color] : null;
   return (
-    <div className={cn('rounded-xl border p-5', theme ? `${theme.card}` : 'bg-card border-border')}>
+    <div className={cn('rounded-xl border p-5', theme ? `${theme.card}` : 'bg-card border-border', className)}>
       <p className={cn('text-sm font-medium', theme ? theme.text : 'text-muted-foreground')}>{label}</p>
       <p className={cn('mt-1 text-3xl font-bold', theme ? theme.value : 'text-foreground')}>{value}</p>
       {sub && <p className={cn('mt-1 text-xs', theme ? theme.text : 'text-muted-foreground')}>{sub}</p>}
