@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview } from '../admin-ui';
+import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview, InfoBanner } from '../admin-ui';
 import { useAdminContent } from '../use-admin-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -103,9 +103,13 @@ export default function NewsAdminPage() {
     <AdminLayout>
       <PageTitle
         title="News"
-        subtitle={`${content.newsArticles.length} article${content.newsArticles.length !== 1 ? 's' : ''} · homepage shows latest in a mobile swipe carousel`}
+        subtitle={`${content.newsArticles.length} article${content.newsArticles.length !== 1 ? 's' : ''} · top 4 on Dispatch scene`}
         action={!editing && <Button onClick={() => { setEditing(newArticle()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />New Article</Button>}
       />
+
+      <InfoBanner className="mb-6">
+        Homepage Dispatch shows the 4 most recent articles. Categories map to display labels: Announcements → Stream Network, Results → Match Result, Tournaments → Tournament Report, Community → Community Signal.
+      </InfoBanner>
 
       {editing ? (
         <Card>

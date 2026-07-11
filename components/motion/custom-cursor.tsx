@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 /**
@@ -8,6 +9,7 @@ import { motion, useMotionValue, useSpring } from 'motion/react';
  * interactive elements. Desktop pointers only.
  */
 export function CustomCursor() {
+  const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
   const [active, setActive] = useState(false);
   const [down, setDown] = useState(false);
@@ -18,6 +20,7 @@ export function CustomCursor() {
   const sy = useSpring(y, { stiffness: 500, damping: 34, mass: 0.3 });
 
   useEffect(() => {
+    if (pathname.startsWith('/admin')) return;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (coarse || reduced) return; // touch devices keep the native pointer
@@ -37,12 +40,13 @@ export function CustomCursor() {
     window.addEventListener('mousedown', onDown);
     window.addEventListener('mouseup', onUp);
     return () => {
+      setEnabled(false);
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mousedown', onDown);
       window.removeEventListener('mouseup', onUp);
       document.documentElement.classList.remove('has-custom-cursor');
     };
-  }, [x, y]);
+  }, [pathname, x, y]);
 
   if (!enabled) return null;
 
