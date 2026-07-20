@@ -113,7 +113,7 @@ export function HeroSection() {
                 Explore Divisions <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/tournaments">
+            <Link href="/fcx">
               <Button
                 size="lg"
                 variant="outline"
@@ -188,7 +188,7 @@ export function UpcomingTournamentsSection({ tournaments }: { tournaments: Tourn
           ))}
         </div>
         <div className={homeSectionCtaClass}>
-          <Link href="/tournaments" className={homeSectionLinkClass}>
+          <Link href="/fcx" className={homeSectionLinkClass}>
             View All Tournaments <ArrowRight className={homeSectionLinkArrowClass} />
           </Link>
         </div>
@@ -263,12 +263,6 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
   );
 }
 
-function sponsorLogoSrc(sponsor: Sponsor) {
-  if (sponsor.logo) return sponsor.logo;
-  if (sponsor.slug) return `https://cdn.simpleicons.org/${sponsor.slug}/${sponsor.color}`;
-  return '/placeholder-logo.svg';
-}
-
 export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
   const marqueeItems = [...sponsors, ...sponsors];
 
@@ -294,7 +288,7 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
               title={sponsor.name}
             >
               <img
-                src={sponsorLogoSrc(sponsor)}
+                src={sponsor.logo}
                 alt={sponsor.name}
                 className="h-9 w-full max-w-30 object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-42"
               />

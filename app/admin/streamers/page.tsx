@@ -1,14 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview, InfoBanner, SocialLinksEditor } from '../admin-ui';
-import { useAdminContent } from '../use-admin-content';
+import {
+  PageTitle,
+  Card,
+  CardHeader,
+  CardBody,
+  Toast,
+  Field,
+  FieldRow,
+  EmptyState,
+  ImagePreview,
+  InfoBanner,
+  SocialLinksEditor,
+  DeleteConfirmDialog,
+} from '../admin-ui';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import type { Streamer } from '@/lib/types';
 
 function newStreamer(): Streamer {
@@ -29,10 +49,22 @@ function newStreamer(): Streamer {
   };
 }
 
-function StreamerForm({ streamer, onSave, onCancel }: {
+function formatFollowers(count: number) {
+  if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`;
+  if (count >= 1_000) return `${Math.round(count / 1_000)}K`;
+  return count.toLocaleString();
+}
+
+const STATUS_STYLES: Record<Streamer['status'], string> = {
+  live: 'bg-primary/10 text-primary',
+  offline: 'bg-muted text-muted-foreground',
+};
+
+function StreamerForm({ streamer, onSave, onCancel, isSaving }: {
   streamer: Streamer;
   onSave: (s: Streamer) => void;
   onCancel: () => void;
+  isSaving: boolean;
 }) {
   const [form, setForm] = useState<Streamer>(streamer);
   const set = <K extends keyof Streamer>(key: K, value: Streamer[K]) => setForm(f => ({ ...f, [key]: value }));
@@ -70,14 +102,15 @@ function StreamerForm({ streamer, onSave, onCancel }: {
           <ImagePreview src={form.avatar} alt={form.name} />
         </Field>
       </FieldRow>
-      <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" placeholder="Optional — not shown on homepage" /></Field>
+      <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" placeholder="Shown on the streamer profile page" /></Field>
       <FieldRow>
         <Field label="Live URL" required>
           <Input value={form.liveUrl} onChange={e => set('liveUrl', e.target.value)} placeholder="https://youtube.com/…/live" />
-          <p className="text-xs text-muted-foreground mt-1">Used by Streamer Wall monitors and /streamers cards.</p>
+          <p className="text-xs text-muted-foreground mt-1">Primary streaming link on the profile page.</p>
         </Field>
         <Field label="Embed URL">
           <Input value={form.embedUrl} onChange={e => set('embedUrl', e.target.value)} placeholder="https://www.youtube.com/embed/…" />
+          <p className="text-xs text-muted-foreground mt-1">Embedded player when status is Live.</p>
         </Field>
       </FieldRow>
       <Field label="Social Links">
@@ -94,69 +127,199 @@ function StreamerForm({ streamer, onSave, onCancel }: {
       </Field>
 
       <div className="flex gap-3 pt-2">
-        <Button onClick={() => onSave(form)} disabled={!form.name}>Save Streamer</Button>
-        <Button variant="outline" onClick={onCancel}><X className="size-4 mr-1" />Cancel</Button>
+        <Button onClick={() => onSave(form)} disabled={!form.name || !form.liveUrl || isSaving}>
+          {isSaving ? 'Saving…' : 'Save Streamer'}
+        </Button>
+        <Button variant="outline" onClick={onCancel} disabled={isSaving}><X className="size-4 mr-1" />Cancel</Button>
       </div>
     </div>
   );
 }
 
 export default function StreamersAdminPage() {
-  const { content, isLoading, isSaving, toast, save } = useAdminContent();
+  const [streamers, setStreamers] = useState<Streamer[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [editing, setEditing] = useState<Streamer | null>(null);
   const [isNew, setIsNew] = useState(false);
+  const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' | 'idle' }>({
+    message: '',
+    kind: 'idle',
+  });
 
-  if (isLoading || !content) {
-    return <AdminLayout><PageTitle title="Streamers" /><p className="text-sm text-muted-foreground">Loading…</p><Toast message={toast.message} kind={toast.kind} /></AdminLayout>;
-  }
+  const notify = useCallback((message: string, kind: 'success' | 'error') => {
+    setToast({ message, kind });
+    setTimeout(() => setToast({ message: '', kind: 'idle' }), 3500);
+  }, []);
 
-  const handleSave = async (s: Streamer) => {
-    const next = isNew ? [...content.streamers, s] : content.streamers.map(x => x.id === s.id ? s : x);
-    await save({ ...content, streamers: next });
-    setEditing(null); setIsNew(false);
+  const loadStreamers = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/admin/streamers', { cache: 'no-store' });
+      const data = (await response.json()) as { streamers?: Streamer[]; error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to load streamers.', 'error');
+        return;
+      }
+
+      setStreamers(data.streamers ?? []);
+    } catch {
+      notify('Failed to load streamers.', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [notify]);
+
+  useEffect(() => {
+    void loadStreamers();
+  }, [loadStreamers]);
+
+  const handleSave = async (streamer: Streamer) => {
+    setIsSaving(true);
+    try {
+      const response = await fetch(
+        isNew ? '/api/admin/streamers' : `/api/admin/streamers/${streamer.id}`,
+        {
+          method: isNew ? 'POST' : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(streamer),
+        },
+      );
+
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to save streamer.', 'error');
+        return;
+      }
+
+      notify(isNew ? 'Streamer created.' : 'Streamer updated.', 'success');
+      setEditing(null);
+      setIsNew(false);
+      await loadStreamers();
+    } catch {
+      notify('Failed to save streamer.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this streamer?')) return;
-    await save({ ...content, streamers: content.streamers.filter(s => s.id !== id) });
+  const handleDelete = async (streamer: Streamer) => {
+    setIsSaving(true);
+    try {
+      const response = await fetch(`/api/admin/streamers/${streamer.id}`, { method: 'DELETE' });
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to delete streamer.', 'error');
+        return;
+      }
+
+      notify(`Removed ${streamer.name}.`, 'success');
+      await loadStreamers();
+    } catch {
+      notify('Failed to delete streamer.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  const liveCount = streamers.filter(s => s.status === 'live').length;
 
   return (
     <AdminLayout>
       <PageTitle
         title="Streamers"
-        subtitle={`${content.streamers.length} streamer${content.streamers.length !== 1 ? 's' : ''} · ${content.streamers.filter(s => s.status === 'live').length} live · Streamer Wall`}
-        action={!editing && <Button onClick={() => { setEditing(newStreamer()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Streamer</Button>}
+        subtitle={`${streamers.length} streamer${streamers.length !== 1 ? 's' : ''} · ${liveCount} live · Streamer Wall & profiles`}
+        action={
+          !editing && (
+            <Button onClick={() => { setEditing(newStreamer()); setIsNew(true); }} disabled={isSaving}>
+              <Plus className="size-4 mr-2" />Add Streamer
+            </Button>
+          )
+        }
       />
 
       <InfoBanner className="mb-6">
-        Streamer Wall shows avatar, name, game, followers, and live status. Set status to &quot;Live&quot; for the red LIVE badge. Cards link to the Live URL.
+        Streamer Wall and cards link to each creator&apos;s profile page. Set status to &quot;Live&quot; for the LIVE badge and embedded player on their profile.
       </InfoBanner>
 
       {editing ? (
         <Card>
           <CardHeader><h2 className="text-sm font-semibold text-foreground">{isNew ? 'New Streamer' : `Editing: ${editing.name}`}</h2></CardHeader>
-          <CardBody><StreamerForm streamer={editing} onSave={handleSave} onCancel={() => { setEditing(null); setIsNew(false); }} /></CardBody>
+          <CardBody>
+            <StreamerForm
+              streamer={editing}
+              onSave={handleSave}
+              onCancel={() => { setEditing(null); setIsNew(false); }}
+              isSaving={isSaving}
+            />
+          </CardBody>
         </Card>
       ) : (
         <Card>
           <CardBody className="p-0">
-            {content.streamers.length === 0 && <EmptyState message="No streamers yet." />}
-            {content.streamers.map((s, i) => (
-              <div key={s.id} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 ${i < content.streamers.length - 1 ? 'border-b border-border' : ''}`}>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium text-foreground text-sm">{s.name}</p>
-                    <span className={`text-xs px-1.5 py-0.5 rounded ${s.status === 'live' ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>{s.status}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{s.game} · {s.platform} · {s.followers.toLocaleString()} followers</p>
-                </div>
-                <div className="flex gap-2 shrink-0">
-                  <Button variant="outline" size="sm" onClick={() => { setEditing(s); setIsNew(false); }}><Pencil className="size-3 mr-1" />Edit</Button>
-                  <Button variant="outline" size="sm" onClick={() => handleDelete(s.id)} disabled={isSaving} className="text-destructive hover:text-destructive border-destructive/40 hover:bg-destructive/5"><Trash2 className="size-3" /></Button>
-                </div>
-              </div>
-            ))}
+            {isLoading ? (
+              <p className="px-4 py-8 text-sm text-muted-foreground">Loading streamers…</p>
+            ) : streamers.length === 0 ? (
+              <EmptyState message="No streamers yet. Add one above." />
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Game</TableHead>
+                    <TableHead>Platform</TableHead>
+                    <TableHead>Followers</TableHead>
+                    <TableHead className="w-[120px] text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {streamers.map((streamer) => (
+                    <TableRow key={streamer.id}>
+                      <TableCell className="font-medium">{streamer.name}</TableCell>
+                      <TableCell>
+                        <span className={`text-xs px-1.5 py-0.5 rounded capitalize ${STATUS_STYLES[streamer.status]}`}>
+                          {streamer.status}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">{streamer.game || '—'}</TableCell>
+                      <TableCell className="capitalize">{streamer.platform}</TableCell>
+                      <TableCell>{formatFollowers(streamer.followers)}</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => { setEditing(streamer); setIsNew(false); }}
+                            aria-label={`Edit ${streamer.name}`}
+                          >
+                            <Pencil className="size-4" />
+                          </Button>
+                          <DeleteConfirmDialog
+                            title="Delete streamer?"
+                            description={`${streamer.name} will be permanently removed from the Streamer Wall and profile pages.`}
+                            onConfirm={() => handleDelete(streamer)}
+                            disabled={isSaving}
+                          >
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              disabled={isSaving}
+                              aria-label={`Delete ${streamer.name}`}
+                            >
+                              <Trash2 className="size-4 text-destructive" />
+                            </Button>
+                          </DeleteConfirmDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardBody>
         </Card>
       )}

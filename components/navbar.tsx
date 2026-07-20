@@ -9,9 +9,8 @@ import { BrandLogo } from '@/components/brand-logo';
 
 const navLinks = [
   { href: '/divisions', label: 'Divisions' },
-  { href: '/tournaments', label: 'Tournaments' },
+  { href: '/fcx', label: 'FCX' },
   { href: '/streamers', label: 'Streamers' },
-  { href: '/tournaments', label: 'FCX' },
   { href: '/news', label: 'News' },
   { href: '/about', label: 'Join' },
 ];

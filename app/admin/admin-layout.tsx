@@ -1,8 +1,8 @@
 'use client';
 
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   Swords,
@@ -14,6 +14,7 @@ import {
   Menu,
   X,
   ExternalLink,
+  LogOut,
 } from 'lucide-react';
 import { BrandLogo } from '@/components/brand-logo';
 import { cn } from '@/lib/utils';
@@ -21,14 +22,22 @@ import { cn } from '@/lib/utils';
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/divisions', label: 'Divisions', icon: Swords },
-  { href: '/admin/tournaments', label: 'Tournaments', icon: Trophy },
+  { href: '/admin/fcx', label: 'FCX', icon: Trophy },
   { href: '/admin/streamers', label: 'Streamers', icon: Radio },
   { href: '/admin/news', label: 'News', icon: Newspaper },
   { href: '/admin/sponsors', label: 'Sponsors', icon: Handshake },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
-function Sidebar({ onClose }: { onClose?: () => void }) {
+function Sidebar({
+  onClose,
+  adminEmail,
+  onLogout,
+}: {
+  onClose?: () => void;
+  adminEmail?: string;
+  onLogout: () => void;
+}) {
   const pathname = usePathname();
 
   return (
@@ -67,7 +76,12 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
         })}
       </nav>
 
-      <div className="border-t border-border px-3 py-4">
+      <div className="border-t border-border px-3 py-4 space-y-1">
+        {adminEmail && (
+          <p className="px-3 pb-2 text-xs text-muted-foreground truncate" title={adminEmail}>
+            {adminEmail}
+          </p>
+        )}
         <a
           href="/"
           target="_blank"
@@ -77,26 +91,55 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
           <ExternalLink className="size-4 shrink-0" />
           View Website
         </a>
+        <button
+          type="button"
+          onClick={onLogout}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+        >
+          <LogOut className="size-4 shrink-0" />
+          Sign out
+        </button>
       </div>
     </aside>
   );
 }
 
 export function AdminLayout({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [adminEmail, setAdminEmail] = useState<string>();
+
+  useEffect(() => {
+    fetch('/api/admin/auth/me')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.user?.email) setAdminEmail(data.user.email);
+      })
+      .catch(() => undefined);
+  }, []);
+
+  async function handleLogout() {
+    await fetch('/api/admin/auth/logout', { method: 'POST' });
+    router.replace('/admin/login');
+    router.refresh();
+  }
 
   return (
     <div className="min-h-screen bg-background flex">
       {/* Desktop sidebar */}
       <div className="hidden md:flex md:w-60 md:shrink-0 md:sticky md:top-0 md:self-start md:h-screen">
-        <Sidebar />
+        <Sidebar adminEmail={adminEmail} onLogout={handleLogout} />
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
           <div className="w-64 shrink-0 flex flex-col h-full">
-            <Sidebar onClose={() => setMobileOpen(false)} />
+            <Sidebar
+              onClose={() => setMobileOpen(false)}
+              adminEmail={adminEmail}
+              onLogout={handleLogout}
+            />
           </div>
           <button
             className="flex-1 bg-black/50"

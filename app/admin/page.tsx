@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 
 const HOMEPAGE_SCENES = [
   { scene: 'Divisions Scene', source: 'All divisions', admin: '/admin/divisions' },
-  { scene: 'Tournament Center', source: 'Active / upcoming tournaments', admin: '/admin/tournaments' },
+  { scene: 'Tournament Center', source: 'Active / upcoming FCX events', admin: '/admin/fcx' },
   { scene: 'Streamer Wall', source: 'All streamers', admin: '/admin/streamers' },
   { scene: 'Dispatch', source: 'Latest 4 news articles', admin: '/admin/news' },
   { scene: 'Sponsor Wall', source: 'All sponsors', admin: '/admin/sponsors' },
@@ -19,7 +19,7 @@ export default function AdminDashboard() {
   const { content, isLoading, toast, reload } = useAdminContent();
 
   const liveStreamers = content?.streamers.filter(s => s.status === 'live').length ?? 0;
-  const activeTournaments = content?.tournaments.filter(t => t.status === 'active').length ?? 0;
+  const activeFcx = content?.fcx.filter(t => t.status === 'active').length ?? 0;
 
   return (
     <AdminLayout>
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
 
       <div className="mb-8 flex flex-nowrap gap-3">
         <StatCard className="min-w-0 flex-1 p-4" label="Divisions" value={content?.divisions.length ?? '—'} sub="shown on homepage & /divisions" color="violet" />
-        <StatCard className="min-w-0 flex-1 p-4" label="Tournaments" value={content?.tournaments.length ?? '—'} sub={content ? `${activeTournaments} active` : undefined} color="sky" />
+        <StatCard className="min-w-0 flex-1 p-4" label="FCX" value={content?.fcx.length ?? '—'} sub={content ? `${activeFcx} active` : undefined} color="sky" />
         <StatCard className="min-w-0 flex-1 p-4" label="Streamers" value={content?.streamers.length ?? '—'} sub={content ? `${liveStreamers} live now` : undefined} color="emerald" />
         <StatCard className="min-w-0 flex-1 p-4" label="News Articles" value={content?.newsArticles.length ?? '—'} sub="top 4 on Dispatch" color="amber" />
         <StatCard className="min-w-0 flex-1 p-4" label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />

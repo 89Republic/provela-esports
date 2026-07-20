@@ -6,15 +6,43 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import type { SocialLink } from '@/lib/types';
 
 const SOCIAL_PLATFORMS: SocialLink['platform'][] = ['x', 'instagram', 'facebook', 'youtube', 'twitch', 'tiktok', 'discord'];
 
-export function SocialLinksEditor({ links, onChange }: { links: SocialLink[]; onChange: (links: SocialLink[]) => void }) {
+export function SocialLinksEditor({
+  links,
+  onChange,
+  onRemove,
+  removeDisabled,
+}: {
+  links: SocialLink[];
+  onChange: (links: SocialLink[]) => void;
+  onRemove?: (index: number, link: SocialLink) => void | Promise<void>;
+  removeDisabled?: boolean;
+}) {
   const add = () => onChange([...links, { platform: 'x', url: '' }]);
   const update = (i: number, key: keyof SocialLink, val: string) =>
     onChange(links.map((item, idx) => (idx === i ? { ...item, [key]: val } : item)));
-  const remove = (i: number) => onChange(links.filter((_, idx) => idx !== i));
+  const remove = async (i: number) => {
+    const link = links[i];
+    if (onRemove) {
+      await onRemove(i, link);
+      return;
+    }
+    onChange(links.filter((_, idx) => idx !== i));
+  };
 
   return (
     <div className="space-y-3">
@@ -27,7 +55,12 @@ export function SocialLinksEditor({ links, onChange }: { links: SocialLink[]; on
             </SelectContent>
           </Select>
           <Input placeholder="https://…" value={s.url} onChange={e => update(i, 'url', e.target.value)} />
-          <button type="button" onClick={() => remove(i)} className="text-muted-foreground hover:text-destructive p-2 transition-colors">
+          <button
+            type="button"
+            onClick={() => void remove(i)}
+            disabled={removeDisabled}
+            className="text-muted-foreground hover:text-destructive p-2 transition-colors disabled:opacity-50"
+          >
             <Trash2 className="size-4" />
           </button>
         </div>
@@ -150,5 +183,51 @@ export function ImagePreview({ src, alt, contain }: { src: string; alt: string; 
         className={cn('h-full w-full', contain ? 'object-contain p-2' : 'object-cover')}
       />
     </div>
+  );
+}
+
+export function DeleteConfirmDialog({
+  title,
+  description,
+  onConfirm,
+  disabled,
+  children,
+  confirmLabel = 'Delete',
+}: {
+  title: string;
+  description: string;
+  onConfirm: () => void | Promise<void>;
+  disabled?: boolean;
+  children: ReactNode;
+  confirmLabel?: string;
+}) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild disabled={disabled}>
+        {children}
+      </AlertDialogTrigger>
+      <AlertDialogContent className="gap-0 overflow-hidden p-0 sm:max-w-md">
+        <div className="flex flex-col items-center px-6 pt-8 pb-2 text-center sm:items-start sm:text-left">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10 ring-1 ring-destructive/20">
+            <Trash2 className="size-5 text-destructive" />
+          </div>
+          <AlertDialogHeader className="space-y-2">
+            <AlertDialogTitle className="text-xl">{title}</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm leading-relaxed">
+              {description}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </div>
+        <AlertDialogFooter className="gap-2 border-t border-border bg-muted/30 px-6 py-4 sm:gap-3">
+          <AlertDialogCancel className="sm:min-w-24">Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive text-white hover:bg-destructive/90 sm:min-w-24"
+            onClick={() => void onConfirm()}
+          >
+            {confirmLabel}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

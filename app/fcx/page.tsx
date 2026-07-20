@@ -5,22 +5,22 @@ import { TournamentCard } from '@/components/cards';
 import { getSiteContent } from '@/lib/site-content';
 
 export const metadata = {
-  title: 'Tournaments | Provela Esports',
-  description: 'Discover upcoming, active, and past tournaments with massive prize pools.',
+  title: 'FCX | Provela Esports',
+  description: 'Discover upcoming, active, and past FCX competitions with massive prize pools.',
 };
 
-export default async function TournamentsPage() {
+export default async function FcxPage() {
   const content = await getSiteContent();
-  const upcoming = content.tournaments.filter((t) => t.status === 'upcoming');
-  const active = content.tournaments.filter((t) => t.status === 'active');
-  const past = content.tournaments.filter((t) => t.status === 'past');
+  const upcoming = content.fcx.filter((t) => t.status === 'upcoming');
+  const active = content.fcx.filter((t) => t.status === 'active');
+  const past = content.fcx.filter((t) => t.status === 'past');
 
   return (
     <>
       <Navbar />
       <PageHeader
-        title="Tournaments"
-        subtitle="World-class competitions with amazing prizes"
+        title="FCX"
+        subtitle="Provela's tournament engine — world-class competitions with amazing prizes"
       />
       <main className="py-12 sm:py-16 md:py-20">
         <Container>

@@ -1,0 +1,1072 @@
+{
+  "brandSocials": [
+    {
+      "platform": "x",
+      "url": "https://x.com/provelaesports"
+    },
+    {
+      "platform": "instagram",
+      "url": "https://instagram.com/provelaesports"
+    },
+    {
+      "platform": "youtube",
+      "url": "https://youtube.com/@provelaesports"
+    }
+  ],
+  "divisions": [
+    {
+      "id": "fcx",
+      "name": "FCX",
+      "game": "Tournament Division",
+      "tagline": "Structured event operations for active, upcoming, and past events.",
+      "description": "FCX is Provela's tournament engine, organizing branded competitions with transparent formats, published schedules, and detailed standings.",
+      "icon": "FCX",
+      "teams": 12,
+      "players": 96,
+      "featured": true,
+      "roster": [
+        {
+          "id": "fcx-ops-1",
+          "tag": "FCX Mira",
+          "name": "Mira Kazim",
+          "role": "Tournament Director",
+          "location": "UK",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "fcx-ops-2",
+          "tag": "FCX Sol",
+          "name": "Harun Malik",
+          "role": "Bracket Operations",
+          "location": "Germany",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        },
+        {
+          "id": "fcx-ops-3",
+          "tag": "FCX Rune",
+          "name": "Elena Petrova",
+          "role": "Broadcast Producer",
+          "location": "Poland",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "youtube",
+              "url": "https://youtube.com"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "10+ Events Delivered",
+          "event": "FCX Season 1",
+          "year": "2025"
+        },
+        {
+          "title": "Average 75K Viewers",
+          "event": "FCX Showcase Finals",
+          "year": "2026"
+        }
+      ],
+      "media": [
+        {
+          "id": "fcx-media-1",
+          "type": "image",
+          "title": "FCX Main Stage",
+          "url": "/images/tournament.jpg"
+        },
+        {
+          "id": "fcx-media-2",
+          "type": "clip",
+          "title": "Behind The Broadcast",
+          "url": "https://youtube.com"
+        }
+      ],
+      "schedule": [
+        {
+          "id": "fcx-sch-1",
+          "opponent": "N/A",
+          "competition": "FCX Summer Cup",
+          "date": "2026-07-03T18:00:00.000Z",
+          "status": "upcoming"
+        },
+        {
+          "id": "fcx-sch-2",
+          "opponent": "N/A",
+          "competition": "FCX Spring Open",
+          "date": "2026-03-03T18:00:00.000Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "provela-shokunin",
+      "name": "Provela Shokunin",
+      "game": "Call of Duty Mobile",
+      "tagline": "Mobile dominance through disciplined gunplay and map control.",
+      "description": "Provela Shokunin focuses on CODM majors with data-driven scrim prep and role-specific training for objective maps and search rotations.",
+      "icon": "CODM",
+      "teams": 1,
+      "players": 8,
+      "featured": true,
+      "roster": [
+        {
+          "id": "shokunin-1",
+          "tag": "PVL Onyx",
+          "name": "Liam Ortega",
+          "role": "IGL",
+          "location": "Mexico",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-2",
+          "tag": "PVL Sumi",
+          "name": "Ari Tan",
+          "role": "Entry",
+          "location": "Singapore",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-3",
+          "tag": "PVL Mako",
+          "name": "Noah Chan",
+          "role": "Anchor",
+          "location": "Malaysia",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            },
+            {
+              "platform": "youtube",
+              "url": "https://youtube.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-4",
+          "tag": "PVL Riku",
+          "name": "Diego Santos",
+          "role": "Support",
+          "location": "Philippines",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "twitch",
+              "url": "https://twitch.tv"
+            },
+            {
+              "platform": "discord",
+              "url": "https://discord.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-5",
+          "tag": "PVL Nova",
+          "name": "Maya Singh",
+          "role": "Slayer",
+          "location": "India",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            },
+            {
+              "platform": "tiktok",
+              "url": "https://tiktok.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-6",
+          "tag": "PVL Kite",
+          "name": "Kenji Watanabe",
+          "role": "Flex",
+          "location": "Japan",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-7",
+          "tag": "PVL Hex",
+          "name": "Omar Hassan",
+          "role": "Sniper",
+          "location": "UAE",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "youtube",
+              "url": "https://youtube.com"
+            },
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        },
+        {
+          "id": "shokunin-8",
+          "tag": "PVL Flux",
+          "name": "Elena Petrova",
+          "role": "Substitute",
+          "location": "Poland",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "twitch",
+              "url": "https://twitch.tv"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Grand Finals Qualification",
+          "event": "CODM Challenger Series",
+          "year": "2025"
+        },
+        {
+          "title": "Top 2 Finish",
+          "event": "Mobile Masters",
+          "year": "2026"
+        }
+      ],
+      "media": [
+        {
+          "id": "shokunin-media-1",
+          "type": "image",
+          "title": "Matchday Stage Photo",
+          "url": "/images/codm.jpg"
+        },
+        {
+          "id": "shokunin-media-2",
+          "type": "clip",
+          "title": "Search and Destroy Ace",
+          "url": "https://youtube.com"
+        }
+      ],
+      "schedule": [
+        {
+          "id": "shokunin-sch-1",
+          "opponent": "Nightline Mobile",
+          "competition": "CODM Regional Split 2",
+          "date": "2026-06-05T17:00:00.000Z",
+          "status": "upcoming"
+        },
+        {
+          "id": "shokunin-sch-2",
+          "opponent": "Core Unity",
+          "competition": "Mobile Masters",
+          "date": "2026-03-28T17:00:00.000Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "provela-sp3",
+      "name": "Provela Sp3",
+      "game": "EA FC Clubs",
+      "tagline": "High tempo clubs football with disciplined team shape.",
+      "description": "Provela Sp3 runs as a tactical eleven-player clubs project built around coordinated transitions, press control, and in-game communication.",
+      "icon": "SP3",
+      "teams": 1,
+      "players": 16,
+      "featured": false,
+      "roster": [
+        {
+          "id": "sp3-1",
+          "tag": "PVL Asher",
+          "name": "Isaac Rivera",
+          "role": "Coach",
+          "location": "Spain",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "sp3-2",
+          "tag": "PVL Nova",
+          "name": "Karim Benali",
+          "role": "CAM",
+          "location": "France",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        },
+        {
+          "id": "sp3-3",
+          "tag": "PVL Brick",
+          "name": "Jack Muir",
+          "role": "CB",
+          "location": "Scotland",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "League Champions",
+          "event": "Clubs Premier Weekend",
+          "year": "2025"
+        },
+        {
+          "title": "Best Defensive Record",
+          "event": "National Clubs Cup",
+          "year": "2025"
+        }
+      ],
+      "media": [
+        {
+          "id": "sp3-media-1",
+          "type": "image",
+          "title": "Tactical Session",
+          "url": "/images/eafc-cover.jpeg"
+        },
+        {
+          "id": "sp3-media-2",
+          "type": "clip",
+          "title": "Counter Attack Sequence",
+          "url": "https://youtube.com"
+        }
+      ],
+      "schedule": [
+        {
+          "id": "sp3-sch-1",
+          "opponent": "Dynasty Clubs",
+          "competition": "Pro Clubs League",
+          "date": "2026-06-22T19:30:00.000Z",
+          "status": "upcoming"
+        },
+        {
+          "id": "sp3-sch-2",
+          "opponent": "Rapid Eleven",
+          "competition": "Clubs Cup",
+          "date": "2026-04-12T19:30:00.000Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "provela-e",
+      "name": "Provela-e",
+      "game": "eFootball",
+      "tagline": "Technical eFootball play with fast transition decision making.",
+      "description": "Provela-e is a specialist eFootball lineup that blends possession structures with aggressive transition play in online and LAN formats.",
+      "icon": "E",
+      "teams": 1,
+      "players": 5,
+      "featured": false,
+      "roster": [
+        {
+          "id": "e-1",
+          "tag": "PVL Prime",
+          "name": "Yusuf Haleem",
+          "role": "Lead Player",
+          "location": "UAE",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "e-2",
+          "tag": "PVL Link",
+          "name": "Riko Tanaka",
+          "role": "Midfield Control",
+          "location": "Japan",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        },
+        {
+          "id": "e-3",
+          "tag": "PVL Frost",
+          "name": "Samir Nasser",
+          "role": "Set Piece Analyst",
+          "location": "Egypt",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Open Cup Winners",
+          "event": "MENA eFootball Open",
+          "year": "2025"
+        },
+        {
+          "title": "Top 8",
+          "event": "International eFootball Series",
+          "year": "2026"
+        }
+      ],
+      "media": [
+        {
+          "id": "e-media-1",
+          "type": "image",
+          "title": "Team Strategy Brief",
+          "url": "/images/e-football.jpeg"
+        },
+        {
+          "id": "e-media-2",
+          "type": "clip",
+          "title": "Top 10 Goals Montage",
+          "url": "https://youtube.com"
+        }
+      ],
+      "schedule": [
+        {
+          "id": "e-sch-1",
+          "opponent": "Volt eClub",
+          "competition": "eFootball Elite Bracket",
+          "date": "2026-06-09T16:00:00.000Z",
+          "status": "upcoming"
+        },
+        {
+          "id": "e-sch-2",
+          "opponent": "Orbit Pros",
+          "competition": "Spring Elite Open",
+          "date": "2026-04-19T16:00:00.000Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "streamers",
+      "name": "Streamers",
+      "game": "Content Division",
+      "tagline": "Live creators driving entertainment and community moments daily.",
+      "description": "The Provela Streamers division is where competitive entertainment meets personality, with daily broadcasts across EA FC, CODM, and variety content.",
+      "icon": "LIVE",
+      "teams": 1,
+      "players": 9,
+      "featured": false,
+      "roster": [
+        {
+          "id": "streamers-1",
+          "tag": "PVL Lens",
+          "name": "Nadia Rehan",
+          "role": "Creator Lead",
+          "location": "Saudi Arabia",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "youtube",
+              "url": "https://youtube.com"
+            }
+          ]
+        },
+        {
+          "id": "streamers-2",
+          "tag": "PVL Flip",
+          "name": "Sami Ward",
+          "role": "Host",
+          "location": "UK",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "https://x.com"
+            }
+          ]
+        },
+        {
+          "id": "streamers-3",
+          "tag": "PVL Riko",
+          "name": "Yara Abbas",
+          "role": "Community Creator",
+          "location": "Jordan",
+          "avatar": "/images/LOGOS-03.png",
+          "socialLinks": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "1M Monthly Views",
+          "event": "Provela Network",
+          "year": "2026"
+        },
+        {
+          "title": "Community Choice Award",
+          "event": "Creator Fest",
+          "year": "2025"
+        }
+      ],
+      "media": [
+        {
+          "id": "streamers-media-1",
+          "type": "image",
+          "title": "Live Watch Party",
+          "url": "/images/streaming.jpg"
+        },
+        {
+          "id": "streamers-media-2",
+          "type": "clip",
+          "title": "Best Stream Moments",
+          "url": "https://youtube.com"
+        }
+      ],
+      "schedule": [
+        {
+          "id": "streamers-sch-1",
+          "opponent": "N/A",
+          "competition": "FCX Watchalong",
+          "date": "2026-05-30T21:00:00.000Z",
+          "status": "upcoming"
+        },
+        {
+          "id": "streamers-sch-2",
+          "opponent": "N/A",
+          "competition": "Creator Clash Night",
+          "date": "2026-04-26T21:00:00.000Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "div-1784551017493",
+      "name": "TEST",
+      "game": "TEST DATA",
+      "tagline": "THIS IS A TEST",
+      "description": "THIS IS A DEMO TEST",
+      "icon": "TEST",
+      "teams": 1,
+      "players": 1,
+      "featured": false,
+      "roster": [
+        {
+          "id": "p-1784551092964",
+          "tag": "TEST",
+          "name": "TEST",
+          "role": "CAP",
+          "location": "GHANA",
+          "avatar": "/uploads/divisions/roster/1784551120929-3d522d66.png",
+          "socialLinks": [
+            {
+              "platform": "x",
+              "url": "FACEBOOK.COM"
+            }
+          ]
+        }
+      ],
+      "achievements": [
+        {
+          "title": "GHANA BEST",
+          "event": "",
+          "year": ""
+        }
+      ],
+      "media": [
+        {
+          "id": "media-1784551059958",
+          "type": "image",
+          "title": "TESTING",
+          "url": "/uploads/divisions/media/1784551088197-33472798.png"
+        }
+      ],
+      "schedule": []
+    }
+  ],
+  "tournaments": [
+    {
+      "id": "fcx-pro-series-s2",
+      "name": "FCX Pro Series S2",
+      "game": "EA SPORTS FC",
+      "division": "FCX",
+      "status": "active",
+      "overview": "FCX Pro Series S2 is a multi-week competition featuring top-tier FC lineups across group and playoff stages.",
+      "format": "8 teams, double round-robin groups, top 4 to single elimination playoffs.",
+      "startDate": "2026-05-01T18:00:00.000Z",
+      "endDate": "2026-06-15T22:00:00.000Z",
+      "prizePool": "GH₵5,000",
+      "registrationOpen": false,
+      "image": "/images/tournament.jpg",
+      "participants": [
+        {
+          "id": "p1",
+          "name": "Provela EA FC",
+          "type": "team",
+          "record": "6-1"
+        },
+        {
+          "id": "p2",
+          "name": "North Core",
+          "type": "team",
+          "record": "5-2"
+        },
+        {
+          "id": "p3",
+          "name": "Rapid XI",
+          "type": "team",
+          "record": "4-3"
+        },
+        {
+          "id": "p4",
+          "name": "Volt Prime",
+          "type": "team",
+          "record": "4-3"
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Provela EA FC",
+          "played": 7,
+          "points": 18
+        },
+        {
+          "rank": 2,
+          "name": "North Core",
+          "played": 7,
+          "points": 15
+        },
+        {
+          "rank": 3,
+          "name": "Rapid XI",
+          "played": 7,
+          "points": 12
+        },
+        {
+          "rank": 4,
+          "name": "Volt Prime",
+          "played": 7,
+          "points": 12
+        }
+      ],
+      "schedule": [
+        {
+          "id": "s1",
+          "label": "Semi Final 1",
+          "stage": "Playoffs",
+          "date": "2026-06-10T20:00:00.000Z"
+        },
+        {
+          "id": "s2",
+          "label": "Semi Final 2",
+          "stage": "Playoffs",
+          "date": "2026-06-11T20:00:00.000Z"
+        },
+        {
+          "id": "s3",
+          "label": "Grand Final",
+          "stage": "Playoffs",
+          "date": "2026-06-15T21:00:00.000Z"
+        }
+      ],
+      "results": [
+        "Matchday 7: Provela EA FC 4-1 Volt Prime",
+        "Matchday 7: North Core 2-2 Rapid XI"
+      ]
+    },
+    {
+      "id": "fcx-open-cup-july",
+      "name": "FCX Open Cup July",
+      "game": "Cross-title Community Cup",
+      "division": "FCX",
+      "status": "upcoming",
+      "overview": "A community-first FCX event with open registration for rising players and teams looking for exposure.",
+      "format": "32 entrants, seeded single elimination bracket with best-of-three rounds.",
+      "startDate": "2026-07-08T19:00:00.000Z",
+      "endDate": "2026-07-19T22:00:00.000Z",
+      "prizePool": "GH₵1,000",
+      "registrationOpen": true,
+      "image": "/images/tournament2.jpg",
+      "participants": [
+        {
+          "id": "u1",
+          "name": "Slots Available",
+          "type": "team"
+        },
+        {
+          "id": "u2",
+          "name": "Slots Available",
+          "type": "team"
+        },
+        {
+          "id": "u3",
+          "name": "Slots Available",
+          "type": "team"
+        },
+        {
+          "id": "u4",
+          "name": "Slots Available",
+          "type": "team"
+        }
+      ],
+      "standings": [],
+      "schedule": [
+        {
+          "id": "u-s1",
+          "label": "Registration Closes",
+          "stage": "Pre-event",
+          "date": "2026-07-05T23:59:00.000Z"
+        },
+        {
+          "id": "u-s2",
+          "label": "Round of 32",
+          "stage": "Bracket",
+          "date": "2026-07-08T19:00:00.000Z"
+        },
+        {
+          "id": "u-s3",
+          "label": "Final",
+          "stage": "Bracket",
+          "date": "2026-07-19T21:00:00.000Z"
+        }
+      ],
+      "results": []
+    },
+    {
+      "id": "fcx-spring-invitational",
+      "name": "FCX Spring Invitational",
+      "game": "EA SPORTS FC",
+      "division": "FCX",
+      "status": "past",
+      "overview": "A closed invitational to open the FCX calendar, featuring eight invited teams and a LAN final.",
+      "format": "Two groups of four, top two from each group to playoffs.",
+      "startDate": "2026-03-01T18:00:00.000Z",
+      "endDate": "2026-03-18T22:00:00.000Z",
+      "prizePool": "GH₵5,000",
+      "registrationOpen": false,
+      "image": "/images/tournament.jpg",
+      "participants": [
+        {
+          "id": "i1",
+          "name": "Provela EA FC",
+          "type": "team",
+          "record": "7-1"
+        },
+        {
+          "id": "i2",
+          "name": "Apex Eleven",
+          "type": "team",
+          "record": "6-2"
+        },
+        {
+          "id": "i3",
+          "name": "North Core",
+          "type": "team",
+          "record": "5-3"
+        },
+        {
+          "id": "i4",
+          "name": "Orbit United",
+          "type": "team",
+          "record": "4-4"
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Provela EA FC",
+          "played": 8,
+          "points": 21
+        },
+        {
+          "rank": 2,
+          "name": "Apex Eleven",
+          "played": 8,
+          "points": 18
+        },
+        {
+          "rank": 3,
+          "name": "North Core",
+          "played": 8,
+          "points": 15
+        },
+        {
+          "rank": 4,
+          "name": "Orbit United",
+          "played": 8,
+          "points": 12
+        }
+      ],
+      "schedule": [
+        {
+          "id": "i-s1",
+          "label": "Semi Final 1",
+          "stage": "Playoffs",
+          "date": "2026-03-16T20:00:00.000Z"
+        },
+        {
+          "id": "i-s2",
+          "label": "Semi Final 2",
+          "stage": "Playoffs",
+          "date": "2026-03-16T21:00:00.000Z"
+        },
+        {
+          "id": "i-s3",
+          "label": "Grand Final",
+          "stage": "Playoffs",
+          "date": "2026-03-18T21:00:00.000Z"
+        }
+      ],
+      "results": [
+        "Grand Final: Provela EA FC 3-2 Apex Eleven",
+        "Third Place: North Core 4-2 Orbit United"
+      ]
+    }
+  ],
+  "streamers": [
+    {
+      "id": "lens",
+      "name": "PVL Lens",
+      "game": "EA SPORTS FC",
+      "avatar": "/images/eafc .jpg",
+      "status": "live",
+      "platform": "youtube",
+      "followers": 112000,
+      "bio": "Daily FC gameplay, review sessions, and FCX watch parties.",
+      "embedUrl": "https://www.youtube.com/embed/jfKfPfyJRdk",
+      "liveUrl": "https://youtube.com/@provelaesports/live",
+      "socialLinks": [
+        {
+          "platform": "youtube",
+          "url": "https://youtube.com/@provelaesports"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/provelaesports"
+        }
+      ],
+      "highlights": [
+        "Top 10 FCX goals recap",
+        "Live tactical review with Pro Squad"
+      ],
+      "schedule": [
+        "Mon-Fri 20:00 UTC",
+        "Sun FCX Watchalong 18:00 UTC"
+      ]
+    },
+    {
+      "id": "flip",
+      "name": "PVL Flip",
+      "game": "Call of Duty Mobile",
+      "avatar": "/images/codm.jpg",
+      "status": "live",
+      "platform": "youtube",
+      "followers": 84000,
+      "bio": "CODM ranked grinds and team comms breakdowns with Shokunin players.",
+      "embedUrl": "https://www.youtube.com/embed/5qap5aO4i9A",
+      "liveUrl": "https://youtube.com/@provelaesports/live",
+      "socialLinks": [
+        {
+          "platform": "youtube",
+          "url": "https://youtube.com/@provelaesports"
+        },
+        {
+          "platform": "instagram",
+          "url": "https://instagram.com/provelaesports"
+        }
+      ],
+      "highlights": [
+        "Shokunin scrim night",
+        "Search and Destroy solo clutch review"
+      ],
+      "schedule": [
+        "Tue-Thu 19:00 UTC",
+        "Sat Community Customs 17:00 UTC"
+      ]
+    },
+    {
+      "id": "nova-live",
+      "name": "PVL Nova",
+      "game": "EA FC Clubs",
+      "avatar": "/images/eafc .jpg",
+      "status": "offline",
+      "platform": "youtube",
+      "followers": 67000,
+      "bio": "Creator-led clubs analysis with tactical overlays and team reviews.",
+      "embedUrl": "https://www.youtube.com/embed/kxopViU98Xo",
+      "liveUrl": "https://youtube.com/@provelaesports/live",
+      "socialLinks": [
+        {
+          "platform": "x",
+          "url": "https://x.com/provelaesports"
+        },
+        {
+          "platform": "youtube",
+          "url": "https://youtube.com/@provelaesports"
+        }
+      ],
+      "highlights": [
+        "SP3 tactical camera deep dive",
+        "Clubs ladder grind week 12"
+      ],
+      "schedule": [
+        "Mon, Wed, Fri 18:00 UTC"
+      ]
+    },
+    {
+      "id": "rune",
+      "name": "PVL Rune",
+      "game": "FCX Broadcast Desk",
+      "avatar": "/placeholder-user.jpg",
+      "status": "offline",
+      "platform": "youtube",
+      "followers": 58000,
+      "bio": "Event host for FCX tournaments, interviews, and post-match breakdowns.",
+      "embedUrl": "https://www.youtube.com/embed/DWcJFNfaw9c",
+      "liveUrl": "https://youtube.com/@provelaesports/live",
+      "socialLinks": [
+        {
+          "platform": "x",
+          "url": "https://x.com/provelaesports"
+        },
+        {
+          "platform": "instagram",
+          "url": "https://instagram.com/provelaesports"
+        }
+      ],
+      "highlights": [
+        "FCX finals desk reactions",
+        "Player spotlight interviews"
+      ],
+      "schedule": [
+        "Tournament Days 19:00 UTC"
+      ]
+    }
+  ],
+  "newsArticles": [
+    {
+      "id": "fcx-pro-series-live",
+      "title": "FCX Pro Series S2 enters playoff week",
+      "excerpt": "The top four teams are locked in for the FCX Pro Series playoff run.",
+      "image": "/images/eafc .jpg",
+      "date": "2026-05-10",
+      "author": "Provela Editorial",
+      "category": "Tournaments",
+      "content": [
+        "The FCX Pro Series S2 regular season has concluded, and the playoff bracket is now finalized.",
+        "Provela EA FC, North Core, Rapid XI, and Volt Prime will compete over three days in a single-elimination format.",
+        "Broadcast coverage starts at 19:30 UTC daily with player interviews, tactical desk segments, and live social engagement."
+      ]
+    },
+    {
+      "id": "shokunin-mobile-masters",
+      "title": "Provela Shokunin secure top-two at Mobile Masters",
+      "excerpt": "A breakout run sees Shokunin finish second and qualify for next split finals.",
+      "image": "/images/codm.jpg",
+      "date": "2026-05-03",
+      "author": "Match Ops Desk",
+      "category": "Results",
+      "content": [
+        "Provela Shokunin delivered one of their strongest tournament performances to date at Mobile Masters.",
+        "The team dropped only one map before the final and closed out the semifinal with a 3-0 sweep.",
+        "This finish secures a direct place in the upcoming regional split finals and improves seeding for cross-region events."
+      ]
+    },
+    {
+      "id": "streamer-network-update",
+      "title": "Provela streamer network crosses one million monthly views",
+      "excerpt": "Creator-led programming is scaling with stronger watch parties and original shows.",
+      "image": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200&h=600&fit=crop",
+      "date": "2026-04-28",
+      "author": "Community Team",
+      "category": "Community",
+      "content": [
+        "Provela stream programming has reached a major milestone with over one million monthly live and VOD views.",
+        "The biggest growth came from FCX watch parties, post-match breakdown formats, and co-streamed creator events.",
+        "New collaboration windows with players and partners will roll out over the next quarter."
+      ]
+    },
+    {
+      "id": "open-cup-registration",
+      "title": "Registration opens for FCX Open Cup July",
+      "excerpt": "Applications are now live for teams and players looking to compete in FCX.",
+      "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&h=600&fit=crop",
+      "date": "2026-04-20",
+      "author": "Tournament Team",
+      "category": "Announcements",
+      "content": [
+        "FCX Open Cup July is now accepting registrations across all supported regions.",
+        "The bracket is open to 32 entries, with seeding based on recent competitive activity and qualifier performance.",
+        "Interested entrants can register through the tournament page and review the event handbook before confirmation."
+      ]
+    }
+  ],
+  "sponsors": [
+    {
+      "id": "gaming-hub",
+      "name": "Let's Hang Out Game Hub",
+      "logo": "/sponsors/gaming-hub.png"
+    },
+    {
+      "id": "mr-klass",
+      "name": "MR KLASS ONLINE",
+      "logo": "/sponsors/mr-klass.png"
+    },
+    {
+      "id": "esports-ghana",
+      "name": "Esports Association Ghana",
+      "logo": "/sponsors/esports-ghana.png"
+    },
+    {
+      "id": "the-bear",
+      "name": "The Bear Fufu and Grill",
+      "logo": "/sponsors/the-bear.png"
+    }
+  ]
+}

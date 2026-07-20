@@ -1,20 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { AdminLayout } from '../admin-layout';
-import { PageTitle, Card, CardHeader, CardBody, Toast, Field, FieldRow, EmptyState, ImagePreview, InfoBanner } from '../admin-ui';
-import { useAdminContent } from '../use-admin-content';
+import {
+  PageTitle,
+  Card,
+  CardHeader,
+  CardBody,
+  Toast,
+  Field,
+  FieldRow,
+  EmptyState,
+  ImagePreview,
+  InfoBanner,
+  DeleteConfirmDialog,
+} from '../admin-ui';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import type { Tournament, TournamentParticipant, TournamentScheduleItem, TournamentStandingsEntry } from '@/lib/types';
 import { formatPrizePool } from '@/lib/utils';
 
-function newTournament(): Tournament {
+function newFcxEvent(): Tournament {
   return {
-    id: `t-${Date.now()}`,
+    id: `fcx-${Date.now()}`,
     name: '',
     game: '',
     division: 'FCX',
@@ -33,10 +52,18 @@ function newTournament(): Tournament {
   };
 }
 
-function TournamentForm({ tournament, onSave, onCancel }: {
+function formatDate(iso: string) {
+  if (!iso) return '—';
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '—';
+  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function TournamentForm({ tournament, onSave, onCancel, isSaving }: {
   tournament: Tournament;
   onSave: (t: Tournament) => void;
   onCancel: () => void;
+  isSaving: boolean;
 }) {
   const [form, setForm] = useState<Tournament>(tournament);
   const set = <K extends keyof Tournament>(key: K, value: Tournament[K]) => setForm(f => ({ ...f, [key]: value }));
@@ -90,7 +117,6 @@ function TournamentForm({ tournament, onSave, onCancel }: {
         <label htmlFor="regOpen" className="text-sm text-foreground">Registration open</label>
       </div>
 
-      {/* Participants */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-semibold text-foreground">Participants ({form.participants.length})</h3>
@@ -101,13 +127,12 @@ function TournamentForm({ tournament, onSave, onCancel }: {
             <div key={p.id} className="grid grid-cols-[1fr_auto_auto] gap-2 items-center">
               <Input placeholder="Team/Player name" value={p.name} onChange={e => updateParticipant(i, 'name', e.target.value)} />
               <Input placeholder="Record" className="w-24" value={p.record ?? ''} onChange={e => updateParticipant(i, 'record', e.target.value)} />
-              <button onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
+              <button type="button" onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Standings */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-semibold text-foreground">Standings</h3>
@@ -120,13 +145,12 @@ function TournamentForm({ tournament, onSave, onCancel }: {
               <Input placeholder="Team name" value={s.name} onChange={e => updateStanding(i, 'name', e.target.value)} />
               <Input type="number" className="w-20" placeholder="Played" value={s.played} onChange={e => updateStanding(i, 'played', Number(e.target.value))} />
               <Input type="number" className="w-20" placeholder="Pts" value={s.points} onChange={e => updateStanding(i, 'points', Number(e.target.value))} />
-              <button onClick={() => removeStanding(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
+              <button type="button" onClick={() => removeStanding(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Schedule */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-semibold text-foreground">Schedule</h3>
@@ -138,13 +162,12 @@ function TournamentForm({ tournament, onSave, onCancel }: {
               <Input placeholder="Label (Semi Final 1)" value={s.label} onChange={e => updateSchedule(i, 'label', e.target.value)} />
               <Input placeholder="Stage" value={s.stage} onChange={e => updateSchedule(i, 'stage', e.target.value)} />
               <Input type="datetime-local" value={s.date.slice(0, 16)} onChange={e => updateSchedule(i, 'date', new Date(e.target.value).toISOString())} />
-              <button onClick={() => removeSchedule(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
+              <button type="button" onClick={() => removeSchedule(i)} className="text-muted-foreground hover:text-destructive p-2"><Trash2 className="size-4" /></button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Results */}
       <Field label="Results (one per line)">
         <Textarea
           className="min-h-20 font-mono text-xs"
@@ -155,8 +178,10 @@ function TournamentForm({ tournament, onSave, onCancel }: {
       </Field>
 
       <div className="flex gap-3 pt-2">
-        <Button onClick={() => onSave(form)} disabled={!form.name}>Save Tournament</Button>
-        <Button variant="outline" onClick={onCancel}><X className="size-4 mr-1" />Cancel</Button>
+        <Button onClick={() => onSave(form)} disabled={!form.name || !form.game || isSaving}>
+          {isSaving ? 'Saving…' : 'Save Event'}
+        </Button>
+        <Button variant="outline" onClick={onCancel} disabled={isSaving}><X className="size-4 mr-1" />Cancel</Button>
       </div>
     </div>
   );
@@ -168,62 +193,192 @@ const STATUS_STYLES: Record<Tournament['status'], string> = {
   past: 'bg-muted text-muted-foreground',
 };
 
-export default function TournamentsAdminPage() {
-  const { content, isLoading, isSaving, toast, save } = useAdminContent();
+export default function FcxAdminPage() {
+  const [events, setEvents] = useState<Tournament[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [editing, setEditing] = useState<Tournament | null>(null);
   const [isNew, setIsNew] = useState(false);
+  const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' | 'idle' }>({
+    message: '',
+    kind: 'idle',
+  });
 
-  if (isLoading || !content) {
-    return <AdminLayout><PageTitle title="Tournaments" /><p className="text-sm text-muted-foreground">Loading…</p><Toast message={toast.message} kind={toast.kind} /></AdminLayout>;
-  }
+  const notify = useCallback((message: string, kind: 'success' | 'error') => {
+    setToast({ message, kind });
+    setTimeout(() => setToast({ message: '', kind: 'idle' }), 3500);
+  }, []);
 
-  const handleSave = async (t: Tournament) => {
-    const next = isNew ? [...content.tournaments, t] : content.tournaments.map(x => x.id === t.id ? t : x);
-    await save({ ...content, tournaments: next });
-    setEditing(null); setIsNew(false);
+  const loadEvents = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/admin/fcx', { cache: 'no-store' });
+      const data = (await response.json()) as { fcx?: Tournament[]; error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to load FCX events.', 'error');
+        return;
+      }
+
+      setEvents(data.fcx ?? []);
+    } catch {
+      notify('Failed to load FCX events.', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [notify]);
+
+  useEffect(() => {
+    void loadEvents();
+  }, [loadEvents]);
+
+  const handleSave = async (tournament: Tournament) => {
+    setIsSaving(true);
+    try {
+      const response = await fetch(
+        isNew ? '/api/admin/fcx' : `/api/admin/fcx/${tournament.id}`,
+        {
+          method: isNew ? 'POST' : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tournament),
+        },
+      );
+
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to save tournament.', 'error');
+        return;
+      }
+
+      notify(isNew ? 'FCX event created.' : 'FCX event updated.', 'success');
+      setEditing(null);
+      setIsNew(false);
+      await loadEvents();
+    } catch {
+      notify('Failed to save FCX event.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this tournament?')) return;
-    await save({ ...content, tournaments: content.tournaments.filter(t => t.id !== id) });
+  const handleDelete = async (tournament: Tournament) => {
+    setIsSaving(true);
+    try {
+      const response = await fetch(`/api/admin/fcx/${tournament.id}`, { method: 'DELETE' });
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        notify(data.error ?? 'Failed to delete FCX event.', 'error');
+        return;
+      }
+
+      notify(`Removed ${tournament.name}.`, 'success');
+      await loadEvents();
+    } catch {
+      notify('Failed to delete FCX event.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  const activeCount = events.filter(t => t.status === 'active').length;
 
   return (
     <AdminLayout>
       <PageTitle
-        title="Tournaments"
-        subtitle={`${content.tournaments.length} tournament${content.tournaments.length !== 1 ? 's' : ''} · ${content.tournaments.filter(t => t.status === 'active').length} active · Tournament Center`}
-        action={!editing && <Button onClick={() => { setEditing(newTournament()); setIsNew(true); }} disabled={isSaving}><Plus className="size-4 mr-2" />Add Tournament</Button>}
+        title="FCX"
+        subtitle={`${events.length} event${events.length !== 1 ? 's' : ''} · ${activeCount} active · Tournament Center`}
+        action={
+          !editing && (
+            <Button onClick={() => { setEditing(newFcxEvent()); setIsNew(true); }} disabled={isSaving}>
+              <Plus className="size-4 mr-2" />Add Event
+            </Button>
+          )
+        }
       />
 
       <InfoBanner className="mb-6">
-        Tournament Center on the homepage highlights the active tournament with bracket, countdown, and standings. Set status to &quot;Active&quot; for homepage prominence.
+        Tournament Center on the homepage highlights the active FCX event with bracket, countdown, and standings. Set status to &quot;Active&quot; for homepage prominence.
       </InfoBanner>
 
       {editing ? (
         <Card>
-          <CardHeader><h2 className="text-sm font-semibold text-foreground">{isNew ? 'New Tournament' : `Editing: ${editing.name}`}</h2></CardHeader>
-          <CardBody><TournamentForm tournament={editing} onSave={handleSave} onCancel={() => { setEditing(null); setIsNew(false); }} /></CardBody>
+          <CardHeader><h2 className="text-sm font-semibold text-foreground">{isNew ? 'New FCX Event' : `Editing: ${editing.name}`}</h2></CardHeader>
+          <CardBody>
+            <TournamentForm
+              tournament={editing}
+              onSave={handleSave}
+              onCancel={() => { setEditing(null); setIsNew(false); }}
+              isSaving={isSaving}
+            />
+          </CardBody>
         </Card>
       ) : (
         <Card>
           <CardBody className="p-0">
-            {content.tournaments.length === 0 && <EmptyState message="No tournaments yet." />}
-            {content.tournaments.map((t, i) => (
-              <div key={t.id} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 py-3.5 ${i < content.tournaments.length - 1 ? 'border-b border-border' : ''}`}>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-medium text-foreground text-sm">{t.name}</p>
-                    <span className={`text-xs px-1.5 py-0.5 rounded capitalize ${STATUS_STYLES[t.status]}`}>{t.status}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{t.game} · {formatPrizePool(t.prizePool)} · {t.participants.length} teams</p>
-                </div>
-                <div className="flex gap-2 shrink-0">
-                  <Button variant="outline" size="sm" onClick={() => { setEditing(t); setIsNew(false); }}><Pencil className="size-3 mr-1" />Edit</Button>
-                  <Button variant="outline" size="sm" onClick={() => handleDelete(t.id)} disabled={isSaving} className="text-destructive hover:text-destructive border-destructive/40 hover:bg-destructive/5"><Trash2 className="size-3" /></Button>
-                </div>
-              </div>
-            ))}
+            {isLoading ? (
+              <p className="px-4 py-8 text-sm text-muted-foreground">Loading FCX events…</p>
+            ) : events.length === 0 ? (
+              <EmptyState message="No FCX events yet. Add one above." />
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Game</TableHead>
+                    <TableHead>Prize Pool</TableHead>
+                    <TableHead>Start</TableHead>
+                    <TableHead>Teams</TableHead>
+                    <TableHead className="w-[120px] text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {events.map((t) => (
+                    <TableRow key={t.id}>
+                      <TableCell className="font-medium">{t.name}</TableCell>
+                      <TableCell>
+                        <span className={`text-xs px-1.5 py-0.5 rounded capitalize ${STATUS_STYLES[t.status]}`}>
+                          {t.status}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">{t.game}</TableCell>
+                      <TableCell>{formatPrizePool(t.prizePool) || '—'}</TableCell>
+                      <TableCell className="text-muted-foreground">{formatDate(t.startDate)}</TableCell>
+                      <TableCell>{t.participants.length}</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => { setEditing(t); setIsNew(false); }}
+                            aria-label={`Edit ${t.name}`}
+                          >
+                            <Pencil className="size-4" />
+                          </Button>
+                          <DeleteConfirmDialog
+                            title="Delete FCX event?"
+                            description={`${t.name} will be permanently removed from the Tournament Center.`}
+                            onConfirm={() => handleDelete(t)}
+                            disabled={isSaving}
+                          >
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              disabled={isSaving}
+                              aria-label={`Delete ${t.name}`}
+                            >
+                              <Trash2 className="size-4 text-destructive" />
+                            </Button>
+                          </DeleteConfirmDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardBody>
         </Card>
       )}

@@ -11,6 +11,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    return [
+      { source: '/tournaments', destination: '/fcx', permanent: true },
+      { source: '/tournaments/:id', destination: '/fcx/:id', permanent: true },
+      { source: '/admin/tournaments', destination: '/admin/fcx', permanent: true },
+    ];
+  },
   // Prevent Turbopack from picking up a stray lockfile in a parent directory.
   turbopack: {
     root: projectRoot,

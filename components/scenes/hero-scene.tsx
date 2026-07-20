@@ -171,7 +171,7 @@ export function HeroScene() {
           </Magnetic>
           <Magnetic strength={0.2} className="w-full sm:w-auto">
             <Link
-              href="/tournaments"
+              href="/fcx"
               className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-cold/25 bg-cold/5 px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-cold backdrop-blur-sm transition-colors hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
             >
               <Play className="h-3.5 w-3.5 fill-current" />

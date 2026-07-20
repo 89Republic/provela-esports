@@ -20,7 +20,7 @@ export default async function Home() {
       <main>
         <HeroScene />
         <DivisionsScene divisions={content.divisions} />
-        <TournamentCenter tournaments={content.tournaments} />
+        <TournamentCenter tournaments={content.fcx} />
         <FeaturedMatchScene />
         <StreamerWall streamers={content.streamers} />
         <Dispatch articles={content.newsArticles} />

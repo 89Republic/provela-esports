@@ -175,7 +175,7 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
 
               <Magnetic strength={0.2}>
                 <Link
-                  href={`/tournaments/${active.id}`}
+                  href={`/fcx/${active.id}`}
                   className="block bg-provela px-6 py-3.5 text-center font-gaming text-xs font-semibold uppercase tracking-[0.2em] text-void transition-shadow hover:shadow-[0_0_30px_oklch(0.66_0.17_256/0.5)]"
                 >
                   {active.registrationOpen ? 'Register Now' : 'View Bracket'}

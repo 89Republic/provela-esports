@@ -200,7 +200,7 @@ export function TournamentCard({ tournament, variant = 'desktop' }: { tournament
   );
 
   return (
-    <Link href={`/tournaments/${tournament.id}`} className="block h-full min-w-0 w-full">
+    <Link href={`/fcx/${tournament.id}`} className="block h-full min-w-0 w-full">
       <div className={cardShellClass}>{variant === 'mobile' ? mobile : desktop}</div>
     </Link>
   );
@@ -260,7 +260,7 @@ export function NewsCard({ article, variant = 'desktop' }: { article: NewsArticl
 
 export function StreamerCard({ streamer }: { streamer: Streamer }) {
   return (
-    <a href={streamer.liveUrl} target="_blank" rel="noopener noreferrer" className="block h-auto min-w-0 w-full md:h-full">
+    <Link href={`/streamers/${streamer.id}`} className="block h-auto min-w-0 w-full md:h-full">
       <div className={cn(cardShellClass, 'flex flex-col items-center p-4 text-center md:h-full')}>
         <div className="relative mb-4">
           <img
@@ -287,6 +287,6 @@ export function StreamerCard({ streamer }: { streamer: Streamer }) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

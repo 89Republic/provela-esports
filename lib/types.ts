@@ -6,9 +6,7 @@ export interface SocialLink {
 export interface Sponsor {
   id: string;
   name: string;
-  slug?: string;
-  color: string;
-  logo?: string;
+  logo: string;
 }
 
 export interface PlayerProfile {

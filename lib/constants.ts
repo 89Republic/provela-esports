@@ -876,25 +876,21 @@ export const SPONSORS: Sponsor[] = [
   {
     id: 'gaming-hub',
     name: "Let's Hang Out Game Hub",
-    color: 'F97316',
     logo: '/sponsors/gaming-hub.png',
   },
   {
     id: 'mr-klass',
     name: 'MR KLASS ONLINE',
-    color: '3B82F6',
     logo: '/sponsors/mr-klass.png',
   },
   {
     id: 'esports-ghana',
     name: 'Esports Association Ghana',
-    color: 'FFFFFF',
     logo: '/sponsors/esports-ghana.png',
   },
   {
     id: 'the-bear',
     name: 'The Bear Fufu and Grill',
-    color: 'FFFFFF',
     logo: '/sponsors/the-bear.png',
   },
 ];

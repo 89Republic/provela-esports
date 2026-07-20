@@ -6,28 +6,28 @@ import { formatPrizePool } from '@/lib/utils';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Trophy, Users } from 'lucide-react';
 
-interface TournamentDetailPageProps {
+interface FcxDetailPageProps {
   params: Promise<{
     id: string;
   }>;
 }
 
-export default async function TournamentDetailPage(props: TournamentDetailPageProps) {
+export default async function FcxDetailPage(props: FcxDetailPageProps) {
   const params = await props.params;
   const content = await getSiteContent();
-  const tournament = content.tournaments.find((t) => t.id === params.id);
+  const tournament = content.fcx.find((t) => t.id === params.id);
 
   if (!tournament) {
     return (
       <>
         <Navbar />
-        <PageHeader title="Tournament Not Found" />
+        <PageHeader title="FCX Event Not Found" />
         <div className="py-20">
           <Container className="text-center">
-            <p className="text-muted-foreground mb-4">We couldn&apos;t find the tournament you&apos;re looking for.</p>
-            <Link href="/tournaments" className={backLinkClass}>
+            <p className="text-muted-foreground mb-4">We couldn&apos;t find the FCX event you&apos;re looking for.</p>
+            <Link href="/fcx" className={backLinkClass}>
               <ArrowLeft className={backLinkArrowClass} />
-              Back to Tournaments
+              Back to FCX
             </Link>
           </Container>
         </div>
@@ -71,7 +71,7 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
           <div className="grid gap-8 md:grid-cols-3 md:gap-12">
             <div className="md:col-span-2">
               <div className="mb-8 rounded-lg border border-border bg-card p-4 sm:p-6 md:p-8">
-                <h2 className="mb-4 text-xl font-bold text-foreground sm:text-2xl">Tournament Details</h2>
+                <h2 className="mb-4 text-xl font-bold text-foreground sm:text-2xl">Event Details</h2>
                 <p className="mb-3 text-base text-muted-foreground sm:text-lg">{tournament.overview}</p>
                 <p className="mb-6 text-sm text-muted-foreground sm:text-base">{tournament.format}</p>
 
@@ -185,9 +185,9 @@ export default async function TournamentDetailPage(props: TournamentDetailPagePr
           </div>
 
           <div className="border-t border-border pt-8 mt-12">
-            <Link href="/tournaments" className={backLinkClass}>
+            <Link href="/fcx" className={backLinkClass}>
               <ArrowLeft className={backLinkArrowClass} />
-              Back to Tournaments
+              Back to FCX
             </Link>
           </div>
         </Container>
