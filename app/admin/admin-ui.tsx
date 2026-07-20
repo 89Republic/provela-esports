@@ -99,10 +99,10 @@ export type StatCardColor = keyof typeof STAT_CARD_THEMES;
 export function StatCard({ label, value, sub, color, className }: { label: string; value: string | number; sub?: string; color?: StatCardColor; className?: string }) {
   const theme = color ? STAT_CARD_THEMES[color] : null;
   return (
-    <div className={cn('rounded-xl border p-5', theme ? `${theme.card}` : 'bg-card border-border', className)}>
-      <p className={cn('text-sm font-medium', theme ? theme.text : 'text-muted-foreground')}>{label}</p>
-      <p className={cn('mt-1 text-3xl font-bold', theme ? theme.value : 'text-foreground')}>{value}</p>
-      {sub && <p className={cn('mt-1 text-xs', theme ? theme.text : 'text-muted-foreground')}>{sub}</p>}
+    <div className={cn('min-w-0 rounded-lg border p-3', theme ? `${theme.card}` : 'bg-card border-border', className)}>
+      <p className={cn('text-[11px] font-medium leading-tight', theme ? theme.text : 'text-muted-foreground')}>{label}</p>
+      <p className={cn('mt-0.5 text-xl font-bold leading-none sm:text-2xl', theme ? theme.value : 'text-foreground')}>{value}</p>
+      {sub && <p className={cn('mt-1 text-[10px] leading-snug text-muted-foreground/90', theme ? theme.text : 'text-muted-foreground')}>{sub}</p>}
     </div>
   );
 }
@@ -117,7 +117,7 @@ export function Card({ children, className }: { children: ReactNode; className?:
 
 export function CardHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn('flex items-center justify-between gap-4 px-5 py-4 border-b border-border', className)}>
+    <div className={cn('flex flex-col gap-2 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5', className)}>
       {children}
     </div>
   );
