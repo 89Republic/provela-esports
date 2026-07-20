@@ -38,13 +38,13 @@ export default function AdminDashboard() {
         The homepage uses a scene-based broadcast layout — Divisions Scene, Tournament Center, Streamer Wall, Dispatch, and Sponsor Wall. Content you edit here feeds directly into those sections.
       </InfoBanner>
 
-      <div className="mb-8 flex flex-nowrap gap-3">
-        <StatCard className="min-w-0 flex-1 p-4" label="Divisions" value={content?.divisions.length ?? '—'} sub="shown on homepage & /divisions" color="violet" />
-        <StatCard className="min-w-0 flex-1 p-4" label="FCX" value={content?.fcx.length ?? '—'} sub={content ? `${activeFcx} active` : undefined} color="sky" />
-        <StatCard className="min-w-0 flex-1 p-4" label="Streamers" value={content?.streamers.length ?? '—'} sub={content ? `${liveStreamers} live now` : undefined} color="emerald" />
-        <StatCard className="min-w-0 flex-1 p-4" label="News Articles" value={content?.newsArticles.length ?? '—'} sub="top 4 on Dispatch" color="amber" />
-        <StatCard className="min-w-0 flex-1 p-4" label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />
-        <StatCard className="min-w-0 flex-1 p-4" label="Social Links" value={content?.brandSocials.length ?? '—'} sub="footer" color="cyan" />
+      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <StatCard className="p-4" label="Divisions" value={content?.divisions.length ?? '—'} sub="shown on homepage & /divisions" color="violet" />
+        <StatCard className="p-4" label="FCX" value={content?.fcx.length ?? '—'} sub={content ? `${activeFcx} active` : undefined} color="sky" />
+        <StatCard className="p-4" label="Streamers" value={content?.streamers.length ?? '—'} sub={content ? `${liveStreamers} live now` : undefined} color="emerald" />
+        <StatCard className="p-4" label="News Articles" value={content?.newsArticles.length ?? '—'} sub="top 4 on Dispatch" color="amber" />
+        <StatCard className="p-4" label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />
+        <StatCard className="p-4" label="Social Links" value={content?.brandSocials.length ?? '—'} sub="footer" color="cyan" />
       </div>
 
       <Card className="mb-8">
