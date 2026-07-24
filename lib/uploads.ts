@@ -15,19 +15,23 @@ function sanitizeFolder(folder: string) {
 
 function ensureCloudinaryConfigured() {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const cloudinaryUrl = process.env.CLOUDINARY_URL;
 
-  if (!cloudName || !apiKey || !apiSecret) {
-    throw new Error('Cloudinary is not configured. Add CLOUDINARY_* env vars.');
+  if (!cloudName || !apiSecret) {
+    throw new Error('Cloudinary is not configured. Add CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_SECRET env vars.');
   }
 
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret,
-    secure: true,
-  });
+  // Use CLOUDINARY_URL if available (production), otherwise build from individual env vars
+  if (cloudinaryUrl) {
+    cloudinary.config({ secure: true });
+  } else {
+    cloudinary.config({
+      cloud_name: cloudName,
+      api_secret: apiSecret,
+      secure: true,
+    });
+  }
 }
 
 export async function saveUploadedImage(file: File, folder: string): Promise<string> {
@@ -46,20 +50,20 @@ export async function saveUploadedImage(file: File, folder: string): Promise<str
   const buffer = Buffer.from(await file.arrayBuffer());
 
   const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: `provela/${safeFolder}`,
-        public_id: publicId,
-        resource_type: 'image',
-      },
-      (error, uploadResult) => {
-        if (error || !uploadResult?.secure_url) {
-          reject(error ?? new Error('Cloudinary upload failed.'));
-          return;
-        }
-        resolve({ secure_url: uploadResult.secure_url });
-      },
-    );
+    const uploadOptions: Record<string, unknown> = {
+      folder: `provela/${safeFolder}`,
+      public_id: publicId,
+      resource_type: 'image',
+      unsigned: false,
+    };
+
+    const stream = cloudinary.uploader.upload_stream(uploadOptions, (error, uploadResult) => {
+      if (error || !uploadResult?.secure_url) {
+        reject(error ?? new Error('Cloudinary upload failed.'));
+        return;
+      }
+      resolve({ secure_url: uploadResult.secure_url });
+    });
 
     stream.end(buffer);
   });
