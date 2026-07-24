@@ -15,6 +15,7 @@ import type { Division } from '@/lib/types';
 import { DivisionMonogram, divisionTint } from '@/components/division-monogram';
 import { KineticHeading } from '@/components/motion/kinetic-heading';
 import { Reveal } from '@/components/motion/reveal';
+import { getDivisionHeroImage } from '@/lib/utils';
 
 /** Max rotation (deg) for the side columns at full scroll progress. */
 const TILT = 24;
@@ -40,6 +41,7 @@ function PerspectiveTile({
   enabled: boolean;
 }) {
   const { tint } = divisionTint(division.id);
+  const heroImage = encodeURI(getDivisionHeroImage(division));
   const isSide = column !== 1;
   const target = column === 0 ? TILT : column === 2 ? -TILT : 0;
   const depth = isSide ? DEPTH : 0;
@@ -70,16 +72,22 @@ function PerspectiveTile({
         href={`/divisions/${division.id}`}
         aria-label={`${division.name} — ${division.game}`}
         style={{ ['--tint' as string]: tint }}
-        className="group relative flex h-36 items-center justify-center overflow-hidden rounded-xl border border-cold/10 bg-cold/[0.03] transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-[var(--tint)]/40 hover:bg-cold/[0.06] focus-visible:outline-none focus-visible:border-[var(--tint)]/60 sm:h-44 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+        className="group relative flex h-36 items-center justify-center overflow-hidden rounded-xl border border-cold/10 bg-cold/[0.03] transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-[var(--tint)]/40 focus-visible:outline-none focus-visible:border-[var(--tint)]/60 sm:h-44 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       >
+        <span
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          style={{ backgroundImage: `url("${heroImage}")` }}
+        />
+        <span aria-hidden className="absolute inset-0 bg-black/55 transition-colors duration-300 group-hover:bg-black/40" />
         {/* tint wash on hover */}
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_var(--tint),_transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-[0.12]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_var(--tint),_transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-[0.18]"
         />
         <DivisionMonogram
           division={division}
-          className="relative text-4xl text-cold/85 transition-[transform,color] duration-300 group-hover:scale-110 group-hover:text-[var(--tint)] sm:text-5xl motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="relative text-4xl text-cold drop-shadow-[0_2px_12px_rgba(0,0,0,0.65)] transition-[transform,color] duration-300 group-hover:scale-110 group-hover:text-[var(--tint)] sm:text-5xl motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       </Link>
     </motion.div>

@@ -3,6 +3,7 @@ import { Footer } from '@/components/footer';
 import { Container, backLinkClass, backLinkHeroClass, backLinkArrowClass } from '@/components/layout';
 import { SquadCarousel } from '@/components/squad-carousel';
 import { getSiteContent } from '@/lib/site-content';
+import { getDivisionHeroImage } from '@/lib/utils';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
@@ -35,7 +36,7 @@ export default async function DivisionDetailPage(props: DivisionDetailPageProps)
     );
   }
 
-  const heroImage = division.media.find((item) => item.type === 'image')?.url ?? '/images/hero.png';
+  const heroImage = encodeURI(getDivisionHeroImage(division));
 
   return (
     <>

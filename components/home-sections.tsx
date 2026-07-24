@@ -42,18 +42,6 @@ function MobileCardCarousel({ children }: { children: React.ReactNode }) {
   );
 }
 
-const streamersCarouselItemClass = 'pl-4 basis-1/2 min-w-0';
-
-function StreamersMobileCarousel({ children }: { children: React.ReactNode }) {
-  return (
-    <Carousel opts={{ align: 'start', dragFree: true }} className="relative mb-4 md:hidden">
-      <CarouselContent className="-ml-4 items-center">{children}</CarouselContent>
-      <CarouselPrevious className={`left-0 ${carouselNavClass}`} />
-      <CarouselNext className={`right-0 ${carouselNavClass}`} />
-    </Carousel>
-  );
-}
-
 export function HeroSection() {
   const heroImage = '/images/provela-hero-bg.png';
 
@@ -240,17 +228,17 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
           title="Featured Streamers"
           description="Follow our professional streamers and watch the best esports content live."
         />
-        <StreamersMobileCarousel>
+        <MobileCardCarousel>
           {streamers.map((streamer) => (
-            <CarouselItem key={streamer.id} className={streamersCarouselItemClass}>
-              <StreamerCard streamer={streamer} />
+            <CarouselItem key={streamer.id} className={mobileCarouselItemClass}>
+              <StreamerCard streamer={streamer} variant="mobile" />
             </CarouselItem>
           ))}
-        </StreamersMobileCarousel>
+        </MobileCardCarousel>
 
         <div className="hidden md:grid md:grid-cols-4 gap-6">
           {streamers.map((streamer) => (
-            <StreamerCard key={streamer.id} streamer={streamer} />
+            <StreamerCard key={streamer.id} streamer={streamer} variant="desktop" />
           ))}
         </div>
         <div className={homeSectionCtaClass}>
@@ -264,7 +252,20 @@ export function StreamersSection({ streamers }: { streamers: Streamer[] }) {
 }
 
 export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
-  const marqueeItems = [...sponsors, ...sponsors];
+  const track = (copy: number) =>
+    sponsors.map((sponsor) => (
+      <div
+        key={`${sponsor.id}-${copy}`}
+        className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-card px-4 transition-all duration-300 hover:border-primary/35 hover:bg-secondary md:h-24 md:w-52 md:px-6"
+        title={sponsor.name}
+      >
+        <img
+          src={sponsor.logo}
+          alt={sponsor.name}
+          className="h-9 w-full max-w-30 object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-42"
+        />
+      </div>
+    ));
 
   return (
     <section className={`${homeSectionClass} ${homeSectionShadeE} overflow-hidden`}>
@@ -276,22 +277,18 @@ export function SponsorsSection({ sponsors }: { sponsors: Sponsor[] }) {
         />
       </Container>
 
-      <div className="relative mt-6">
+      <div className="group relative mt-6 overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-linear-to-r from-section-e to-transparent sm:w-16 md:w-28" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-linear-to-l from-section-e to-transparent sm:w-16 md:w-28" />
 
-        <div className="group flex w-max animate-sponsor-marquee items-center gap-4 px-4 hover:[animation-play-state:paused] sm:gap-6 md:gap-8">
-          {marqueeItems.map((sponsor, index) => (
+        <div className="flex w-max animate-sponsor-marquee items-center hover:[animation-play-state:paused]">
+          {[0, 1].map((copy) => (
             <div
-              key={`${sponsor.id}-${index}`}
-              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-card px-4 transition-all duration-300 hover:border-primary/35 hover:bg-secondary md:h-24 md:w-52 md:px-6"
-              title={sponsor.name}
+              key={copy}
+              className="flex min-w-screen shrink-0 items-center justify-evenly gap-4 px-4 sm:gap-6 md:gap-8"
+              aria-hidden={copy > 0 ? true : undefined}
             >
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                className="h-9 w-full max-w-30 object-contain opacity-90 transition-opacity group-hover:opacity-100 md:max-h-14 md:max-w-42"
-              />
+              {track(copy)}
             </div>
           ))}
         </div>

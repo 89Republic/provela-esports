@@ -4,6 +4,8 @@ import { Ticker } from '@/components/motion/ticker';
 import type { Sponsor } from '@/lib/types';
 
 export function SponsorWall({ sponsors }: { sponsors: Sponsor[] }) {
+  if (sponsors.length === 0) return null;
+
   const items = sponsors.map((sponsor) => (
     <div key={sponsor.id} className="group relative px-6 py-4 sm:px-10">
       <img

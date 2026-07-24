@@ -1,16 +1,8 @@
 import { randomBytes } from 'crypto';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
 
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
 const MAX_BYTES = 5 * 1024 * 1024;
-
-const EXT_BY_MIME: Record<string, string> = {
-  'image/jpeg': '.jpg',
-  'image/png': '.png',
-  'image/webp': '.webp',
-  'image/gif': '.gif',
-};
 
 function sanitizeFolder(folder: string) {
   const parts = folder
@@ -19,6 +11,23 @@ function sanitizeFolder(folder: string) {
     .filter(Boolean);
 
   return parts.join('/') || 'general';
+}
+
+function ensureCloudinaryConfigured() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    throw new Error('Cloudinary is not configured. Add CLOUDINARY_* env vars.');
+  }
+
+  cloudinary.config({
+    cloud_name: cloudName,
+    api_key: apiKey,
+    api_secret: apiSecret,
+    secure: true,
+  });
 }
 
 export async function saveUploadedImage(file: File, folder: string): Promise<string> {
@@ -30,15 +39,30 @@ export async function saveUploadedImage(file: File, folder: string): Promise<str
     throw new Error('Image must be 5 MB or smaller.');
   }
 
+  ensureCloudinaryConfigured();
+
   const safeFolder = sanitizeFolder(folder);
-  const ext = EXT_BY_MIME[file.type] ?? '.jpg';
-  const filename = `${Date.now()}-${randomBytes(4).toString('hex')}${ext}`;
-  const dir = path.join(process.cwd(), 'public', 'uploads', safeFolder);
-
-  await fs.mkdir(dir, { recursive: true });
-
+  const publicId = `${Date.now()}-${randomBytes(4).toString('hex')}`;
   const buffer = Buffer.from(await file.arrayBuffer());
-  await fs.writeFile(path.join(dir, filename), buffer);
 
-  return `/uploads/${safeFolder}/${filename}`;
+  const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: `provela/${safeFolder}`,
+        public_id: publicId,
+        resource_type: 'image',
+      },
+      (error, uploadResult) => {
+        if (error || !uploadResult?.secure_url) {
+          reject(error ?? new Error('Cloudinary upload failed.'));
+          return;
+        }
+        resolve({ secure_url: uploadResult.secure_url });
+      },
+    );
+
+    stream.end(buffer);
+  });
+
+  return result.secure_url;
 }

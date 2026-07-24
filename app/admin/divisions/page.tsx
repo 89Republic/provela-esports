@@ -169,7 +169,7 @@ function DivisionForm({ division, onSave, onCancel, isSaving }: {
           <h3 className="text-sm font-semibold text-foreground">Media & Cover Image</h3>
           <Button type="button" variant="outline" size="sm" onClick={addMedia}><Plus className="size-3 mr-1" />Add Media</Button>
         </div>
-        <p className="text-xs text-muted-foreground mb-3">The first image is used as the detail page hero. Division list pages use monograms, not cover images.</p>
+        <p className="text-xs text-muted-foreground mb-3">The first image is used as the detail page hero and as the cover on division cards across the site.</p>
         <div className="space-y-3">
           {form.media.map((m, i) => (
             <div key={m.id} className="rounded-lg border border-border p-3 space-y-2">

@@ -1,8 +1,15 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import type { Division } from '@/lib/types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+/** First media image — same source as the division detail hero. */
+export function getDivisionHeroImage(division: Division): string {
+  const hero = division.media.find((item) => item.type === 'image' && item.url.trim())
+  return hero?.url.trim() || '/images/hero.png'
 }
 
 const CEDIS_FORMATTER = new Intl.NumberFormat('en-GH', {

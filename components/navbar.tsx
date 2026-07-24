@@ -12,7 +12,7 @@ const navLinks = [
   { href: '/fcx', label: 'FCX' },
   { href: '/streamers', label: 'Streamers' },
   { href: '/news', label: 'News' },
-  { href: '/about', label: 'Join' },
+  { href: '/about', label: 'About Us' },
 ];
 
 export function Navbar() {
