@@ -13,21 +13,47 @@ function sanitizeFolder(folder: string) {
   return parts.join('/') || 'general';
 }
 
+let isCloudinaryConfigured = false;
+
 function ensureCloudinaryConfigured() {
+  if (isCloudinaryConfigured) return;
+
+  const cloudinaryUrl = process.env.CLOUDINARY_URL;
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
-  if (!cloudName || !apiKey || !apiSecret) {
-    throw new Error('Cloudinary is not configured. Add CLOUDINARY_* env vars.');
+  // Try CLOUDINARY_URL first (most reliable)
+  if (cloudinaryUrl) {
+    cloudinary.config({ secure: true });
+    isCloudinaryConfigured = true;
+    return;
   }
 
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret,
-    secure: true,
-  });
+  // Fall back to individual env vars
+  if (cloudName && apiSecret) {
+    cloudinary.config({
+      cloud_name: cloudName,
+      api_secret: apiSecret,
+      secure: true,
+    });
+    isCloudinaryConfigured = true;
+    return;
+  }
+
+  // Provide detailed error message with available env vars
+  const available = [];
+  if (cloudinaryUrl) available.push('CLOUDINARY_URL');
+  if (cloudName) available.push('CLOUDINARY_CLOUD_NAME');
+  if (apiSecret) available.push('CLOUDINARY_API_SECRET');
+
+  const missing = [];
+  if (!cloudinaryUrl && !cloudName) missing.push('CLOUDINARY_URL or CLOUDINARY_CLOUD_NAME');
+  if (!cloudinaryUrl && !apiSecret) missing.push('CLOUDINARY_API_SECRET');
+
+  throw new Error(
+    `Cloudinary is not configured. Missing: ${missing.join(', ')}. ` +
+    (available.length > 0 ? `Available: ${available.join(', ')}.` : 'Add CLOUDINARY_* env vars.'),
+  );
 }
 
 export async function saveUploadedImage(file: File, folder: string): Promise<string> {
@@ -46,20 +72,20 @@ export async function saveUploadedImage(file: File, folder: string): Promise<str
   const buffer = Buffer.from(await file.arrayBuffer());
 
   const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: `provela/${safeFolder}`,
-        public_id: publicId,
-        resource_type: 'image',
-      },
-      (error, uploadResult) => {
-        if (error || !uploadResult?.secure_url) {
-          reject(error ?? new Error('Cloudinary upload failed.'));
-          return;
-        }
-        resolve({ secure_url: uploadResult.secure_url });
-      },
-    );
+    const uploadOptions: Record<string, unknown> = {
+      folder: `provela/${safeFolder}`,
+      public_id: publicId,
+      resource_type: 'image',
+      unsigned: false,
+    };
+
+    const stream = cloudinary.uploader.upload_stream(uploadOptions, (error, uploadResult) => {
+      if (error || !uploadResult?.secure_url) {
+        reject(error ?? new Error('Cloudinary upload failed.'));
+        return;
+      }
+      resolve({ secure_url: uploadResult.secure_url });
+    });
 
     stream.end(buffer);
   });
