@@ -12,11 +12,11 @@ import {
   Field,
   FieldRow,
   EmptyState,
-  ImagePreview,
   InfoBanner,
   SocialLinksEditor,
   DeleteConfirmDialog,
 } from '../admin-ui';
+import { ImageUploadField } from '../image-upload-field';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -95,13 +95,18 @@ function StreamerForm({ streamer, onSave, onCancel, isSaving }: {
           </Select>
         </Field>
       </FieldRow>
-      <FieldRow>
-        <Field label="Followers"><Input type="number" value={form.followers} onChange={e => set('followers', Number(e.target.value))} /></Field>
-        <Field label="Avatar URL">
-          <Input value={form.avatar} onChange={e => set('avatar', e.target.value)} placeholder="/images/…" />
-          <ImagePreview src={form.avatar} alt={form.name} />
-        </Field>
-      </FieldRow>
+      <Field label="Followers">
+        <Input type="number" value={form.followers} onChange={e => set('followers', Number(e.target.value))} />
+      </Field>
+      <Field label="Avatar">
+        <ImageUploadField
+          value={form.avatar}
+          onChange={(avatar) => set('avatar', avatar)}
+          alt={form.name || 'Streamer avatar'}
+          folder="streamers"
+          placeholder="/uploads/streamers/avatar.jpg"
+        />
+      </Field>
       <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" placeholder="Shown on the streamer profile page" /></Field>
       <FieldRow>
         <Field label="Live URL" required>

@@ -12,10 +12,10 @@ import {
   Field,
   FieldRow,
   EmptyState,
-  ImagePreview,
   InfoBanner,
   DeleteConfirmDialog,
 } from '../admin-ui';
+import { ImageUploadField } from '../image-upload-field';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -106,9 +106,14 @@ function TournamentForm({ tournament, onSave, onCancel, isSaving }: {
         <Field label="Start Date"><Input type="datetime-local" value={form.startDate.slice(0, 16)} onChange={e => set('startDate', new Date(e.target.value).toISOString())} /></Field>
         <Field label="End Date"><Input type="datetime-local" value={form.endDate.slice(0, 16)} onChange={e => set('endDate', new Date(e.target.value).toISOString())} /></Field>
       </FieldRow>
-      <Field label="Image URL">
-        <Input value={form.image} onChange={e => set('image', e.target.value)} placeholder="/images/tournament.jpg" />
-        <ImagePreview src={form.image} alt={form.name} />
+      <Field label="Cover Image">
+        <ImageUploadField
+          value={form.image}
+          onChange={(image) => set('image', image)}
+          alt={form.name || 'FCX event'}
+          folder="fcx"
+          placeholder="/uploads/fcx/cover.jpg"
+        />
       </Field>
       <Field label="Overview"><Textarea value={form.overview} onChange={e => set('overview', e.target.value)} className="min-h-20" /></Field>
       <Field label="Format"><Textarea value={form.format} onChange={e => set('format', e.target.value)} className="min-h-16" /></Field>
