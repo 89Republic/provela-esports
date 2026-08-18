@@ -186,7 +186,8 @@ export default function SettingsAdminPage() {
                 <li><strong>Streamer Wall</strong> — 3D monitor cards linking to streamer profiles</li>
                 <li><strong>Dispatch</strong> — latest 4 news articles as field reports</li>
                 <li><strong>Sponsor Wall</strong> — scrolling partner marquee (Admin → Sponsors)</li>
-                <li>Hero, Featured Match, and Community Pulse are hardcoded — not editable here</li>
+                <li><strong>Featured Match</strong> — upcoming homepage faceoff (Admin → Featured Match)</li>
+                <li>Hero and Community Pulse are hardcoded — not editable here</li>
               </ul>
             </InfoBanner>
           </CardBody>
@@ -241,6 +242,7 @@ export default function SettingsAdminPage() {
                   { label: 'News Articles', value: content.newsArticles.length },
                   { label: 'Sponsors', value: content.sponsors.length },
                   { label: 'Social Links', value: socials.length },
+                  { label: 'Featured Match', value: content.featuredMatch.enabled ? 'Live' : 'Hidden' },
                 ].map(({ label, value }) => (
                   <div key={label}>
                     <p className="text-xs text-muted-foreground">{label}</p>

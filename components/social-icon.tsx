@@ -1,8 +1,8 @@
 import { Facebook, Instagram, Twitch, X, Youtube, type LucideIcon } from 'lucide-react';
-import type { SocialLink } from '@/lib/types';
+import type { SocialLink, StreamerPlatform } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-type SocialPlatform = SocialLink['platform'] | 'facebook';
+type SocialPlatform = SocialLink['platform'] | StreamerPlatform;
 
 const SOCIAL_ICON_MAP: Partial<Record<SocialPlatform, LucideIcon>> = {
   twitch: Twitch,
@@ -28,6 +28,14 @@ function TikTokIcon({ className }: { className?: string }) {
   );
 }
 
+function KickIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M3 3h6.2v6.15L14.4 3H21l-7.05 8.1L21 21h-6.6l-5.2-6.75V21H3V3z" />
+    </svg>
+  );
+}
+
 const SOCIAL_LABELS: Record<SocialPlatform, string> = {
   x: 'X',
   instagram: 'Instagram',
@@ -36,6 +44,7 @@ const SOCIAL_LABELS: Record<SocialPlatform, string> = {
   tiktok: 'TikTok',
   discord: 'Discord',
   facebook: 'Facebook',
+  kick: 'Kick',
 };
 
 const SOCIAL_BRAND_CLASSES: Record<SocialPlatform, string> = {
@@ -47,10 +56,15 @@ const SOCIAL_BRAND_CLASSES: Record<SocialPlatform, string> = {
   tiktok: 'border-black/20 bg-black text-[#25F4EE] hover:bg-neutral-900',
   discord: 'border-[#5865F2]/30 bg-[#5865F2] text-white hover:bg-[#4752C4]',
   facebook: 'border-[#1877F2]/30 bg-[#1877F2] text-white hover:bg-[#166FE5]',
+  kick: 'border-[#53FC18]/30 bg-black text-[#53FC18] hover:bg-neutral-900',
 };
 
 export function getSocialBrandClasses(platform: SocialPlatform) {
   return SOCIAL_BRAND_CLASSES[platform] ?? SOCIAL_BRAND_CLASSES.x;
+}
+
+export function getPlatformLabel(platform: string) {
+  return SOCIAL_LABELS[platform as SocialPlatform] ?? platform;
 }
 
 export function SocialIcon({
@@ -72,6 +86,10 @@ export function SocialIcon({
 
   if (platform === 'tiktok') {
     return <TikTokIcon className={className} />;
+  }
+
+  if (platform === 'kick') {
+    return <KickIcon className={className} />;
   }
 
   return <X className={className} aria-hidden="true" />;

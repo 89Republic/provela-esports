@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Container, backLinkClass, backLinkHeroClass, backLinkArrowClass } from '@/components/layout';
-import { SocialIcon, getSocialBrandClasses } from '@/components/social-icon';
+import { SocialIcon, getSocialBrandClasses, getPlatformLabel } from '@/components/social-icon';
 import { getSiteContent } from '@/lib/site-content';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, ExternalLink, Radio, Users } from 'lucide-react';
@@ -18,11 +18,6 @@ function formatFollowers(count: number) {
   if (count >= 1_000) return `${Math.round(count / 1_000)}K`;
   return String(count);
 }
-
-const PLATFORM_LABELS: Record<'twitch' | 'youtube', string> = {
-  twitch: 'Twitch',
-  youtube: 'YouTube',
-};
 
 export async function generateMetadata(props: StreamerProfilePageProps) {
   const params = await props.params;
@@ -64,7 +59,7 @@ export default async function StreamerProfilePage(props: StreamerProfilePageProp
 
   const isLive = streamer.status === 'live';
   const encodedAvatar = encodeURI(streamer.avatar);
-  const primaryPlatformLabel = PLATFORM_LABELS[streamer.platform];
+  const primaryPlatformLabel = getPlatformLabel(streamer.platform);
 
   return (
     <>

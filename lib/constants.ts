@@ -1,4 +1,4 @@
-import type { Division, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
+import type { Division, FeaturedMatch, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
 
 export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'x', url: 'https://x.com/provelaesports' },
@@ -708,6 +708,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     date: '2026-05-10',
     author: 'Provela Editorial',
     category: 'Tournaments',
+    published: true,
     content: [
       'The FCX Pro Series S2 regular season has concluded, and the playoff bracket is now finalized.',
       'Provela EA FC, North Core, Rapid XI, and Volt Prime will compete over three days in a single-elimination format.',
@@ -722,6 +723,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     date: '2026-05-03',
     author: 'Match Ops Desk',
     category: 'Results',
+    published: true,
     content: [
       'Provela Shokunin delivered one of their strongest tournament performances to date at Mobile Masters.',
       'The team dropped only one map before the final and closed out the semifinal with a 3-0 sweep.',
@@ -736,6 +738,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     date: '2026-04-28',
     author: 'Community Team',
     category: 'Community',
+    published: true,
     content: [
       'Provela stream programming has reached a major milestone with over one million monthly live and VOD views.',
       'The biggest growth came from FCX watch parties, post-match breakdown formats, and co-streamed creator events.',
@@ -750,6 +753,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     date: '2026-04-20',
     author: 'Tournament Team',
     category: 'Announcements',
+    published: true,
     content: [
       'FCX Open Cup July is now accepting registrations across all supported regions.',
       'The bracket is open to 32 entries, with seeding based on recent competitive activity and qualifier performance.',
@@ -832,20 +836,13 @@ export const DIVISION_VISUALS: DivisionVisual[] = [
   },
 ];
 
-export interface FeaturedMatch {
-  teamA: string;
-  teamB: string;
-  division: string;
-  when: string;
-  streamUrl: string;
-}
-
 export const FEATURED_MATCH: FeaturedMatch = {
   teamA: 'Shokunin',
   teamB: 'Vanguard',
   division: 'CODM · FCX Open Qualifier',
   when: 'Tonight · 20:00 GMT',
   streamUrl: 'https://youtube.com/@provelaesports/live',
+  enabled: true,
 };
 
 export interface CommunityStat {

@@ -29,7 +29,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Streamer } from '@/lib/types';
+import { STREAMER_PLATFORMS, type Streamer, type StreamerPlatform } from '@/lib/types';
+import { getPlatformLabel } from '@/components/social-icon';
 
 function newStreamer(): Streamer {
   return {
@@ -54,6 +55,16 @@ function formatFollowers(count: number) {
   if (count >= 1_000) return `${Math.round(count / 1_000)}K`;
   return count.toLocaleString();
 }
+
+const LIVE_URL_PLACEHOLDERS: Record<StreamerPlatform, string> = {
+  youtube: 'https://youtube.com/…/live',
+  twitch: 'https://twitch.tv/…',
+  tiktok: 'https://tiktok.com/@…/live',
+  kick: 'https://kick.com/…',
+  facebook: 'https://facebook.com/…/live',
+  discord: 'https://discord.gg/…',
+  instagram: 'https://instagram.com/…',
+};
 
 const STATUS_STYLES: Record<Streamer['status'], string> = {
   live: 'bg-primary/10 text-primary',
@@ -89,8 +100,11 @@ function StreamerForm({ streamer, onSave, onCancel, isSaving }: {
           <Select value={form.platform} onValueChange={v => set('platform', v as Streamer['platform'])}>
             <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="youtube">YouTube</SelectItem>
-              <SelectItem value="twitch">Twitch</SelectItem>
+              {STREAMER_PLATFORMS.map((platform) => (
+                <SelectItem key={platform} value={platform}>
+                  {getPlatformLabel(platform)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </Field>
@@ -110,7 +124,7 @@ function StreamerForm({ streamer, onSave, onCancel, isSaving }: {
       <Field label="Bio"><Textarea value={form.bio} onChange={e => set('bio', e.target.value)} className="min-h-20" placeholder="Shown on the streamer profile page" /></Field>
       <FieldRow>
         <Field label="Live URL" required>
-          <Input value={form.liveUrl} onChange={e => set('liveUrl', e.target.value)} placeholder="https://youtube.com/…/live" />
+          <Input value={form.liveUrl} onChange={e => set('liveUrl', e.target.value)} placeholder={LIVE_URL_PLACEHOLDERS[form.platform]} />
           <p className="text-xs text-muted-foreground mt-1">Primary streaming link on the profile page.</p>
         </Field>
         <Field label="Embed URL">
@@ -291,7 +305,7 @@ export default function StreamersAdminPage() {
                         </span>
                       </TableCell>
                       <TableCell className="text-muted-foreground">{streamer.game || '—'}</TableCell>
-                      <TableCell className="capitalize">{streamer.platform}</TableCell>
+                      <TableCell>{getPlatformLabel(streamer.platform)}</TableCell>
                       <TableCell>{formatFollowers(streamer.followers)}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-1">

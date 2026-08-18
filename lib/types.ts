@@ -9,6 +9,15 @@ export interface Sponsor {
   logo: string;
 }
 
+export interface FeaturedMatch {
+  teamA: string;
+  teamB: string;
+  division: string;
+  when: string;
+  streamUrl: string;
+  enabled: boolean;
+}
+
 export interface PlayerProfile {
   id: string;
   tag: string;
@@ -96,13 +105,25 @@ export interface Tournament {
   results: string[];
 }
 
+export const STREAMER_PLATFORMS = [
+  'youtube',
+  'twitch',
+  'tiktok',
+  'kick',
+  'facebook',
+  'discord',
+  'instagram',
+] as const;
+
+export type StreamerPlatform = (typeof STREAMER_PLATFORMS)[number];
+
 export interface Streamer {
   id: string;
   name: string;
   game: string;
   avatar: string;
   status: 'live' | 'offline';
-  platform: 'twitch' | 'youtube';
+  platform: StreamerPlatform;
   followers: number;
   bio: string;
   embedUrl: string;
@@ -121,4 +142,5 @@ export interface NewsArticle {
   author: string;
   category: 'Announcements' | 'Results' | 'Tournaments' | 'Community';
   content: string[];
+  published: boolean;
 }

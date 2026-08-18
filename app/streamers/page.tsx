@@ -6,7 +6,7 @@ import { getSiteContent } from '@/lib/site-content';
 
 export const metadata = {
   title: 'Streamers | Provela Esports',
-  description: 'Follow our professional streamers and watch the best esports content live on Twitch and YouTube.',
+  description: 'Follow our professional streamers and watch the best esports content live on Twitch, YouTube, TikTok, Kick, and more.',
 };
 
 export default async function StreamersPage() {

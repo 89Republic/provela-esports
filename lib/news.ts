@@ -21,6 +21,13 @@ function normalizeCategory(value: unknown): NewsArticle['category'] {
   return 'Announcements';
 }
 
+function parsePublished(value: unknown, fallback = true): boolean {
+  if (typeof value === 'boolean') return value;
+  if (value === 0 || value === '0' || value === 'false' || value === 'off') return false;
+  if (value === 1 || value === '1' || value === 'true' || value === 'on') return true;
+  return fallback;
+}
+
 function normalizeNewsArticle(candidate: Partial<NewsArticle>): NewsArticle {
   return {
     id: candidate.id?.trim() ?? '',
@@ -33,6 +40,7 @@ function normalizeNewsArticle(candidate: Partial<NewsArticle>): NewsArticle {
     content: Array.isArray(candidate.content)
       ? candidate.content.map((paragraph) => String(paragraph).trim()).filter(Boolean)
       : [],
+    published: parsePublished(candidate.published),
   };
 }
 
@@ -43,7 +51,7 @@ export function toNewsArticle(doc: NewsDocument & { _id?: unknown }): NewsArticl
     updatedAt: _updatedAt,
     ...article
   } = doc;
-  return article;
+  return normalizeNewsArticle(article);
 }
 
 export async function getNewsCollection() {
@@ -113,6 +121,11 @@ export async function listNewsArticles(): Promise<NewsArticle[]> {
   return docs.map(toNewsArticle);
 }
 
+export async function listPublishedNewsArticles(): Promise<NewsArticle[]> {
+  const articles = await listNewsArticles();
+  return articles.filter((article) => article.published);
+}
+
 export async function findNewsById(id: string): Promise<NewsArticle | null> {
   await ensureNewsSeeded();
   const collection = await getNewsCollection();
@@ -170,6 +183,12 @@ export async function updateNewsArticle(
     },
   );
   return merged;
+}
+
+export async function setNewsPublished(id: string, published: boolean): Promise<NewsArticle | null> {
+  const existing = await findNewsById(id);
+  if (!existing) return null;
+  return updateNewsArticle(id, { ...existing, published });
 }
 
 export async function deleteNewsById(id: string): Promise<NewsArticle | null> {

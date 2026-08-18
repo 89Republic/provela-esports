@@ -21,7 +21,9 @@ export default async function Home() {
         <HeroScene />
         <DivisionsScene divisions={content.divisions} />
         <TournamentCenter tournaments={content.fcx} />
-        <FeaturedMatchScene />
+        {content.featuredMatch.enabled && (
+          <FeaturedMatchScene match={content.featuredMatch} />
+        )}
         <StreamerWall streamers={content.streamers} />
         <Dispatch articles={content.newsArticles} />
         <CommunityPulse />

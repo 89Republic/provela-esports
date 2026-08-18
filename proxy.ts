@@ -13,7 +13,7 @@ async function getAdminSessionFromRequest(request: NextRequest) {
   return verifyAdminSessionToken(token);
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const session = await getAdminSessionFromRequest(request);
 

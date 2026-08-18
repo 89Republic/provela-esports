@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import type { NewsArticle } from '@/lib/types';
 
 const CATEGORIES: NewsArticle['category'][] = ['Announcements', 'Results', 'Tournaments', 'Community'];
@@ -23,6 +24,7 @@ function newArticle(): NewsArticle {
     author: '',
     category: 'Announcements',
     content: [''],
+    published: true,
   };
 }
 
@@ -64,6 +66,21 @@ function ArticleForm({ article, onSave, onCancel, isSaving }: {
           />
         </Field>
       </FieldRow>
+      <div className="flex items-center justify-between gap-4 rounded-lg border border-border px-4 py-3">
+        <div>
+          <p className="text-sm font-medium text-foreground">Show on site</p>
+          <p className="text-xs text-muted-foreground">
+            {form.published
+              ? 'Visible on homepage Dispatch and /news.'
+              : 'Hidden from the public site until you turn this on.'}
+          </p>
+        </div>
+        <Switch
+          checked={form.published}
+          onCheckedChange={(published) => set('published', published)}
+          disabled={isSaving}
+        />
+      </div>
       <Field label="Article Body (one paragraph per line)">
         <Textarea
           className="min-h-48 font-mono text-xs"
@@ -178,11 +195,40 @@ export default function NewsAdminPage() {
     }
   };
 
+  const handleTogglePublished = async (article: NewsArticle, published: boolean) => {
+    const previous = articles;
+    setArticles((current) => current.map((item) => (item.id === article.id ? { ...item, published } : item)));
+    setIsSaving(true);
+    try {
+      const response = await fetch(`/api/admin/news/${article.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ published }),
+      });
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        setArticles(previous);
+        notify(data.error ?? 'Failed to update visibility.', 'error');
+        return;
+      }
+
+      notify(published ? `"${article.title}" is now live.` : `"${article.title}" is hidden.`, 'success');
+    } catch {
+      setArticles(previous);
+      notify('Failed to update visibility.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const publishedCount = articles.filter((article) => article.published).length;
+
   return (
     <AdminLayout>
       <PageTitle
         title="News"
-        subtitle={`${articles.length} article${articles.length !== 1 ? 's' : ''} · top 4 on Dispatch scene`}
+        subtitle={`${publishedCount} live · ${articles.length} article${articles.length !== 1 ? 's' : ''} · top 4 live on Dispatch`}
         action={!editing && (
           <Button onClick={() => { setEditing(newArticle()); setIsNew(true); }} disabled={isSaving}>
             <Plus className="size-4 mr-2" />New Article
@@ -191,7 +237,7 @@ export default function NewsAdminPage() {
       />
 
       <InfoBanner className="mb-6">
-        Homepage Dispatch shows the 4 most recent articles. Categories map to display labels: Announcements → Stream Network, Results → Match Result, Tournaments → Tournament Report, Community → Community Signal.
+        Homepage Dispatch shows the 4 most recent live articles. Use the switch to show or hide an article without deleting it. Hidden articles stay in admin only.
       </InfoBanner>
 
       {editing ? (
@@ -220,10 +266,24 @@ export default function NewsAdminPage() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="font-medium text-foreground text-sm">{a.title}</p>
                       <span className={`text-xs px-1.5 py-0.5 rounded ${CATEGORY_STYLES[a.category]}`}>{a.category}</span>
+                      {!a.published && (
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500">Hidden</span>
+                      )}
                     </div>
                     <p className="text-xs text-muted-foreground">{a.author} · {a.date}</p>
                   </div>
-                  <div className="flex gap-2 shrink-0">
+                  <div className="flex items-center gap-3 shrink-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground hidden sm:inline">
+                        {a.published ? 'Live' : 'Hidden'}
+                      </span>
+                      <Switch
+                        checked={a.published}
+                        onCheckedChange={(published) => { void handleTogglePublished(a, published); }}
+                        disabled={isSaving}
+                        aria-label={a.published ? `Hide ${a.title}` : `Show ${a.title}`}
+                      />
+                    </div>
                     <Button variant="outline" size="sm" onClick={() => { setEditing(a); setIsNew(false); }}><Pencil className="size-3 mr-1" />Edit</Button>
                     <DeleteConfirmDialog
                       title="Delete article?"

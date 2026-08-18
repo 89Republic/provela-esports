@@ -1068,5 +1068,13 @@
       "name": "The Bear Fufu and Grill",
       "logo": "/sponsors/the-bear.png"
     }
-  ]
+  ],
+  "featuredMatch": {
+    "teamA": "Shokunin PROVELA",
+    "teamB": "Vanguard",
+    "division": "CODM · FCX Open Qualifier",
+    "when": "Tonight · 20:00 GMT",
+    "streamUrl": "https://youtube.com/@provelaesports/live",
+    "enabled": true
+  }
 }

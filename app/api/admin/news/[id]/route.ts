@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { deleteNewsById, findNewsById, updateNewsArticle } from '@/lib/news';
+import { deleteNewsById, findNewsById, setNewsPublished, updateNewsArticle } from '@/lib/news';
 import { getCurrentAdmin } from '@/lib/admin-auth';
 import type { NewsArticle } from '@/lib/types';
 
@@ -35,6 +35,34 @@ export async function PUT(
     const body = (await request.json()) as Partial<NewsArticle>;
     const article = await updateNewsArticle(id, body);
 
+    if (!article) {
+      return NextResponse.json({ error: 'News article not found.' }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true, article });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Invalid request.';
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  try {
+    const currentAdmin = await getCurrentAdmin();
+    if (!currentAdmin) {
+      return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+    }
+
+    const { id } = await context.params;
+    const body = (await request.json()) as { published?: unknown };
+    if (typeof body.published !== 'boolean') {
+      return NextResponse.json({ error: 'published must be true or false.' }, { status: 400 });
+    }
+
+    const article = await setNewsPublished(id, body.published);
     if (!article) {
       return NextResponse.json({ error: 'News article not found.' }, { status: 404 });
     }

@@ -9,9 +9,9 @@ import {
   useReducedMotion,
 } from 'motion/react';
 import { useImpact } from '@/components/motion/impact-frame';
-import { FEATURED_MATCH } from '@/lib/constants';
+import type { FeaturedMatch } from '@/lib/types';
 
-export function FeaturedMatchScene() {
+export function FeaturedMatchScene({ match }: { match: FeaturedMatch }) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -61,7 +61,7 @@ export function FeaturedMatchScene() {
             style={{ x: reduced ? 0 : aX }}
             className="max-w-full text-center font-gaming text-2xl font-bold uppercase tracking-tight text-cold break-words sm:text-left sm:text-4xl md:text-6xl lg:text-7xl"
           >
-            {FEATURED_MATCH.teamA}
+            {match.teamA}
           </motion.span>
 
           <span className="shrink-0 font-gaming text-lg font-bold text-provela sm:text-2xl md:text-4xl">
@@ -72,7 +72,7 @@ export function FeaturedMatchScene() {
             style={{ x: reduced ? 0 : bX }}
             className="max-w-full text-center font-gaming text-2xl font-bold uppercase tracking-tight text-cold break-words sm:text-right sm:text-4xl md:text-6xl lg:text-7xl"
           >
-            {FEATURED_MATCH.teamB}
+            {match.teamB}
           </motion.span>
         </div>
 
@@ -81,13 +81,13 @@ export function FeaturedMatchScene() {
           className="mx-auto mt-8 max-w-md border border-provela/30 bg-abyss/60 p-4 text-center backdrop-blur-sm sm:mt-12 sm:p-6"
         >
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-steel">
-            {FEATURED_MATCH.division}
+            {match.division}
           </p>
           <p className="mt-2 font-gaming text-2xl font-bold uppercase text-cold">
-            {FEATURED_MATCH.when}
+            {match.when}
           </p>
           <a
-            href={FEATURED_MATCH.streamUrl}
+            href={match.streamUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 bg-provela px-6 py-2.5 font-gaming text-xs font-semibold uppercase tracking-[0.2em] text-void transition-shadow hover:shadow-[0_0_30px_oklch(0.66_0.17_256/0.5)]"

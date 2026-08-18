@@ -9,7 +9,7 @@ export async function GET(
     const { id } = await context.params;
     const article = await findNewsById(id);
 
-    if (!article) {
+    if (!article || !article.published) {
       return NextResponse.json({ error: 'News article not found.' }, { status: 404 });
     }
 

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { listNewsArticles } from '@/lib/news';
+import { listPublishedNewsArticles } from '@/lib/news';
 
 export async function GET() {
   try {
-    const newsArticles = await listNewsArticles();
+    const newsArticles = await listPublishedNewsArticles();
     return NextResponse.json({ newsArticles });
   } catch (error) {
     return NextResponse.json(

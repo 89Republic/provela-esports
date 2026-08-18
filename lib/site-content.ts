@@ -1,14 +1,15 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { unstable_noStore as noStore } from 'next/cache';
-import { BRAND_SOCIALS, DIVISIONS, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
+import { BRAND_SOCIALS, DIVISIONS, FEATURED_MATCH, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
 import { listBrandSocials } from '@/lib/brand-socials';
 import { listDivisions } from '@/lib/divisions';
+import { getFeaturedMatch, normalizeFeaturedMatch } from '@/lib/featured-match';
 import { listFcx } from '@/lib/fcx';
-import { listNewsArticles } from '@/lib/news';
+import { listPublishedNewsArticles } from '@/lib/news';
 import { listSponsors } from '@/lib/sponsors';
 import { listStreamers } from '@/lib/streamers';
-import type { Division, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
+import type { Division, FeaturedMatch, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
 
 export interface SiteContent {
   brandSocials: SocialLink[];
@@ -17,6 +18,7 @@ export interface SiteContent {
   streamers: Streamer[];
   newsArticles: NewsArticle[];
   sponsors: Sponsor[];
+  featuredMatch: FeaturedMatch;
 }
 
 const CONTENT_FILE_PATH = path.join(process.cwd(), 'data', 'site-content.override.json');
@@ -28,6 +30,7 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
   streamers: STREAMERS,
   newsArticles: NEWS_ARTICLES,
   sponsors: SPONSORS,
+  featuredMatch: FEATURED_MATCH,
 };
 
 function deepClone<T>(value: T): T {
@@ -62,6 +65,9 @@ function normalizeContent(candidate: unknown): SiteContent {
           logo: s.logo ?? '',
         }))
       : fallback.sponsors,
+    featuredMatch: content.featuredMatch
+      ? normalizeFeaturedMatch(content.featuredMatch)
+      : fallback.featuredMatch,
   };
 }
 
@@ -79,9 +85,9 @@ async function loadDivisions(): Promise<Division[]> {
 
 async function loadNewsArticles(): Promise<NewsArticle[]> {
   try {
-    return await listNewsArticles();
+    return await listPublishedNewsArticles();
   } catch {
-    return getDefaultSiteContent().newsArticles;
+    return getDefaultSiteContent().newsArticles.filter((article) => article.published);
   }
 }
 
@@ -117,30 +123,39 @@ async function loadBrandSocials(): Promise<SocialLink[]> {
   }
 }
 
+async function loadFeaturedMatch(): Promise<FeaturedMatch> {
+  try {
+    return await getFeaturedMatch();
+  } catch {
+    return getDefaultSiteContent().featuredMatch;
+  }
+}
+
 export async function getSiteContent(): Promise<SiteContent> {
   noStore();
 
-  const [divisions, newsArticles, sponsors, fcx, streamers, brandSocials] = await Promise.all([
+  const [divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch] = await Promise.all([
     loadDivisions(),
     loadNewsArticles(),
     loadSponsors(),
     loadFcx(),
     loadStreamers(),
     loadBrandSocials(),
+    loadFeaturedMatch(),
   ]);
 
   try {
     const raw = await fs.readFile(CONTENT_FILE_PATH, 'utf8');
-    return { ...normalizeContent(JSON.parse(raw)), divisions, newsArticles, sponsors, fcx, streamers, brandSocials };
+    return { ...normalizeContent(JSON.parse(raw)), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch };
   } catch {
-    return { ...getDefaultSiteContent(), divisions, newsArticles, sponsors, fcx, streamers, brandSocials };
+    return { ...getDefaultSiteContent(), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch };
   }
 }
 
 export async function saveSiteContent(content: SiteContent): Promise<void> {
   const normalized = normalizeContent(content);
-  const { brandSocials: _brandSocials, ...withoutBrandSocials } = normalized;
-  const output = `${JSON.stringify(withoutBrandSocials, null, 2)}\n`;
+  const { brandSocials: _brandSocials, featuredMatch: _featuredMatch, ...withoutMongoManaged } = normalized;
+  const output = `${JSON.stringify(withoutMongoManaged, null, 2)}\n`;
 
   await fs.mkdir(path.dirname(CONTENT_FILE_PATH), { recursive: true });
   await fs.writeFile(CONTENT_FILE_PATH, output, 'utf8');

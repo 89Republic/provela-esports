@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Division, Tournament, NewsArticle, Streamer } from '@/lib/types';
+import { getPlatformLabel } from '@/components/social-icon';
 import { cn, formatPrizePool, getDivisionHeroImage } from '@/lib/utils';
 
 const NEWS_DATE_FORMATTER = new Intl.DateTimeFormat('en-GB', {
@@ -263,7 +264,7 @@ export function StreamerCard({ streamer, variant = 'desktop' }: { streamer: Stre
   const statusColor = getStreamerStatusColor(streamer.status);
   const stats = [
     { label: 'Followers', value: formatFollowers(streamer.followers), primary: true },
-    { label: 'Platform', value: streamer.platform === 'twitch' ? 'Twitch' : 'YouTube' },
+    { label: 'Platform', value: getPlatformLabel(streamer.platform) },
   ];
 
   const mobile = (

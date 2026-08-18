@@ -1,12 +1,11 @@
 import type { ObjectId, WithoutId } from 'mongodb';
 import { STREAMERS } from '@/lib/constants';
 import { getDb } from '@/lib/mongodb';
-import type { SocialLink, Streamer } from '@/lib/types';
+import { STREAMER_PLATFORMS, type SocialLink, type Streamer } from '@/lib/types';
 
 export const STREAMERS_COLLECTION = 'streamers';
 
 const STREAMER_STATUSES = ['live', 'offline'] as const;
-const STREAMER_PLATFORMS = ['twitch', 'youtube'] as const;
 const SOCIAL_PLATFORMS = ['x', 'instagram', 'youtube', 'twitch', 'tiktok', 'discord', 'facebook'] as const;
 
 export interface StreamerDocument extends Streamer {

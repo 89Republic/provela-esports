@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 const HOMEPAGE_SCENES = [
   { scene: 'Divisions Scene', source: 'All divisions', admin: '/admin/divisions' },
   { scene: 'Tournament Center', source: 'Active / upcoming FCX events', admin: '/admin/fcx' },
+  { scene: 'Featured Match', source: 'Upcoming homepage faceoff', admin: '/admin/featured-match' },
   { scene: 'Streamer Wall', source: 'All streamers', admin: '/admin/streamers' },
   { scene: 'Dispatch', source: 'Latest 4 news articles', admin: '/admin/news' },
   { scene: 'Sponsor Wall', source: 'All sponsors', admin: '/admin/sponsors' },
@@ -35,14 +36,14 @@ export default function AdminDashboard() {
       />
 
       <InfoBanner className="mb-6">
-        The homepage uses a scene-based broadcast layout — Divisions Scene, Tournament Center, Streamer Wall, Dispatch, and Sponsor Wall. Content you edit here feeds directly into those sections.
+        The homepage uses a scene-based broadcast layout — Divisions Scene, Tournament Center, Featured Match, Streamer Wall, Dispatch, and Sponsor Wall. Content you edit here feeds directly into those sections.
       </InfoBanner>
 
       <div className="mb-6 grid grid-cols-3 gap-2">
         <StatCard label="Divisions" value={content?.divisions.length ?? '—'} sub="shown on homepage & /divisions" color="violet" />
         <StatCard label="FCX" value={content?.fcx.length ?? '—'} sub={content ? `${activeFcx} active` : undefined} color="sky" />
         <StatCard label="Streamers" value={content?.streamers.length ?? '—'} sub={content ? `${liveStreamers} live now` : undefined} color="emerald" />
-        <StatCard label="News Articles" value={content?.newsArticles.length ?? '—'} sub="top 4 on Dispatch" color="amber" />
+        <StatCard label="News Articles" value={content?.newsArticles.length ?? '—'} sub="live on Dispatch" color="amber" />
         <StatCard label="Sponsors" value={content?.sponsors.length ?? '—'} color="rose" />
         <StatCard label="Social Links" value={content?.brandSocials.length ?? '—'} sub="footer" color="cyan" />
       </div>
@@ -64,7 +65,7 @@ export default function AdminDashboard() {
           ))}
           <div className="border-t border-border bg-muted/30 px-4 py-3 sm:px-5">
             <p className="text-xs text-muted-foreground">
-              Hero, Featured Match, and Community Pulse are hardcoded in the codebase — not editable here.
+              Hero and Community Pulse are hardcoded in the codebase — not editable here.
             </p>
           </div>
         </CardBody>
