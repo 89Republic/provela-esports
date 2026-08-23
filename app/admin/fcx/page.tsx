@@ -99,6 +99,9 @@ function TournamentForm({ tournament, onSave, onCancel, isSaving }: {
               <SelectItem value="past">Past</SelectItem>
             </SelectContent>
           </Select>
+          <p className="mt-1 text-xs text-muted-foreground">
+            After the end date, status becomes Past automatically unless you save a different status here.
+          </p>
         </Field>
         <Field label="Prize Pool"><Input value={form.prizePool} onChange={e => set('prizePool', e.target.value)} placeholder="GH₵5,000" /></Field>
       </FieldRow>
@@ -304,7 +307,7 @@ export default function FcxAdminPage() {
       />
 
       <InfoBanner className="mb-6">
-        Tournament Center on the homepage highlights the active FCX event with bracket, countdown, and standings. Set status to &quot;Active&quot; for homepage prominence.
+        Tournament Center on the homepage highlights the active FCX event with bracket, countdown, and standings. Set status to &quot;Active&quot; for homepage prominence. Events whose end date has passed are marked Past automatically unless you manually set another status.
       </InfoBanner>
 
       {editing ? (

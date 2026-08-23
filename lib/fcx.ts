@@ -16,6 +16,8 @@ const FCX_STATUSES = ['upcoming', 'active', 'past'] as const;
 export interface FcxDocument extends Tournament {
   createdAt: Date;
   updatedAt: Date;
+  /** When true, skip auto-expiring to `past` after endDate. Set if an admin saves a non-past status on an already-ended event. */
+  statusManuallySet?: boolean;
 }
 
 export type FcxInsert = WithoutId<FcxDocument>;
@@ -25,6 +27,24 @@ function normalizeStatus(value: unknown): Tournament['status'] {
     return value as Tournament['status'];
   }
   return 'upcoming';
+}
+
+export function isFcxEndDatePast(endDate: string, now = new Date()): boolean {
+  if (!endDate.trim()) return false;
+  const end = new Date(endDate);
+  if (Number.isNaN(end.getTime())) return false;
+  return end.getTime() < now.getTime();
+}
+
+function resolveManualStatusFlag(status: Tournament['status'], endDate: string): boolean {
+  return isFcxEndDatePast(endDate) && status !== 'past';
+}
+
+function applyAutoPastStatus(event: Tournament, statusManuallySet: boolean): Tournament {
+  if (statusManuallySet || !isFcxEndDatePast(event.endDate) || event.status === 'past') {
+    return event;
+  }
+  return { ...event, status: 'past' };
 }
 
 function normalizeParticipant(candidate: Partial<TournamentParticipant>): TournamentParticipant {
@@ -88,6 +108,7 @@ export function toFcxEvent(doc: FcxDocument & { _id?: unknown }): Tournament {
     _id: _mongoId,
     createdAt: _createdAt,
     updatedAt: _updatedAt,
+    statusManuallySet: _statusManuallySet,
     ...event
   } = doc;
   return event;
@@ -177,8 +198,26 @@ export async function ensureFcxSeeded() {
   }
 }
 
+async function expireEndedFcxEvents() {
+  const collection = await getFcxCollection();
+  await collection.updateMany(
+    {
+      statusManuallySet: { $ne: true },
+      status: { $ne: 'past' },
+      endDate: { $gt: '', $lt: new Date().toISOString() },
+    },
+    {
+      $set: {
+        status: 'past',
+        updatedAt: new Date(),
+      },
+    },
+  );
+}
+
 export async function listFcx(): Promise<Tournament[]> {
   await ensureFcxSeeded();
+  await expireEndedFcxEvents();
   const collection = await getFcxCollection();
   const docs = await collection.find().sort({ startDate: -1 }).toArray();
   return docs.map(toFcxEvent);
@@ -186,6 +225,7 @@ export async function listFcx(): Promise<Tournament[]> {
 
 export async function findFcxById(id: string): Promise<Tournament | null> {
   await ensureFcxSeeded();
+  await expireEndedFcxEvents();
   const collection = await getFcxCollection();
   const doc = await collection.findOne({ id });
   return doc ? toFcxEvent(doc) : null;
@@ -207,15 +247,18 @@ export async function createFcxEvent(input: Partial<Tournament>): Promise<Tourna
     throw new Error('An FCX event with this ID already exists.');
   }
 
+  const statusManuallySet = resolveManualStatusFlag(event.status, event.endDate);
+  const resolved = applyAutoPastStatus(event, statusManuallySet);
   const now = new Date();
   const doc: FcxInsert = {
-    ...event,
+    ...resolved,
+    statusManuallySet,
     createdAt: now,
     updatedAt: now,
   };
 
   await collection.insertOne(doc);
-  return event;
+  return resolved;
 }
 
 export async function updateFcxEvent(
@@ -231,16 +274,20 @@ export async function updateFcxEvent(
     throw new Error('Name and game are required.');
   }
 
+  const statusManuallySet = resolveManualStatusFlag(merged.status, merged.endDate);
+  const resolved = applyAutoPastStatus(merged, statusManuallySet);
+
   await collection.updateOne(
     { id },
     {
       $set: {
-        ...merged,
+        ...resolved,
+        statusManuallySet,
         updatedAt: new Date(),
       },
     },
   );
-  return merged;
+  return resolved;
 }
 
 export async function deleteFcxById(id: string): Promise<Tournament | null> {
