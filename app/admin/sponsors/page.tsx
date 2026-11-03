@@ -14,6 +14,7 @@ function normalizeSponsor(sponsor: Sponsor): Sponsor {
     ...sponsor,
     name: sponsor.name ?? '',
     logo: sponsor.logo ?? '',
+    website: sponsor.website ?? '',
   };
 }
 
@@ -22,6 +23,7 @@ function newSponsor(): Sponsor {
     id: `sponsor-${Date.now()}`,
     name: '',
     logo: '',
+    website: '',
   };
 }
 
@@ -48,6 +50,10 @@ function SponsorForm({ sponsor, onSave, onCancel, isSaving }: {
           placeholder="/uploads/sponsors/logo.png"
           contain
         />
+      </Field>
+      <Field label="Website">
+        <Input value={form.website ?? ''} onChange={(e) => set('website', e.target.value)} placeholder="https://…" />
+        <p className="text-xs text-muted-foreground mt-1">Optional. The partner card on /partners links here.</p>
       </Field>
       <div className="flex gap-3 pt-2">
         <Button onClick={() => onSave(form)} disabled={!form.name.trim() || !form.logo?.trim() || isSaving}>
@@ -163,7 +169,7 @@ export default function SponsorsAdminPage() {
       />
 
       <InfoBanner className="mb-6">
-        Sponsors appear in the scrolling marquee at the bottom of the homepage. Order here matches display order.
+        Sponsors appear in the scrolling marquee at the bottom of the homepage and on the /partners page. Order here matches display order.
       </InfoBanner>
 
       {isLoading ? (
@@ -195,7 +201,7 @@ export default function SponsorsAdminPage() {
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-foreground text-sm">{s.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{s.logo || 'No logo'}</p>
+                  <p className="text-xs text-muted-foreground truncate">{s.website || 'No website'}</p>
                 </div>
                 <div className="flex gap-2 shrink-0">
                   <Button variant="outline" size="sm" onClick={() => { setEditing(normalizeSponsor(s)); setIsNew(false); }}>
@@ -203,7 +209,7 @@ export default function SponsorsAdminPage() {
                   </Button>
                   <DeleteConfirmDialog
                     title="Delete sponsor?"
-                    description={`${s.name} will be permanently removed from the homepage marquee.`}
+                    description={`${s.name} will be permanently removed from the homepage marquee and /partners page.`}
                     onConfirm={() => handleDelete(s)}
                     disabled={isSaving}
                   >

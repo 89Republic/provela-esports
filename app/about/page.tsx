@@ -2,6 +2,9 @@ import { formatCedis } from '@/lib/utils';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { PageHeader, Container, SectionHeader } from '@/components/layout';
+import { SocialIconLink } from '@/components/social-icon';
+import { getSiteContent } from '@/lib/site-content';
+import type { ManagementMember } from '@/lib/types';
 import { Trophy, Users, Zap } from 'lucide-react';
 
 export const metadata = {
@@ -9,7 +12,37 @@ export const metadata = {
   description: 'Learn about Provela Esports, our mission, values, and commitment to professional gaming.',
 };
 
-export default function AboutPage() {
+function ManagementCard({ member }: { member: ManagementMember }) {
+  const isBrandLogo = member.photo.includes('LOGOS-03');
+
+  return (
+    <article className="overflow-hidden rounded-lg border border-border bg-card">
+      <div className="relative aspect-4/5 w-full overflow-hidden">
+        <img
+          src={member.photo || '/placeholder-user.jpg'}
+          alt={member.name}
+          className={`absolute inset-0 h-full w-full ${isBrandLogo ? 'object-contain bg-black p-8' : 'object-cover'}`}
+        />
+      </div>
+      <div className="p-5">
+        <p className="text-xs font-semibold uppercase tracking-wider text-primary">{member.role}</p>
+        <h3 className="mt-1 font-gaming text-xl font-bold text-foreground">{member.name}</h3>
+        {member.bio && <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>}
+        {member.socialLinks.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {member.socialLinks.map((social) => (
+              <SocialIconLink key={`${member.id}-${social.platform}-${social.url}`} social={social} size="sm" />
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+export default async function AboutPage() {
+  const content = await getSiteContent();
+
   return (
     <>
       <Navbar />
@@ -83,6 +116,22 @@ export default function AboutPage() {
             </div>
           </Container>
         </div>
+
+        {content.management.length > 0 && (
+          <div className="py-12 sm:py-16 md:py-20 bg-section-c border-t border-border/50">
+            <Container>
+              <SectionHeader
+                title="Management"
+                description="The team leading Provela Esports"
+              />
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+                {content.management.map((member) => (
+                  <ManagementCard key={member.id} member={member} />
+                ))}
+              </div>
+            </Container>
+          </div>
+        )}
 
         <div className="py-12 sm:py-16 md:py-20 bg-section-d border-t border-border/50">
           <Container>

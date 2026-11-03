@@ -1,4 +1,4 @@
-import type { Division, FeaturedMatch, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
+import type { Division, FeaturedMatch, ManagementMember, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
 
 export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'x', url: 'https://x.com/provelaesports' },
@@ -889,5 +889,36 @@ export const SPONSORS: Sponsor[] = [
     id: 'the-bear',
     name: 'The Bear Fufu and Grill',
     logo: '/sponsors/the-bear.png',
+  },
+];
+
+/** Placeholder team seeded on first run — replace from Admin → Management. */
+export const MANAGEMENT: ManagementMember[] = [
+  {
+    id: 'mgmt-founder',
+    name: 'Name Surname',
+    role: 'Founder & CEO',
+    photo: BRAND_LOGO,
+    bio: 'Sets the vision for Provela Esports and leads the organization across divisions, tournaments, and partnerships.',
+    socialLinks: [],
+    order: 1,
+  },
+  {
+    id: 'mgmt-operations',
+    name: 'Name Surname',
+    role: 'Head of Esports Operations',
+    photo: BRAND_LOGO,
+    bio: 'Runs day-to-day competitive operations — rosters, scheduling, and the FCX tournament engine.',
+    socialLinks: [],
+    order: 2,
+  },
+  {
+    id: 'mgmt-partnerships',
+    name: 'Name Surname',
+    role: 'Head of Partnerships',
+    photo: BRAND_LOGO,
+    bio: 'Builds and looks after the brands that back Provela, from sponsors to community partners.',
+    socialLinks: [],
+    order: 3,
   },
 ];

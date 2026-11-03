@@ -7,6 +7,17 @@ export interface Sponsor {
   id: string;
   name: string;
   logo: string;
+  website?: string;
+}
+
+export interface ManagementMember {
+  id: string;
+  name: string;
+  role: string;
+  photo: string;
+  bio: string;
+  socialLinks: SocialLink[];
+  order: number;
 }
 
 export interface FeaturedMatch {

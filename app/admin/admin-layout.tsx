@@ -12,6 +12,7 @@ import {
   Settings,
   Handshake,
   Tv,
+  Users,
   Menu,
   X,
   ExternalLink,
@@ -28,6 +29,7 @@ const NAV = [
   { href: '/admin/streamers', label: 'Streamers', icon: Radio },
   { href: '/admin/news', label: 'News', icon: Newspaper },
   { href: '/admin/sponsors', label: 'Sponsors', icon: Handshake },
+  { href: '/admin/management', label: 'Management', icon: Users },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 

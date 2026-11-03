@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { BrandLogo } from '@/components/brand-logo';
 import { SocialIconLink } from '@/components/social-icon';
 import { listBrandSocials } from '@/lib/brand-socials';
+import { BRAND_SOCIALS } from '@/lib/constants';
 
 export async function Footer() {
-  const socials = await listBrandSocials();
+  const socials = await listBrandSocials().catch(() => BRAND_SOCIALS);
 
   return (
     <footer className="bg-section-f border-t border-border/50 mt-0">
@@ -49,6 +50,11 @@ export async function Footer() {
               <li>
                 <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
                   About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/partners" className="text-muted-foreground hover:text-primary transition-colors">
+                  Partners
                 </Link>
               </li>
               <li>
