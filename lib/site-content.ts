@@ -67,6 +67,7 @@ function normalizeContent(candidate: unknown): SiteContent {
           name: s.name ?? '',
           logo: s.logo ?? '',
           website: s.website ?? '',
+          description: s.description ?? '',
         }))
       : fallback.sponsors,
     featuredMatch: content.featuredMatch

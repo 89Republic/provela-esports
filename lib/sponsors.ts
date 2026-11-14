@@ -23,6 +23,7 @@ function normalizeSponsor(candidate: Partial<Sponsor>): Sponsor {
     name: candidate.name?.trim() ?? '',
     logo: candidate.logo?.trim() ?? '',
     website: candidate.website?.trim() ?? '',
+    description: candidate.description?.trim() ?? '',
   };
 }
 

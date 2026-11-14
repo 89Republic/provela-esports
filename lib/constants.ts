@@ -874,21 +874,29 @@ export const SPONSORS: Sponsor[] = [
     id: 'gaming-hub',
     name: "Let's Hang Out Game Hub",
     logo: '/sponsors/gaming-hub.png',
+    description:
+      "Let's Hang Out Game Hub is a proud partner of Provela Esports, supporting our community, divisions, and events. More about this partnership is coming soon.",
   },
   {
     id: 'mr-klass',
     name: 'MR KLASS ONLINE',
     logo: '/sponsors/mr-klass.png',
+    description:
+      'MR KLASS ONLINE is a proud partner of Provela Esports, supporting our community, divisions, and events. More about this partnership is coming soon.',
   },
   {
     id: 'esports-ghana',
     name: 'Esports Association Ghana',
     logo: '/sponsors/esports-ghana.png',
+    description:
+      'The Association works to support and promote esports in Ghana by bringing gamers and other stakeholders together, raising awareness and providing expertise.',
   },
   {
     id: 'the-bear',
     name: 'The Bear Fufu and Grill',
     logo: '/sponsors/the-bear.png',
+    description:
+      'The Bear Fufu and Grill is a proud partner of Provela Esports, supporting our community, divisions, and events. More about this partnership is coming soon.',
   },
 ];
 

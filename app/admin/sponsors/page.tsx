@@ -7,6 +7,7 @@ import { PageTitle, Card, CardHeader, CardBody, Toast, Field, EmptyState, InfoBa
 import { ImageUploadField } from '../image-upload-field';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import type { Sponsor } from '@/lib/types';
 
 function normalizeSponsor(sponsor: Sponsor): Sponsor {
@@ -15,6 +16,7 @@ function normalizeSponsor(sponsor: Sponsor): Sponsor {
     name: sponsor.name ?? '',
     logo: sponsor.logo ?? '',
     website: sponsor.website ?? '',
+    description: sponsor.description ?? '',
   };
 }
 
@@ -24,6 +26,7 @@ function newSponsor(): Sponsor {
     name: '',
     logo: '',
     website: '',
+    description: '',
   };
 }
 
@@ -53,7 +56,16 @@ function SponsorForm({ sponsor, onSave, onCancel, isSaving }: {
       </Field>
       <Field label="Website">
         <Input value={form.website ?? ''} onChange={(e) => set('website', e.target.value)} placeholder="https://…" />
-        <p className="text-xs text-muted-foreground mt-1">Optional. The partner card on /partners links here.</p>
+        <p className="text-xs text-muted-foreground mt-1">Optional. The partner logo on /partners links here.</p>
+      </Field>
+      <Field label="Description">
+        <Textarea
+          value={form.description ?? ''}
+          onChange={(e) => set('description', e.target.value)}
+          placeholder="A short paragraph about this partner…"
+          className="min-h-28"
+        />
+        <p className="text-xs text-muted-foreground mt-1">Optional. Shown next to the logo on /partners.</p>
       </Field>
       <div className="flex gap-3 pt-2">
         <Button onClick={() => onSave(form)} disabled={!form.name.trim() || !form.logo?.trim() || isSaving}>

@@ -8,6 +8,7 @@ export interface Sponsor {
   name: string;
   logo: string;
   website?: string;
+  description?: string;
 }
 
 export interface ManagementMember {
