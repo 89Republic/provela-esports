@@ -35,7 +35,8 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
           align="left"
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        {/* grid-cols-1 = minmax(0,1fr): stops long headlines from widening the column past the viewport */}
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* lead story */}
           <Reveal from="left">
             <Link
@@ -46,13 +47,13 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
                 className="absolute inset-0 scale-105 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style={{ backgroundImage: `url("${encodeURI(lead.image)}")` }}
               />
-              <div className="absolute inset-0 bg-linear-to-t from-void via-void/40 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-void via-void/75 to-transparent sm:via-void/40" />
               <div className="scanlines absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                 <span className="inline-block bg-provela px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-void">
                   {CATEGORY_LABEL[lead.category]}
                 </span>
-                <h3 className="mt-3 max-w-lg font-gaming text-2xl font-bold uppercase leading-tight text-cold md:text-3xl">
+                <h3 className="mt-3 max-w-lg text-balance font-gaming text-2xl font-bold uppercase leading-tight text-cold md:text-3xl">
                   {lead.title}
                 </h3>
                 <p className="mt-2 max-w-md text-sm text-steel">{lead.excerpt}</p>
@@ -77,7 +78,7 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
                   href={`/news/${article.id}`}
                   className="group flex items-start gap-3 border-b border-cold/10 py-4 transition-colors hover:border-provela/40 sm:items-center sm:gap-4"
                 >
-                  <span className="hidden font-gaming text-2xl font-bold text-provela/40 transition-colors group-hover:text-provela sm:inline">
+                  <span className="hidden w-9 shrink-0 font-gaming text-2xl font-bold text-provela/40 transition-colors group-hover:text-provela sm:inline">
                     0{i + 1}
                   </span>
                   <div
@@ -88,7 +89,7 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
                     <p className="font-mono text-[0.55rem] uppercase tracking-[0.2em] text-provela">
                       {CATEGORY_LABEL[article.category]}
                     </p>
-                    <h4 className="mt-1 truncate font-gaming text-base font-semibold uppercase text-cold transition-colors group-hover:text-provela">
+                    <h4 className="mt-1 line-clamp-2 font-gaming text-base font-semibold uppercase leading-snug text-cold transition-colors group-hover:text-provela">
                       {article.title}
                     </h4>
                     <p className="font-mono text-[0.6rem] uppercase tracking-[0.15em] text-steel">
