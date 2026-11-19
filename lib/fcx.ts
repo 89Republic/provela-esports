@@ -74,6 +74,11 @@ function normalizeScheduleItem(candidate: Partial<TournamentScheduleItem>): Tour
   };
 }
 
+function normalizeCapacity(value: unknown): number | undefined {
+  const n = typeof value === 'string' ? Number(value) : value;
+  return typeof n === 'number' && Number.isInteger(n) && n > 0 ? n : undefined;
+}
+
 function normalizeFcxEvent(candidate: Partial<Tournament>): Tournament {
   return {
     id: candidate.id?.trim() ?? '',
@@ -87,6 +92,7 @@ function normalizeFcxEvent(candidate: Partial<Tournament>): Tournament {
     endDate: candidate.endDate?.trim() ?? '',
     prizePool: candidate.prizePool?.trim() ?? '',
     registrationOpen: Boolean(candidate.registrationOpen),
+    capacity: normalizeCapacity(candidate.capacity),
     image: candidate.image?.trim() ?? '',
     participants: Array.isArray(candidate.participants)
       ? candidate.participants.map(normalizeParticipant)

@@ -27,8 +27,10 @@ export function HeroScene() {
   const spx = useSpring(px, { stiffness: 60, damping: 18 });
   const spy = useSpring(py, { stiffness: 60, damping: 18 });
 
+  // Pointer parallax follows a mouse only; on touch it made the scene jump as a scroll began.
+  // Phones keep the scroll dolly below.
   const onPointer = (e: React.PointerEvent) => {
-    if (reduced) return;
+    if (reduced || e.pointerType !== 'mouse') return;
     px.set((e.clientX / window.innerWidth - 0.5) * 2);
     py.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
@@ -108,8 +110,8 @@ export function HeroScene() {
         className="pointer-events-none absolute inset-0 hidden md:block"
         style={{ x: l5x, y: l5y }}
       >
-        <div className="absolute left-6 top-28 h-24 w-40 -skew-y-3 rounded border border-cold/10 bg-cold/3 backdrop-blur-[2px]" />
-        <div className="absolute bottom-28 right-8 h-28 w-44 skew-y-3 rounded border border-cold/10 bg-cold/3 backdrop-blur-[2px]" />
+        <div className="absolute left-6 top-28 h-24 w-40 -skew-y-3 rounded border border-cold/10 bg-cold/3 fine:backdrop-blur-[2px]" />
+        <div className="absolute bottom-28 right-8 h-28 w-44 skew-y-3 rounded border border-cold/10 bg-cold/3 fine:backdrop-blur-[2px]" />
         <div className="absolute left-1/2 top-0 h-full w-0.5 translate-x-[-30vw] bg-linear-to-b from-transparent via-ion/20 to-transparent blur-sm" />
       </motion.div>
 
@@ -172,7 +174,7 @@ export function HeroScene() {
           <Magnetic strength={0.2} className="w-full sm:w-auto">
             <Link
               href="/fcx"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-cold/25 bg-cold/5 px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-cold backdrop-blur-sm transition-colors hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-cold/25 bg-cold/5 px-7 py-3.5 font-gaming text-sm font-semibold uppercase tracking-wider text-cold transition-colors fine:backdrop-blur-sm hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
             >
               <Play className="h-3.5 w-3.5 fill-current" />
               View Live Brackets

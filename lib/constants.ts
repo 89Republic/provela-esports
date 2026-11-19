@@ -12,6 +12,9 @@ const CODM_IMAGE = '/images/codm.jpg';
 const EAFC_IMAGE = '/images/eafc .jpg';
 const EAFC_CLUBS_IMAGE = '/images/eafc-cover.jpeg';
 const STREAMERS_IMAGE = '/images/streaming.jpg';
+// 4:5 stream-card art: EA FC without the PS5 band and rating badge; CODM anchored to its title.
+const EAFC_POSTER = '/images/eafc-poster.jpg';
+const CODM_POSTER = '/images/codm-poster.jpg';
 const TOURNAMENT_IMAGE = '/images/tournament.jpg';
 
 export const DIVISIONS: Division[] = [
@@ -571,13 +574,9 @@ export const TOURNAMENTS: Tournament[] = [
     endDate: '2026-07-19T22:00:00.000Z',
     prizePool: 'GH₵1,000',
     registrationOpen: true,
+    capacity: 32,
     image: '/images/tournament2.jpg',
-    participants: [
-      { id: 'u1', name: 'Slots Available', type: 'team' },
-      { id: 'u2', name: 'Slots Available', type: 'team' },
-      { id: 'u3', name: 'Slots Available', type: 'team' },
-      { id: 'u4', name: 'Slots Available', type: 'team' },
-    ],
+    participants: [],
     standings: [],
     schedule: [
       { id: 'u-s1', label: 'Registration Closes', stage: 'Pre-event', date: '2026-07-05T23:59:00.000Z' },
@@ -629,7 +628,7 @@ export const STREAMERS: Streamer[] = [
     id: 'lens',
     name: 'PVL Lens',
     game: 'EA SPORTS FC',
-    avatar: EAFC_IMAGE,
+    avatar: EAFC_POSTER,
     status: 'live',
     platform: 'youtube',
     followers: 112000,
@@ -647,7 +646,7 @@ export const STREAMERS: Streamer[] = [
     id: 'flip',
     name: 'PVL Flip',
     game: 'Call of Duty Mobile',
-    avatar: CODM_IMAGE,
+    avatar: CODM_POSTER,
     status: 'live',
     platform: 'youtube',
     followers: 84000,
@@ -665,7 +664,7 @@ export const STREAMERS: Streamer[] = [
     id: 'nova-live',
     name: 'PVL Nova',
     game: 'EA FC Clubs',
-    avatar: EAFC_IMAGE,
+    avatar: EAFC_POSTER,
     status: 'offline',
     platform: 'youtube',
     followers: 67000,

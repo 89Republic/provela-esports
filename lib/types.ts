@@ -110,6 +110,8 @@ export interface Tournament {
   endDate: string;
   prizePool: string;
   registrationOpen: boolean;
+  /** Number of team slots. Slots left = capacity − registered participants. Unset for invitationals. */
+  capacity?: number;
   image: string;
   participants: TournamentParticipant[];
   standings: TournamentStandingsEntry[];

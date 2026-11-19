@@ -50,7 +50,7 @@ export function CommunityPulse() {
 
         <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-4">
           {COMMUNITY_STATS.map((stat) => (
-            <div key={stat.label} className="border border-cold/10 bg-void/40 px-3 py-4 backdrop-blur-sm sm:px-4 sm:py-6">
+            <div key={stat.label} className="border border-cold/10 bg-void/40 px-3 py-4 fine:backdrop-blur-sm sm:px-4 sm:py-6">
               <span className="block font-gaming text-2xl font-bold text-provela sm:text-3xl md:text-4xl">
                 <Odometer value={stat.value} />
                 {stat.suffix}

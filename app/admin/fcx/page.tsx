@@ -120,10 +120,26 @@ function TournamentForm({ tournament, onSave, onCancel, isSaving }: {
       </Field>
       <Field label="Overview"><Textarea value={form.overview} onChange={e => set('overview', e.target.value)} className="min-h-20" /></Field>
       <Field label="Format"><Textarea value={form.format} onChange={e => set('format', e.target.value)} className="min-h-16" /></Field>
-      <div className="flex items-center gap-2">
-        <input type="checkbox" id="regOpen" checked={form.registrationOpen} onChange={e => set('registrationOpen', e.target.checked)} className="size-4 accent-primary" />
-        <label htmlFor="regOpen" className="text-sm text-foreground">Registration open</label>
-      </div>
+      <FieldRow>
+        <Field label="Team slots">
+          <Input
+            type="number"
+            min={1}
+            step={1}
+            inputMode="numeric"
+            value={form.capacity ?? ''}
+            onChange={e => set('capacity', e.target.value === '' ? undefined : Number(e.target.value))}
+            placeholder="32"
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            The event page shows slots left (slots minus participants) beside Register Team. Leave empty for invite-only events.
+          </p>
+        </Field>
+        <div className="flex items-center gap-2 self-center">
+          <input type="checkbox" id="regOpen" checked={form.registrationOpen} onChange={e => set('registrationOpen', e.target.checked)} className="size-4 accent-primary" />
+          <label htmlFor="regOpen" className="text-sm text-foreground">Registration open</label>
+        </div>
+      </FieldRow>
 
       <div>
         <div className="flex items-center justify-between mb-2">
@@ -354,7 +370,7 @@ export default function FcxAdminPage() {
                       <TableCell className="text-muted-foreground">{t.game}</TableCell>
                       <TableCell>{formatPrizePool(t.prizePool) || '—'}</TableCell>
                       <TableCell className="text-muted-foreground">{formatDate(t.startDate)}</TableCell>
-                      <TableCell>{t.participants.length}</TableCell>
+                      <TableCell>{t.capacity ? `${t.participants.length} of ${t.capacity}` : t.participants.length}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-1">
                           <Button

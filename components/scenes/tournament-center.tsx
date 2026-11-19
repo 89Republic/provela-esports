@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import type { Tournament } from '@/lib/types';
-import { formatPrizePool } from '@/lib/utils';
+import { prizeContext } from '@/lib/tournament-display';
+import { PrizePlate } from '@/components/prize-plate';
 import { SceneHeader } from '@/components/motion/scene-header';
 import { Reveal } from '@/components/motion/reveal';
 import { ImpactOnView } from '@/components/motion/impact-frame';
@@ -112,7 +113,7 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
         <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.4fr_1fr]">
           {/* left: tournament identity */}
           <Reveal from="left">
-            <div className="border border-cold/10 bg-abyss/50 p-6 backdrop-blur-sm">
+            <div className="border border-cold/10 bg-abyss/50 p-6 fine:backdrop-blur-sm">
               <span className="inline-block bg-provela/15 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-provela">
                 ● {active.status}
               </span>
@@ -162,15 +163,9 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
                 </div>
               </div>
 
+              {/* desktop keeps its gold edge flash; every device gets the plate's sheen */}
               <ImpactOnView variant="gold" amount={0.8}>
-                <div className="border border-victory/30 bg-victory/6 p-5">
-                  <p className="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-steel">
-                    Prize Pool
-                  </p>
-                  <p className="mt-1 font-gaming text-3xl font-bold text-victory">
-                    {formatPrizePool(active.prizePool)}
-                  </p>
-                </div>
+                <PrizePlate prizePool={active.prizePool} context={prizeContext(active)} />
               </ImpactOnView>
 
               <Magnetic strength={0.2}>

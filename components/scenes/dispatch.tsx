@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import type { NewsArticle } from '@/lib/types';
 import { SceneHeader } from '@/components/motion/scene-header';
 import { Reveal } from '@/components/motion/reveal';
+import { useEntrance } from '@/components/motion/use-entrance';
 
 const DATE_FMT = new Intl.DateTimeFormat('en-GB', {
   timeZone: 'UTC',
@@ -19,6 +20,22 @@ const CATEGORY_LABEL: Record<NewsArticle['category'], string> = {
   Community: 'Community Signal',
   Announcements: 'Stream Network',
 };
+
+/** Rows slide in from the side with a mouse (they read as a column arriving); on touch they rise. */
+function DispatchRow({ index, children }: { index: number; children: React.ReactNode }) {
+  const { ref, controls, initial } = useEntrance<HTMLDivElement>({
+    touch: { opacity: 0, x: 0, y: 12 },
+    desktop: { opacity: 0, x: 30, y: 0 },
+    show: { opacity: 1, x: 0, y: 0 },
+    transition: { duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] },
+    amount: 0.5,
+  });
+  return (
+    <motion.div ref={ref} initial={initial} animate={controls}>
+      {children}
+    </motion.div>
+  );
+}
 
 export function Dispatch({ articles }: { articles: NewsArticle[] }) {
   const [lead, ...rest] = articles.slice(0, 4);
@@ -67,13 +84,7 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
           {/* secondary rows */}
           <div className="flex flex-col gap-3">
             {rest.map((article, i) => (
-              <motion.div
-                key={article.id}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <DispatchRow key={article.id} index={i}>
                 <Link
                   href={`/news/${article.id}`}
                   className="group flex items-start gap-3 border-b border-cold/10 py-4 transition-colors hover:border-provela/40 sm:items-center sm:gap-4"
@@ -82,7 +93,7 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
                     0{i + 1}
                   </span>
                   <div
-                    className="h-14 w-20 shrink-0 overflow-hidden rounded bg-cover bg-center grayscale transition-all duration-500 group-hover:grayscale-0 sm:h-16 sm:w-24"
+                    className="h-14 w-20 shrink-0 overflow-hidden rounded bg-cover bg-center transition-all duration-500 fine:grayscale fine:group-hover:grayscale-0 sm:h-16 sm:w-24"
                     style={{ backgroundImage: `url("${encodeURI(article.image)}")` }}
                   />
                   <div className="min-w-0">
@@ -97,7 +108,7 @@ export function Dispatch({ articles }: { articles: NewsArticle[] }) {
                     </p>
                   </div>
                 </Link>
-              </motion.div>
+              </DispatchRow>
             ))}
           </div>
         </div>

@@ -35,11 +35,14 @@ export function SceneHeader({
         </div>
       </Reveal>
 
+      {/* Phones: one fluid size for every section headline (32–44 px) and balanced lines
+          that use the width; md and up keep the authored line breaks and sizes. */}
       <KineticHeading
         as="h2"
         lines={titleLines}
         flickerWords={flickerWords}
-        className="mt-5 font-gaming text-3xl font-bold uppercase leading-[0.95] tracking-tight text-cold sm:text-4xl md:text-5xl lg:text-6xl"
+        flow
+        className="mt-5 text-balance font-gaming text-[clamp(2rem,10vw,2.75rem)] font-bold uppercase leading-[0.95] tracking-tight text-cold md:text-5xl lg:text-6xl"
       />
 
       {description && (
