@@ -6,8 +6,8 @@ import { Fragment, useEffect, useRef, useState, createElement } from 'react';
  * Headlines arrive — they never fade. Each line rises from a clipped wrapper
  * with a stagger when the heading enters view.
  *
- * `flow`: below md the authored lines run together (so `text-balance` can use the full
- * width) and the headline rises as one block; from md up it behaves exactly as without it.
+ * `flow`: the authored lines run together, so the title sits on one line when it fits
+ * (`text-balance` splits it evenly when it doesn't), and the headline rises as one block.
  */
 export function KineticHeading({
   lines,

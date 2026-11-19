@@ -351,9 +351,9 @@
   animation: kinetic-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Flowing headline (section headers): below md the authored lines run together so
-   text-wrap: balance can use the full width, and the headline rises as one block.
-   From md up the wrappers vanish (display: contents) and lines rise one by one. */
+/* Flowing headline (section headers): the authored lines run together so the title sits
+   on one line when it fits (text-wrap: balance splits it evenly when it doesn't), and the
+   headline rises as one block. */
 .kinetic-flow-clip {
   display: block;
   overflow: hidden;
@@ -365,19 +365,11 @@
 .kinetic-flow-inner.play {
   animation: kinetic-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@media (max-width: 767px) {
-  .kinetic-flow-inner .kinetic-line-wrap,
-  .kinetic-flow-inner .kinetic-line {
-    display: inline;
-    transform: none;
-    animation: none;
-  }
-}
-@media (min-width: 768px) {
-  .kinetic-flow-clip,
-  .kinetic-flow-inner {
-    display: contents;
-  }
+.kinetic-flow-inner .kinetic-line-wrap,
+.kinetic-flow-inner .kinetic-line {
+  display: inline;
+  transform: none;
+  animation: none;
 }
 
 /* Impact accent: a single subtle camera nudge (not a shake) */

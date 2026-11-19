@@ -103,11 +103,9 @@ export function TournamentCenter({ tournaments }: { tournaments: Tournament[] })
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SceneHeader
           index="03"
-          eyebrow="Tournament Command"
           titleLines={['The Command', 'Center']}
           description="Live brackets, prize pools, and match operations — running right now."
           align="left"
-          accent="text-victory"
         />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.4fr_1fr]">
