@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { isFinePointer } from '@/hooks/use-fine-pointer';
 
 /**
  * Impact accents — a SINGLE soft, low-luminance pulse fired at earned moments.
@@ -56,6 +57,9 @@ export function ImpactProvider({ children }: { children: React.ReactNode }) {
     const now = performance.now();
     if (now - lastFired.current < COOLDOWN_MS) return;
     if (reduced.current) return;
+    // Screen-level nudge and bloom are desktop-only; on touch they fire mid-scroll and
+    // read as the page jumping. Phones get element-level moments instead (prize sheen).
+    if (!isFinePointer()) return;
     lastFired.current = now;
 
     timers.current.forEach(clearTimeout);

@@ -3,6 +3,9 @@ import { Footer } from '@/components/footer';
 import { PageHeader, Container, backLinkClass, backLinkArrowClass } from '@/components/layout';
 import { getSiteContent } from '@/lib/site-content';
 import { formatPrizePool } from '@/lib/utils';
+import { isRegistrationOpen, prizeContext, teamsCount } from '@/lib/tournament-display';
+import { PrizePlate } from '@/components/prize-plate';
+import { RegisteredTeams, SlotsCard, registerButtonClass } from '@/components/fcx-participants';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Trophy, Users } from 'lucide-react';
 
@@ -48,8 +51,9 @@ export default async function FcxDetailPage(props: FcxDetailPageProps) {
     tournament?.status === 'active'
       ? 'bg-primary/20 text-primary'
       : tournament?.status === 'upcoming'
-        ? 'bg-blue-500/20 text-blue-400'
+        ? 'bg-provela/18 text-provela'
         : 'bg-muted text-muted-foreground';
+  const capacity = tournament.capacity || undefined;
 
   return (
     <>
@@ -97,7 +101,9 @@ export default async function FcxDetailPage(props: FcxDetailPageProps) {
                       <Users className="w-5 h-5" />
                       <span className="text-sm font-semibold">Participants</span>
                     </div>
-                    <p className="text-foreground font-semibold">{tournament.participants.length} Teams</p>
+                    <p className="text-foreground font-semibold">
+                      {capacity ? teamsCount(tournament) : `${tournament.participants.length} Teams`}
+                    </p>
                   </div>
                   <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center space-x-2 text-primary mb-2">
@@ -107,16 +113,15 @@ export default async function FcxDetailPage(props: FcxDetailPageProps) {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-foreground mb-4">Participants</h3>
-                <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                  {tournament.participants.map((participant) => (
-                    <div key={participant.id} className="border border-border rounded-lg p-3">
-                      <p className="font-semibold text-foreground">{participant.name}</p>
-                      <p className="text-sm text-muted-foreground capitalize">{participant.type}</p>
-                      {participant.record && <p className="text-sm text-primary">Record: {participant.record}</p>}
+                {(capacity || tournament.participants.length > 0) && (
+                  <>
+                    <h3 className="text-xl font-bold text-foreground mb-4">Participants</h3>
+                    <div className="mb-8 flex flex-col gap-3">
+                      <RegisteredTeams participants={tournament.participants} />
+                      {capacity ? <SlotsCard tournament={{ ...tournament, capacity }} /> : null}
                     </div>
-                  ))}
-                </div>
+                  </>
+                )}
 
                 <h3 className="text-xl font-bold text-foreground mb-4">Standings</h3>
                 <div className="bg-background rounded-lg p-6 space-y-3">
@@ -159,25 +164,30 @@ export default async function FcxDetailPage(props: FcxDetailPageProps) {
             </div>
 
             <div className="md:col-span-1">
-              <div className="sticky top-20 rounded-lg border border-border bg-card p-4 sm:top-24 sm:p-6">
-                <h3 className="text-lg font-bold text-foreground mb-6">Quick Info</h3>
-                <div className="space-y-6">
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Status</p>
-                    <p className={`inline-block px-3 py-1 rounded-full text-sm font-semibold capitalize ${statusBadge}`}>
-                      {tournament.status}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Prize Pool</p>
-                    <p className="text-2xl font-bold text-primary">{formatPrizePool(tournament.prizePool)}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Participating Teams</p>
-                    <p className="text-2xl font-bold text-foreground">{tournament.participants.length}</p>
-                  </div>
-                  <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-lg transition-colors">
-                    {tournament.registrationOpen ? 'Register Team' : 'Registration Closed'}
+              {/* Quick Info: the prize is the card's header (gold, once), then two key–value rows */}
+              <div className="sticky top-20 overflow-hidden rounded-lg border border-border bg-card sm:top-24">
+                <PrizePlate
+                  variant="header"
+                  prizePool={tournament.prizePool}
+                  context={prizeContext(tournament)}
+                />
+                <div className="px-5 pb-5">
+                  <dl className="mb-4">
+                    <div className="flex items-center justify-between gap-3 border-b border-border py-3">
+                      <dt className="text-base text-muted-foreground">Status</dt>
+                      <dd
+                        className={`rounded-full px-2.5 py-1 text-[0.8125rem] font-semibold leading-4.5 capitalize ${statusBadge}`}
+                      >
+                        {tournament.status}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 border-b border-border py-3">
+                      <dt className="text-base text-muted-foreground">Teams</dt>
+                      <dd className="text-base font-medium text-foreground tabular-nums">{teamsCount(tournament)}</dd>
+                    </div>
+                  </dl>
+                  <button type="button" className={registerButtonClass}>
+                    {isRegistrationOpen(tournament) ? 'Register Team' : 'Registration Closed'}
                   </button>
                 </div>
               </div>

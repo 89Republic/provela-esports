@@ -2,6 +2,9 @@
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+/* Desktop-only effects (tilt, hover zoom, magnetic pull, parallax, blur, screen flash)
+   gate on the input, not the width: a tablet with a mouse keeps them, a phone never gets them. */
+@custom-variant fine (@media (hover: hover) and (pointer: fine));
 
 :root,
 .dark {
@@ -41,6 +44,15 @@
   --steel-gray: oklch(0.63 0.014 256); /* #7E8796 */
   --impact-red: oklch(0.62 0.235 23); /* #FF2D3D */
   --victory-gold: oklch(0.84 0.142 85); /* #FFC84A */
+  /* Prize plate: deep gold shades for the plate, muted gold for its labels, warm ink for text on it */
+  --victory-deep: oklch(0.301 0.062 85); /* #3C2B00 */
+  --victory-shade: oklch(0.233 0.04 86); /* #261C05 */
+  --victory-muted: oklch(0.736 0.109 85); /* #C9A453 */
+  --victory-ink: oklch(0.85 0.038 88); /* #D8CDB2 */
+  /* Deep provela shade for art placeholders (monogram tiles) */
+  --provela-deep: oklch(0.279 0.08 256); /* #09284F */
+  /* Reading text between cold white and steel (bios) */
+  --body-copy: oklch(0.805 0.016 257); /* #B9C0CA */
   --sidebar: oklch(0.05 0.003 264);
   --sidebar-foreground: oklch(0.98 0 0);
   --sidebar-primary: oklch(0.64 0.19 258);
@@ -113,6 +125,12 @@
   --color-steel: var(--steel-gray);
   --color-signal: var(--impact-red);
   --color-victory: var(--victory-gold);
+  --color-victory-deep: var(--victory-deep);
+  --color-victory-shade: var(--victory-shade);
+  --color-victory-muted: var(--victory-muted);
+  --color-victory-ink: var(--victory-ink);
+  --color-provela-deep: var(--provela-deep);
+  --color-body-copy: var(--body-copy);
 }
 
 @layer base {
@@ -256,6 +274,18 @@
   100% { transform: translate(2%, 3%); }
 }
 
+/* Touch: the grain holds still at screen size with plain blending. A moving, blended
+   layer twice the screen's size makes a phone recomposite the whole page every frame. */
+@media (hover: none), (pointer: coarse) {
+  .grain-overlay {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: normal;
+    animation: none;
+  }
+}
+
 /* Scanline shimmer — viewport reads as a camera feed */
 .scanlines::after {
   content: '';
@@ -321,6 +351,27 @@
   animation: kinetic-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Flowing headline (section headers): the authored lines run together so the title sits
+   on one line when it fits (text-wrap: balance splits it evenly when it doesn't), and the
+   headline rises as one block. */
+.kinetic-flow-clip {
+  display: block;
+  overflow: hidden;
+}
+.kinetic-flow-inner {
+  display: block;
+  transform: translateY(110%);
+}
+.kinetic-flow-inner.play {
+  animation: kinetic-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.kinetic-flow-inner .kinetic-line-wrap,
+.kinetic-flow-inner .kinetic-line {
+  display: inline;
+  transform: none;
+  animation: none;
+}
+
 /* Impact accent: a single subtle camera nudge (not a shake) */
 @keyframes impact-nudge {
   0% { transform: translateY(0); }
@@ -329,12 +380,64 @@
 }
 .impact-shake { animation: impact-nudge 0.18s ease-out 1; }
 
-/* Live indicator pulse */
+/* Live indicator pulse — opacity and transform only, so it never forces a repaint */
 @keyframes live-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 oklch(0.62 0.235 23 / 0.5); }
-  50% { opacity: 0.6; box-shadow: 0 0 0 5px oklch(0.62 0.235 23 / 0); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
-.live-dot { animation: live-pulse 1.6s ease-in-out infinite; }
+@keyframes live-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  50%, 100% { transform: scale(2.25); opacity: 0; }
+}
+.live-dot {
+  position: relative;
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: live-ring 1.6s ease-out infinite;
+}
+
+/* Prize plate sheen: one warm band crosses the plate once when it comes into view.
+   Same slant as the hero CTA sweep; 30% of the plate wide, warm white at 30% at its peak. */
+@keyframes prize-sheen {
+  from { transform: translateX(-200%) skewX(-20deg); }
+  to { transform: translateX(400%) skewX(-20deg); }
+}
+.prize-sheen {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 30%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, oklch(0.963 0.045 89 / 0.3), transparent);
+  transform: translateX(-200%) skewX(-20deg);
+}
+.prize-sheen[data-play] {
+  animation: prize-sheen 0.9s ease-out 1 forwards;
+}
+
+/* Touch press feedback: cards and buttons dip and brighten under the finger instead of
+   hover states that never fire (or stick after a tap). Inline text links can't be scaled,
+   so they only brighten. In the base layer so a component's own utilities still win. */
+@layer base {
+  @media (hover: none), (pointer: coarse) {
+    a,
+    button,
+    [role='button'] {
+      -webkit-tap-highlight-color: transparent;
+      transition: scale 120ms ease-out, filter 120ms ease-out;
+    }
+    :is(a, button, [role='button']):active {
+      scale: 0.98;
+      filter: brightness(1.08);
+    }
+  }
+}
 
 /* Perpetual light sweep across a primary CTA face */
 @keyframes cta-sweep {
@@ -376,9 +479,20 @@
   .grain-overlay { opacity: 0.03; }
 
   .kinetic-line,
-  .kinetic-line.play {
+  .kinetic-line.play,
+  .kinetic-flow-inner,
+  .kinetic-flow-inner.play {
     transform: none !important;
     animation: none !important;
+  }
+
+  .live-dot::after,
+  .prize-sheen {
+    display: none;
+  }
+
+  :is(a, button, [role='button']):active {
+    scale: none;
   }
 
   .ambient-scroll-layer {

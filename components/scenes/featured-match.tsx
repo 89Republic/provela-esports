@@ -78,7 +78,7 @@ export function FeaturedMatchScene({ match }: { match: FeaturedMatch }) {
 
         <motion.div
           style={{ opacity: reduced ? 1 : cardOpacity, scale: reduced ? 1 : cardScale }}
-          className="mx-auto mt-8 max-w-md border border-provela/30 bg-abyss/60 p-4 text-center backdrop-blur-sm sm:mt-12 sm:p-6"
+          className="mx-auto mt-8 max-w-md border border-provela/30 bg-abyss/60 p-4 text-center fine:backdrop-blur-sm sm:mt-12 sm:p-6"
         >
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-steel">
             {match.division}

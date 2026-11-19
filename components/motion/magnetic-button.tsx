@@ -23,8 +23,9 @@ export function Magnetic({
   const sx = useSpring(x, { stiffness: 220, damping: 18, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 220, damping: 18, mass: 0.4 });
 
-  const onMove = (e: React.MouseEvent) => {
-    if (reduced) return;
+  // Mouse only: a tap fires a synthetic move at the finger and the button would jump there.
+  const onMove = (e: React.PointerEvent) => {
+    if (reduced || e.pointerType !== 'mouse') return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -41,8 +42,8 @@ export function Magnetic({
     <motion.div
       ref={ref}
       className={cn('inline-block', className)}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
+      onPointerMove={onMove}
+      onPointerLeave={reset}
       style={{ x: sx, y: sy }}
       data-cursor="target"
     >

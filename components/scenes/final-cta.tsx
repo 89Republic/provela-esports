@@ -59,7 +59,7 @@ export function FinalCta() {
             <Magnetic strength={0.2} className="w-full sm:w-auto">
               <Link
                 href="/fcx"
-                className="inline-flex w-full justify-center border border-cold/25 bg-cold/5 px-8 py-3.5 font-gaming text-sm font-semibold uppercase tracking-[0.2em] text-cold backdrop-blur-sm transition-colors hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
+                className="inline-flex w-full justify-center border border-cold/25 bg-cold/5 px-8 py-3.5 font-gaming text-sm font-semibold uppercase tracking-[0.2em] text-cold transition-colors fine:backdrop-blur-sm hover:border-provela/60 hover:bg-provela/10 sm:w-auto"
               >
                 Register For FCX
               </Link>

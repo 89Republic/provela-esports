@@ -52,7 +52,27 @@ export function EmberField({ className }: { className?: string }) {
     resize();
     seed();
 
+    // Draw only while the hero is on screen and the tab is visible; the loop used to run
+    // for the life of the page, repainting the canvas under every scroll frame.
     let raf = 0;
+    let onScreen = true;
+    const running = () => raf !== 0;
+    const start = () => {
+      if (!running() && onScreen && !document.hidden) raf = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) start();
+      else stop();
+    });
+    io.observe(canvas);
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener('visibilitychange', onVisibility);
+
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
       for (const e of embers) {
@@ -73,7 +93,7 @@ export function EmberField({ className }: { className?: string }) {
       }
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+    start();
 
     const onMove = (ev: MouseEvent) => {
       mouse.x = ev.clientX / window.innerWidth;
@@ -83,7 +103,9 @@ export function EmberField({ className }: { className?: string }) {
     window.addEventListener('resize', resize);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', resize);
     };

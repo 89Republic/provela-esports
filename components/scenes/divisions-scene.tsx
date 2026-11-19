@@ -127,8 +127,8 @@ export function DivisionsScene({ divisions }: { divisions: Division[] }) {
   return (
     <section className="relative overflow-hidden bg-void py-14 sm:py-20 md:py-28">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* two-column header */}
-        <div className="grid gap-8 md:grid-cols-2 md:items-end md:gap-12">
+        {/* two-column header; on phones the link sits beneath the headline as part of it */}
+        <div className="grid gap-5 md:grid-cols-2 md:items-end md:gap-12">
           <div>
             <Reveal from="none">
               <div className="flex items-center gap-2.5">
@@ -141,7 +141,8 @@ export function DivisionsScene({ divisions }: { divisions: Division[] }) {
             <KineticHeading
               as="h2"
               lines={['Pick Your', 'World']}
-              className="mt-5 font-gaming text-4xl font-bold uppercase leading-[0.95] tracking-tight text-cold sm:text-5xl md:text-6xl"
+              flow
+              className="mt-5 text-balance font-gaming text-[clamp(2rem,10vw,2.75rem)] font-bold uppercase leading-[0.95] tracking-tight text-cold md:text-6xl"
             />
           </div>
 
@@ -149,7 +150,7 @@ export function DivisionsScene({ divisions }: { divisions: Division[] }) {
             <div className="md:flex md:justify-end md:pb-2">
               <Link
                 href="/divisions"
-                className="group inline-flex items-center gap-2 font-gaming text-sm font-semibold uppercase tracking-[0.2em] text-victory transition-colors hover:text-victory/80"
+                className="group inline-flex items-center gap-2 py-3 font-gaming text-sm font-semibold uppercase tracking-[0.2em] text-victory transition-colors hover:text-victory/80 md:py-0"
               >
                 View all divisions
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
@@ -161,7 +162,7 @@ export function DivisionsScene({ divisions }: { divisions: Division[] }) {
         {/* logo tile grid — perspective container */}
         <div
           ref={gridRef}
-          className="mt-12 grid grid-cols-2 gap-3 [perspective:1600px] sm:gap-4 lg:grid-cols-3"
+          className="mt-9 grid grid-cols-2 gap-3 [perspective:1600px] sm:gap-4 md:mt-12 lg:grid-cols-3"
         >
           {divisions.map((division, i) => (
             <PerspectiveTile

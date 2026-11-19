@@ -42,7 +42,7 @@ export function Navbar() {
       <nav
         className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
           scrolled
-            ? 'border-cold/10 bg-void/85 py-1 backdrop-blur-xl'
+            ? 'border-cold/10 bg-void/95 py-1 fine:bg-void/85 fine:backdrop-blur-xl'
             : 'border-transparent bg-linear-to-b from-void/80 to-transparent py-3'
         }`}
       >
@@ -98,7 +98,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="scanlines fixed inset-0 top-0 z-100 flex flex-col bg-void/97 backdrop-blur-xl md:hidden"
+            className="scanlines fixed inset-0 top-0 z-100 flex flex-col bg-void/97 fine:backdrop-blur-xl md:hidden"
           >
             <div
               className="absolute inset-0 opacity-[0.06]"

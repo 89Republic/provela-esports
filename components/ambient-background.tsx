@@ -1,13 +1,19 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { isFinePointer } from '@/hooks/use-fine-pointer';
 
+/**
+ * Soft light pools behind every page. On desktop they drift with scroll and are blurred;
+ * on touch they hold still and unblurred (the radial gradients are already soft), because
+ * four large blurred layers moving every scroll frame was the main cost on phones.
+ */
 export function AmbientScrollBackground() {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || !isFinePointer()) return;
 
     let frame = 0;
 
@@ -45,19 +51,19 @@ export function AmbientScrollBackground() {
       style={{ '--scroll-progress': 0, '--scroll-y': '0px' } as React.CSSProperties}
     >
       <div
-        className="ambient-scroll-layer absolute -left-[20%] top-[-10%] h-[70vh] w-[70vw] rounded-full bg-[radial-gradient(circle,oklch(0.2_0.01_264/0.22)_0%,transparent_70%)] blur-3xl"
+        className="ambient-scroll-layer absolute -left-[20%] top-[-10%] h-[70vh] w-[70vw] rounded-full bg-[radial-gradient(circle,oklch(0.2_0.01_264/0.22)_0%,transparent_70%)] fine:blur-3xl"
         style={{ transform: 'translate3d(0, calc(var(--scroll-y) * 0.18), 0)' }}
       />
       <div
-        className="ambient-scroll-layer absolute -right-[15%] top-[20%] h-[60vh] w-[55vw] rounded-full bg-[radial-gradient(circle,oklch(0.16_0.008_264/0.18)_0%,transparent_72%)] blur-3xl"
+        className="ambient-scroll-layer absolute -right-[15%] top-[20%] h-[60vh] w-[55vw] rounded-full bg-[radial-gradient(circle,oklch(0.16_0.008_264/0.18)_0%,transparent_72%)] fine:blur-3xl"
         style={{ transform: 'translate3d(0, calc(var(--scroll-y) * -0.12), 0)' }}
       />
       <div
-        className="ambient-scroll-layer absolute bottom-[-15%] left-[10%] h-[65vh] w-[60vw] rounded-full bg-[radial-gradient(circle,oklch(0.14_0.007_264/0.16)_0%,transparent_70%)] blur-3xl"
+        className="ambient-scroll-layer absolute bottom-[-15%] left-[10%] h-[65vh] w-[60vw] rounded-full bg-[radial-gradient(circle,oklch(0.14_0.007_264/0.16)_0%,transparent_70%)] fine:blur-3xl"
         style={{ transform: 'translate3d(0, calc(var(--scroll-y) * 0.22), 0)' }}
       />
       <div
-        className="ambient-scroll-layer absolute left-1/2 top-1/2 h-[50vh] w-[80vw] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,oklch(0.22_0.01_264/0.1)_0%,transparent_65%)] blur-[80px] opacity-[calc(0.35+var(--scroll-progress)*0.45)]"
+        className="ambient-scroll-layer absolute left-1/2 top-1/2 h-[50vh] w-[80vw] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,oklch(0.22_0.01_264/0.1)_0%,transparent_65%)] fine:blur-[80px] opacity-[calc(0.35+var(--scroll-progress)*0.45)]"
         style={{ transform: 'translate3d(-50%, calc(-50% + var(--scroll-y) * 0.08), 0)' }}
       />
       <div
