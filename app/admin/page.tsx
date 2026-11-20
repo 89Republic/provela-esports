@@ -14,6 +14,7 @@ const HOMEPAGE_SCENES = [
   { scene: 'Streamer Wall', source: 'All streamers', admin: '/admin/streamers' },
   { scene: 'Dispatch', source: 'Latest 4 news articles', admin: '/admin/news' },
   { scene: 'Sponsor Wall', source: 'All sponsors', admin: '/admin/sponsors' },
+  { scene: 'Community Pulse', source: 'Stats, ticker & CTA', admin: '/admin/community-pulse' },
 ];
 
 export default function AdminDashboard() {
@@ -65,7 +66,7 @@ export default function AdminDashboard() {
           ))}
           <div className="border-t border-border bg-muted/30 px-4 py-3 sm:px-5">
             <p className="text-xs text-muted-foreground">
-              Hero and Community Pulse are hardcoded in the codebase — not editable here.
+              The homepage hero scene is still fixed in the codebase — other scenes above are editable in admin.
             </p>
           </div>
         </CardBody>

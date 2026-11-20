@@ -1080,5 +1080,43 @@
     "when": "Tonight · 20:00 GMT",
     "streamUrl": "https://youtube.com/@provelaesports/live",
     "enabled": true
+  },
+  "communityPulse": {
+    "eyebrow": "Community Pulse",
+    "titleLines": [
+      "Inside The",
+      "Network"
+    ],
+    "stats": [
+      {
+        "label": "Players Registered",
+        "value": 1240
+      },
+      {
+        "label": "Teams Formed",
+        "value": 86
+      },
+      {
+        "label": "Matches Played",
+        "value": 3120
+      },
+      {
+        "label": "Monthly Viewers",
+        "value": 1,
+        "suffix": "M+"
+      }
+    ],
+    "feed": [
+      "PVL Raze advanced to FCX Quarters",
+      "North Core 2 — 2 Rapid XI",
+      "New team registered: Atlas Mobile",
+      "Shokunin clinch Map 3 on Search",
+      "PVL Nova hit 67K followers",
+      "Volt Prime eliminated · Round of 16",
+      "FCX Open Cup: 12 slots remaining",
+      "PVL Lens live — FCX Watchalong"
+    ],
+    "ctaLabel": "Join The Network",
+    "ctaHref": "/about"
   }
 }

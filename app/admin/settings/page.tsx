@@ -187,7 +187,8 @@ export default function SettingsAdminPage() {
                 <li><strong>Dispatch</strong> — latest 4 news articles as field reports</li>
                 <li><strong>Sponsor Wall</strong> — scrolling partner marquee (Admin → Sponsors)</li>
                 <li><strong>Featured Match</strong> — upcoming homepage faceoff (Admin → Featured Match)</li>
-                <li>Hero and Community Pulse are hardcoded — not editable here</li>
+                <li><strong>Community Pulse</strong> — stats, ticker, and CTA (Admin → Community Pulse)</li>
+                <li>The homepage hero scene is still hardcoded in the codebase</li>
               </ul>
             </InfoBanner>
           </CardBody>

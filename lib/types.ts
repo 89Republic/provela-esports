@@ -30,6 +30,21 @@ export interface FeaturedMatch {
   enabled: boolean;
 }
 
+export interface CommunityStat {
+  label: string;
+  value: number;
+  suffix?: string;
+}
+
+export interface CommunityPulseContent {
+  eyebrow: string;
+  titleLines: string[];
+  stats: CommunityStat[];
+  feed: string[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
 export interface PlayerProfile {
   id: string;
   tag: string;

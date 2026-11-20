@@ -1,4 +1,4 @@
-import type { Division, FeaturedMatch, ManagementMember, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
+import type { CommunityPulseContent, CommunityStat, Division, FeaturedMatch, ManagementMember, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from './types';
 
 export const BRAND_SOCIALS: SocialLink[] = [
   { platform: 'x', url: 'https://x.com/provelaesports' },
@@ -844,11 +844,7 @@ export const FEATURED_MATCH: FeaturedMatch = {
   enabled: true,
 };
 
-export interface CommunityStat {
-  label: string;
-  value: number;
-  suffix?: string;
-}
+export type { CommunityStat };
 
 export const COMMUNITY_STATS: CommunityStat[] = [
   { label: 'Players Registered', value: 1240 },
@@ -867,6 +863,15 @@ export const COMMUNITY_FEED: string[] = [
   'FCX Open Cup: 12 slots remaining',
   'PVL Lens live — FCX Watchalong',
 ];
+
+export const DEFAULT_COMMUNITY_PULSE: CommunityPulseContent = {
+  eyebrow: 'Community Pulse',
+  titleLines: ['Inside The', 'Network'],
+  stats: COMMUNITY_STATS,
+  feed: COMMUNITY_FEED,
+  ctaLabel: 'Join The Network',
+  ctaHref: '/about',
+};
 
 export const SPONSORS: Sponsor[] = [
   {

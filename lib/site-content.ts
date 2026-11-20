@@ -2,6 +2,8 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { unstable_noStore as noStore } from 'next/cache';
 import { BRAND_SOCIALS, DIVISIONS, FEATURED_MATCH, MANAGEMENT, NEWS_ARTICLES, SPONSORS, STREAMERS, TOURNAMENTS } from '@/lib/constants';
+import { DEFAULT_COMMUNITY_PULSE } from '@/lib/constants';
+import { getCommunityPulse, normalizeCommunityPulse } from '@/lib/community-pulse';
 import { listBrandSocials } from '@/lib/brand-socials';
 import { listDivisions } from '@/lib/divisions';
 import { getFeaturedMatch, normalizeFeaturedMatch } from '@/lib/featured-match';
@@ -10,7 +12,7 @@ import { listManagement } from '@/lib/management';
 import { listPublishedNewsArticles } from '@/lib/news';
 import { listSponsors } from '@/lib/sponsors';
 import { listStreamers } from '@/lib/streamers';
-import type { Division, FeaturedMatch, ManagementMember, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
+import type { CommunityPulseContent, Division, FeaturedMatch, ManagementMember, NewsArticle, SocialLink, Sponsor, Streamer, Tournament } from '@/lib/types';
 
 export interface SiteContent {
   brandSocials: SocialLink[];
@@ -20,6 +22,7 @@ export interface SiteContent {
   newsArticles: NewsArticle[];
   sponsors: Sponsor[];
   featuredMatch: FeaturedMatch;
+  communityPulse: CommunityPulseContent;
   management: ManagementMember[];
 }
 
@@ -33,6 +36,7 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
   newsArticles: NEWS_ARTICLES,
   sponsors: SPONSORS,
   featuredMatch: FEATURED_MATCH,
+  communityPulse: DEFAULT_COMMUNITY_PULSE,
   management: MANAGEMENT,
 };
 
@@ -73,6 +77,9 @@ function normalizeContent(candidate: unknown): SiteContent {
     featuredMatch: content.featuredMatch
       ? normalizeFeaturedMatch(content.featuredMatch)
       : fallback.featuredMatch,
+    communityPulse: content.communityPulse
+      ? normalizeCommunityPulse(content.communityPulse)
+      : fallback.communityPulse,
     management: Array.isArray(content.management) ? content.management : fallback.management,
   };
 }
@@ -145,10 +152,18 @@ async function loadManagement(): Promise<ManagementMember[]> {
   }
 }
 
+async function loadCommunityPulse(): Promise<CommunityPulseContent> {
+  try {
+    return await getCommunityPulse();
+  } catch {
+    return getDefaultSiteContent().communityPulse;
+  }
+}
+
 export async function getSiteContent(): Promise<SiteContent> {
   noStore();
 
-  const [divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, management] = await Promise.all([
+  const [divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, communityPulse, management] = await Promise.all([
     loadDivisions(),
     loadNewsArticles(),
     loadSponsors(),
@@ -156,20 +171,27 @@ export async function getSiteContent(): Promise<SiteContent> {
     loadStreamers(),
     loadBrandSocials(),
     loadFeaturedMatch(),
+    loadCommunityPulse(),
     loadManagement(),
   ]);
 
   try {
     const raw = await fs.readFile(CONTENT_FILE_PATH, 'utf8');
-    return { ...normalizeContent(JSON.parse(raw)), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, management };
+    return { ...normalizeContent(JSON.parse(raw)), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, communityPulse, management };
   } catch {
-    return { ...getDefaultSiteContent(), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, management };
+    return { ...getDefaultSiteContent(), divisions, newsArticles, sponsors, fcx, streamers, brandSocials, featuredMatch, communityPulse, management };
   }
 }
 
 export async function saveSiteContent(content: SiteContent): Promise<void> {
   const normalized = normalizeContent(content);
-  const { brandSocials: _brandSocials, featuredMatch: _featuredMatch, management: _management, ...withoutMongoManaged } = normalized;
+  const {
+    brandSocials: _brandSocials,
+    featuredMatch: _featuredMatch,
+    communityPulse: _communityPulse,
+    management: _management,
+    ...withoutMongoManaged
+  } = normalized;
   const output = `${JSON.stringify(withoutMongoManaged, null, 2)}\n`;
 
   await fs.mkdir(path.dirname(CONTENT_FILE_PATH), { recursive: true });

@@ -26,7 +26,7 @@ export default async function Home() {
         )}
         <StreamerWall streamers={content.streamers} />
         <Dispatch articles={content.newsArticles} />
-        <CommunityPulse />
+        <CommunityPulse content={content.communityPulse} />
         <SponsorWall sponsors={content.sponsors} />
         <FinalCta />
       </main>

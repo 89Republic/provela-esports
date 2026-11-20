@@ -13,6 +13,7 @@ import {
   Handshake,
   Tv,
   Users,
+  Activity,
   Menu,
   X,
   ExternalLink,
@@ -29,6 +30,7 @@ const NAV = [
   { href: '/admin/streamers', label: 'Streamers', icon: Radio },
   { href: '/admin/news', label: 'News', icon: Newspaper },
   { href: '/admin/sponsors', label: 'Sponsors', icon: Handshake },
+  { href: '/admin/community-pulse', label: 'Community Pulse', icon: Activity },
   { href: '/admin/management', label: 'Management', icon: Users },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
